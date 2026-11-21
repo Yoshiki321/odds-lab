@@ -55,3 +55,14 @@ discussion_package*.zip
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# ---- 数据库本地配置与本地工具权限（严禁提交）----
+app/config/db.json
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+.claude/_write_test.txt
+
+# ---- 备份与临时编译产物 ----
+*.bak
+*.bak-*
+__pycache__/

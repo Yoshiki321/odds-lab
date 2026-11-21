@@ -131,7 +131,7 @@ function weightedScore(sample: Sample, params: Params): number {
 }
 
 function onePnl(sample: Sample): number {
-  if (sample.market === 'HHAD' && sample.result === 'D') return 0;
+  // 竞彩 HHAD 为三项盘，让平(D)不是走水，押胜/负时全输(-1)
   return sample.result === sample.pred ? sample.odds - 1 : -1;
 }
 

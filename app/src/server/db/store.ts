@@ -18,11 +18,14 @@ function parseKickoff(m: MatchRow): string | null {
   if (m.kickoff) return m.kickoff;
   const d = m.matchDate, t = m.matchTime;
   if (!d || !t) return null;
-  const hh = t.slice(0, 2);
-  const ok = /^\d{1,2}:\d{2}(:\d{2})?$/.test(t) && hh !== '24';
-  const tt = ok ? t : '00:00:00'; // 24:00（深夜场）按当日 0 点记，与旧系统一致
-  const iso = new Date(`${d}T${tt.length === 5 ? tt + ':00' : tt}+08:00`);
-  return isNaN(iso.getTime()) ? null : iso.toISOString();
+  const is24 = /^24:00(:00)?$/.test(t);
+  const ok = /^\d{1,2}:\d{2}(:\d{2})?$/.test(t) && !is24;
+  const tt = ok ? t : '00:00:00';
+  const base = new Date(`${d}T${tt.length === 5 ? tt + ':00' : tt}+08:00`);
+  if (isNaN(base.getTime())) return null;
+  // 24:00 为次日 00:00（原逻辑误记当日 00:00，提前了整整 24 小时）
+  const fixed = is24 ? new Date(base.getTime() + 86400_000) : base;
+  return fixed.toISOString();
 }
 
 const WD = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
@@ -50,10 +53,14 @@ export async function upsertMatch(m: MatchRow): Promise<void> {
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, now())
     ON CONFLICT (match_id) DO UPDATE SET
       match_date=$2, num=$3, league=$4, home=$5, away=$6, kickoff=$7, had=$8, hhad=$9,
-      had_base=COALESCE(matches.had_base, $10), hhad_base=COALESCE(matches.hhad_base, $11),
+      had_base=COALESCE(NULLIF(matches.had_base, 'null'::jsonb), $10::jsonb),
+      hhad_base=COALESCE(NULLIF(matches.hhad_base, 'null'::jsonb), $11::jsonb),
       updated_at=now()
   `, [m.matchId, matchDate, m.num, m.league, m.home, m.away, kickoff,
-      JSON.stringify(m.had), JSON.stringify(m.hhad), JSON.stringify(m.hadBase), JSON.stringify(m.hhadBase)]);
+      m.had == null ? null : JSON.stringify(m.had),
+      m.hhad == null ? null : JSON.stringify(m.hhad),
+      m.hadBase == null ? null : JSON.stringify(m.hadBase),
+      m.hhadBase == null ? null : JSON.stringify(m.hhadBase)]);
 }
 
 /** 兜底补录（可以过时，不能缺少）：比分/赛果链路见到的未知竞彩场只插不盖。
@@ -114,11 +121,10 @@ export async function getEuropeanOdds(matchId: string): Promise<{ home: number; 
 /** matches.support upsert（保持 had_base 等首见语义，support 只覆盖当轮）。
  *  match_date 用子查询保底（行已存在走 DO UPDATE；不存在兜底插入接口不存在该场） */
 export async function upsertSupport(matchId: string, support: SupportRates): Promise<void> {
+  // 仅更新已存在的竞彩场次，禁止写入残缺幽灵行
   await query(`
-    INSERT INTO matches (match_id, match_date, num, support, updated_at)
-    VALUES ($1::varchar, COALESCE((SELECT match_date FROM matches WHERE match_id = $1::varchar), now()::date), '', $2::jsonb, now())
-    ON CONFLICT (match_id) DO UPDATE SET support=$2::jsonb, updated_at=now()
-  `, [matchId, JSON.stringify(support ?? null)]);
+    UPDATE matches SET support=$2::jsonb, updated_at=now() WHERE match_id=$1::varchar
+  `, [matchId, support == null ? null : JSON.stringify(support)]);
 }
 
 // ---------------- 新增渠道（历史积累层） ----------------
@@ -532,7 +538,10 @@ export async function getBankroll(): Promise<BankrollRow | null> {
   return {
     cash: Number(x.cash), startingBankroll: Number(x.start_bankroll), target: Number(x.target),
     epoch: x.epoch, epochNote: x.epoch_note, sequence: x.history ?? [],
-  };
+    settledProfit: Number(x.settled_profit ?? 0),
+    totalStaked: Number(x.total_staked ?? 0),
+    totalReturned: Number(x.total_returned ?? 0),
+  } as any;
 }
 
 export async function getSourceStatus(): Promise<{ ok: boolean; errors: { source: string; message: string }[] } | null> {
@@ -663,10 +672,11 @@ export async function buildSummary(): Promise<unknown> {
       epoch: bank?.epoch ?? '', epochNote: bank?.epochNote ?? '',
       cash,
       inPlay: inPlay.map(b => b.betId),
-      inPlayAmount: undefined,
-      settledProfit: 0,
-      totalStaked: 0, totalReturned: 0,
-      bets: inPlay.map(b => b.betId), history: [],
+      inPlayAmount: +inPlay.reduce((s, b) => s + Number(b.stake || 0), 0).toFixed(2),
+      settledProfit: Number((bank as any)?.settledProfit ?? 0),
+      totalStaked: Number((bank as any)?.totalStaked ?? 0),
+      totalReturned: Number((bank as any)?.totalReturned ?? 0),
+      bets: inPlay.map(b => b.betId), history: bank?.sequence ?? [],
       lastUpdated: new Date().toISOString(),
     },
     bankroll: { cash, startBankroll: bank?.startingBankroll, target: bank?.target, epoch: bank?.epoch, epochNote: bank?.epochNote, sequence: bank?.sequence ?? [] },

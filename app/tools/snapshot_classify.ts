@@ -26,7 +26,7 @@ const perMatch = new Map<string, { strict: number; doubtful: number; noResult: n
 for (const f of readdirSync(ODDS).filter((x) => /^football_all_.*\.json$/.test(x))) {
   const m0 = f.match(/football_all_(\d{4}-\d{2}-\d{2})-(\d{2})-(\d{2})-(\d{2})\.json$/);
   if (!m0) continue;
-  const nameMs = ts(m0[1], `${m0[2]}:${m0[3]}:${m0[4]}`);
+  const nameMs = Date.parse(`${m0[1]}T${m0[2]}:${m0[3]}:${m0[4]}Z`); // scraper.js uses UTC toISOString()
   let j: any; try { j = JSON.parse(readFileSync(join(ODDS, f), 'utf8')); } catch { continue; }
   for (const g of j?.value?.matchInfoList || []) for (const m of g.subMatchList || []) {
     const id = String(m.matchId);

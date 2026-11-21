@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(cd /c/zwkj/竞彩助手/app && npx tsx scripts/_diag2.ts)",
-      "Read(//c/zwkj/竞彩助手/app/**)"
-    ]
-  }
-}

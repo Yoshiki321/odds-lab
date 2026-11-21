@@ -93,7 +93,7 @@ function predict(lg: LeagueStat, homeId: string, awayId: string, date: string, s
   // 休息天数惩罚：背靠背(-0.5分/队)、1天休(-0.2分/队)
   const restH = restDays(h?.lastDate ?? null, date);
   const restA = restDays(a?.lastDate ?? null, date);
-  const restAdj = (r: number) => (r <= 1 ? -3.0 : r === 2 ? -1.0 : 0);
+  const restAdj = (r: number) => (r === 0 ? -0.5 : r === 1 ? -0.2 : 0);
   lh += restAdj(restH);
   la += restAdj(restA);
   lh = Math.max(60, Math.min(lh, 150));
@@ -139,8 +139,12 @@ function main() {
       const pRaw = 1 - normCdf((-g.line - pred.mu) / pred.sigma);
       const dv = devigTwoWay(g.h, g.a);
       if (dv.prob === null) continue;
-      const cover = (g.homeScore - g.awayScore + g.line) > 0 ? 1 : 0;
+      const diff = g.homeScore - g.awayScore + g.line;
+      if (diff === 0) continue; // 整数盘走水不计入二分类 Brier
+      const cover = diff > 0 ? 1 : 0;
       rawObs.push({ g, pModel: pRaw, pBase: dv.prob, cover: cover as 0 | 1, date: day });
+      residuals.push((g.homeScore - g.awayScore) - pred.mu);
+      if (residuals.length > 400) residuals.shift();
     }
 
     // 更新统计并收集残差

@@ -15,7 +15,7 @@ const URL = 'https://www.dongqiudi.com/magicball/v1/list/match_list?language=zh-
 export function parseEuro(str: unknown): { home: number; draw: number; away: number } | null {
   if (typeof str !== 'string') return null;
   const p = str.split(',').map(s => parseFloat(s));
-  if (p.length < 3 || p.some(x => !isFinite(x) || x <= 0)) return null;
+  if (p.length < 3 || !isFinite(p[0]) || p[0] <= 0 || !isFinite(p[2]) || p[2] <= 0 || !isFinite(p[1])) return null;
   return { home: p[0], draw: p[1], away: p[2] };
 }
 
@@ -112,7 +112,8 @@ export async function fetchEuropeOdds(): Promise<EuropeOddsFeed> {
     const tsMs = Number(m.match_timestamp) * 1000;
     if (!isFinite(tsMs)) continue;
     const k = Math.floor(tsMs / (90 * 60_000));
-    const cand = (buckets.get(k) || []).filter(u => Math.abs(u.kickoffMs - tsMs) <= 45 * 60_000);
+    const near = [...(buckets.get(k - 1) || []), ...(buckets.get(k) || []), ...(buckets.get(k + 1) || [])];
+    const cand = near.filter(u => Math.abs(u.kickoffMs - tsMs) <= 45 * 60_000);
     if (!cand.length) { if (feed.unmatched.length < 5) feed.unmatched.push(`${m.team_A?.name} vs ${m.team_B?.name}`); continue; }
     const homeN = normName(m.team_A?.name), awayN = normName(m.team_B?.name);
     // 只认队名互含（同轮联赛同时开赛很常见，时间窗唯一≠同一场；宁可缺不错）

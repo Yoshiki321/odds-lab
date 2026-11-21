@@ -496,6 +496,10 @@ function runApiSweep() {
   }
   try {
     const out = JSON.parse(r.stdout.trim().split("\n").filter((l) => l.startsWith("{")).pop() || "{}");
+    const st = readJson(statePath(), {});
+    st.sweepDone = st.sweepDone || {};
+    st.sweepDone[bjDate(nowMs())] = bj(nowMs());
+    writeJson(statePath(), st);
     log("INFO", `API扫盘完成 plan=${out.plan} stats=${JSON.stringify(out.stats)}`);
     return { ok: true, ...out };
   } catch (e) { log("ERROR", "API扫盘输出解析失败: " + e.message); return { ok: false }; }
@@ -524,13 +528,19 @@ async function tick({ forceSweep = false } = {}) {
   const plans = [];
   for (const d of [date, bjDate(now - 86400000)]) {
     for (const f of fs.existsSync(SWEEP) ? fs.readdirSync(SWEEP) : []) {
-      if (f.startsWith(`plan_${d}`) && f.endsWith(".json")) plans.push(readJson(path.join(SWEEP, f), null));
+      if ((f.startsWith(`plan_${d}`) || f.startsWith(`planApi_${d}`)) && f.endsWith(".json")) {
+        plans.push(readJson(path.join(SWEEP, f), null));
+      }
     }
   }
   const tasks = plans
-    .filter((p) => p && p.version === "sweep-plan-v2")
-    .flatMap((p) => p.rechecks || [])
-    .filter((t) => t && t.eventId && t.home && t.away && Number.isFinite(t.kickoffMs));
+    .filter((p) => p && (p.version === "sweep-plan-v2" || p.version === "sweep-plan-v4-api-native"))
+    .flatMap((p) => (p.rechecks || []).map((t) => ({
+      ...t,
+      eventId: t.eventId || (t.mid ? `mid-${t.mid}` : null),
+      planAtMs: Number.isFinite(t.planAtMs) ? t.planAtMs : (Number.isFinite(t.kickoffMs) ? t.kickoffMs - 30 * 60000 : NaN),
+    })))
+    .filter((t) => t && t.eventId && t.home && t.away && Number.isFinite(t.kickoffMs) && Number.isFinite(t.planAtMs));
   for (const t of tasks) {
     const executed = st.executed && st.executed[t.eventId];
     if (executed) continue;

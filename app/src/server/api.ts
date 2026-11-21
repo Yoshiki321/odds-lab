@@ -1,6 +1,6 @@
 import { IncomingMessage, ServerResponse } from 'node:http';
 import { readFileSync, existsSync } from 'node:fs';
-import { extname, dirname, resolve } from 'node:path';
+import { extname, dirname, resolve, relative, isAbsolute } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   buildDayView, buildSummary, buildMistakes,
@@ -11,10 +11,11 @@ import type { Hub } from './ws/hub.js';
 import { refresh } from '../../tools/refresh.js';
 import { settleAll } from '../../tools/settle.js';
 import { audit } from '../../tools/audit.js';
-import { opVirtual, opVirtualDelete, opDiary, opBet, opGate, readJsonBody } from './ops.js';
+import { opVirtual, opVirtualDelete, opDiary, opBet, opGate, readJsonBody, bjToday } from './ops.js';
 
 const here = dirname(fileURLToPath(import.meta.url));
 export const PUBLIC_DIR = resolve(here, '../../public'); // app/public —— v2 专属前端，根目录 public/ 是 v1 遗留
+const API_TOKEN = process.env.JC_API_TOKEN || '';
 
 const MIME: Record<string, string> = {
   '.html': 'text/html; charset=utf-8',
@@ -35,10 +36,40 @@ function tryRead(p: string): Buffer | null {
   try { return existsSync(p) ? readFileSync(p) : null; } catch { return null; }
 }
 
+/** 写/触发接口安全检查：拦截跨站 CSRF，并支持 JC_API_TOKEN Bearer 鉴权 */
+function authorizeWrite(req: IncomingMessage, res: ServerResponse): boolean {
+  const origin = req.headers.origin;
+  if (origin) {
+    try {
+      const u = new URL(origin);
+      if (u.hostname !== '127.0.0.1' && u.hostname !== 'localhost') {
+        json(res, 403, { error: 'forbidden origin' });
+        return false;
+      }
+    } catch {
+      json(res, 403, { error: 'invalid origin' });
+      return false;
+    }
+  }
+  if (API_TOKEN) {
+    const auth = String(req.headers.authorization || '');
+    if (auth !== `Bearer ${API_TOKEN}`) {
+      json(res, 401, { error: 'unauthorized' });
+      return false;
+    }
+  }
+  return true;
+}
+
 function serveStatic(res: ServerResponse, pathname: string) {
   const rel = pathname === '/' ? 'index.html' : pathname.slice(1).replace(/\\/g, '/');
   const file = resolve(PUBLIC_DIR, rel);
-  if (!file.startsWith(PUBLIC_DIR)) { res.writeHead(403); res.end('forbidden'); return; }
+  const diff = relative(PUBLIC_DIR, file);
+  if (diff.startsWith('..') || isAbsolute(diff) || /\.bak/i.test(file)) {
+    res.writeHead(403);
+    res.end('forbidden');
+    return;
+  }
   const body = tryRead(file);
   if (body == null) { res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' }); res.end('404'); return; }
   const headers: Record<string, string> = { 'Content-Type': MIME[extname(file)] || 'application/octet-stream' };
@@ -84,8 +115,8 @@ export function createRouter(hub: Hub) {
     if (p.startsWith('/api/live/')) {
       const date = p.replace('/api/live/', '').split('?')[0];
       if (date === 'refresh') {
-        // 主动拉一次当日比分（生产环境由 scheduler 自动，这里留手动兜底）
-        await markChange('live', date);
+        if (!authorizeWrite(req, res)) return;
+        await markChange('live', bjToday());
         return json(res, 200, { ok: true, note: 'live refresh 由 scheduler 驱动' });
       }
       return json(res, 200, await getLive(date));
@@ -96,30 +127,37 @@ export function createRouter(hub: Hub) {
       return json(res, 200, await opGate({ date: u.searchParams.get('date') || undefined, num: u.searchParams.get('num') || undefined, matchId: u.searchParams.get('matchId') || undefined }));
     }
     if (p === '/api/virtual' && req.method === 'POST') {
+      if (!authorizeWrite(req, res)) return;
       return json(res, 200, await opVirtual(await readJsonBody(req)));
     }
     if (p === '/api/virtual' && req.method === 'DELETE') {
+      if (!authorizeWrite(req, res)) return;
       return json(res, 200, await opVirtualDelete({ id: u.searchParams.get('id') || undefined, matchId: u.searchParams.get('matchId') || undefined }));
     }
     if (p === '/api/diary' && req.method === 'POST') {
+      if (!authorizeWrite(req, res)) return;
       return json(res, 200, await opDiary(await readJsonBody(req)));
     }
     if (p === '/api/bet' && req.method === 'POST') {
+      if (!authorizeWrite(req, res)) return;
       const r: any = await opBet(await readJsonBody(req));
       return json(res, r.ok ? 200 : 409, r);
     }
 
     // ── 触发器（POST，替代 shell 调用，不弹 CMD） ──
     if (p === '/api/trigger/refresh' && req.method === 'POST') {
+      if (!authorizeWrite(req, res)) return;
       const date = u.searchParams.get('date') || undefined;
       const r = await refresh(date);
       return json(res, 200, { ok: true, ...r });
     }
     if (p === '/api/trigger/settle' && req.method === 'POST') {
+      if (!authorizeWrite(req, res)) return;
       const r = await settleAll();
       return json(res, 200, { ok: true, ...r });
     }
     if (p === '/api/trigger/audit' && req.method === 'POST') {
+      if (!authorizeWrite(req, res)) return;
       const r = await audit();
       return json(res, 200, { ok: true, ...r });
     }
@@ -128,7 +166,7 @@ export function createRouter(hub: Hub) {
     serveStatic(res, p);
     } catch (e) {
       console.error('[api]', p, e && (e as Error).message);
-      if (!res.headersSent) json(res, 500, { error: String((e as Error).message || e) });
+      if (!res.headersSent) json(res, 500, { error: 'internal server error' });
     }
   };
 }

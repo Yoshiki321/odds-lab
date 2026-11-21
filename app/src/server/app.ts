@@ -8,6 +8,7 @@ import { startLivePoller } from './live-poller.js';
 import { startAutoRefresh, startHourlyRefresh } from './auto-refresh.js';
 
 const PORT = Number(process.env.PORT) || 9000;
+const HOST = process.env.HOST || '127.0.0.1';
 
 async function start() {
   await migrate();
@@ -15,9 +16,9 @@ async function start() {
   const hub = new Hub(server);
   const router = createRouter(hub);
   server.on('request', router);
-  server.listen(PORT, '0.0.0.0', () => {
-    console.log(`[app] 竞彩助手 v2 running on http://0.0.0.0:${PORT}`);
-    console.log(`      WebSocket: ws://0.0.0.0:${PORT}/ws`);
+  server.listen(PORT, HOST, () => {
+    console.log(`[app] 竞彩助手 v2 running on http://${HOST}:${PORT}`);
+    console.log(`      WebSocket: ws://${HOST}:${PORT}/ws`);
   });
 
   startScanWorker();      // 扫描计划执行器（仅执行到点分析，不结算）
