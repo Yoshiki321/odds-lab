@@ -1,4 +1,4 @@
-// restart_server.cjs — 重启本项目竞彩助手服务器（优雅：杀旧实例→等端口释放→拉起→自检）
+// restart_server.cjs — 重启本项目Odds-Lab服务器（优雅：杀旧实例→等端口释放→拉起→自检）
 // 用法: node tools/restart_server.cjs [port]   （默认 9000）
 // 目的: 避免直接 rm/taskkill 系统级命令，仅操作本项目自身进程（安全配置允许范围）
 const { execSync, spawn } = require('child_process');

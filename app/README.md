@@ -1,97 +1,72 @@
-# 竞彩助手 v2（TS + Python + PostgreSQL）
+# Odds-Lab v2 服务（TypeScript + PostgreSQL + WebSocket）
 
-v1（Node CJS + JSON 文件）→ v2 架构迁移。**一切数据落 PG（数据库 `jc_assistant`），评分只读 PG，前端只读 HTTP/WS。**
+`app/` 是 Odds-Lab 的核心常驻服务与数据引擎。所有盘口、欧亚水位轨迹、赛果、评分快照、扫描计划与台账统一持久化至 PostgreSQL，前端看板通过 HTTP API 与 WebSocket 实时同步。
 
-## 架构
+## 目录架构
 
-```
-public/ (index/self-upgrade/help 三页，前端零改动)
-  │  HTTP /api/* + WS /ws
-app/src/server/
-  ├─ app.ts          入口：migrate → http → WS hub → scheduler → watcher
-  ├─ api.ts          REST 路由（day/days/summary/mistakes/diary/live/status）
-  ├─ ws/hub.ts       WS 房间广播（day:日期 / summary / status）
-  ├─ ws/watcher.ts   change_log 哨兵轮询 → hub 推送（需求1：前端零刷新实时变）
-  ├─ scheduler/
-  │   ├─ planner.ts  扫描排程（需求2）：13:00 预扫 → 20:00 首扫 → 各 kickoff-30min 临场
-  │   └─ worker.ts   每 60s 跑到点计划
-  ├─ llm/
-  │   ├─ prompt.ts   分析 prompt（预写，只换实时水位）
-  │   ├─ adapter.ts  LLM API 适配（配置 key 后启用）
-  │   └─ analyzer.ts LLM 未配置 → 自动回落本地引擎评分（当前生效路径）
-  └─ db/
-      ├─ pool.ts      PG 连接池 + migrate
-      ├─ schema.sql   9 表（matches/scores/results/live/bets/virtual/bankroll/scan_plans/docs…）
-      ├─ store.ts     数据访问 + buildDayView/buildSummary（旧 server.js 同构视图）
-      └─ store-scan.ts scan_plans 读写
-app/tools/            生产工具（对齐原 tools/*.js）
-  ├─ refresh.ts       抓当日盘 → PG → 评分 → 赛果 → 排程 → source_status（主刷新入口）
-  ├─ fetch-today.ts   sporttery getMatchCalculatorV1 → upsert matches（COALESCE 首见盘定格）
-  ├─ score.ts         评分引擎 v1.6（DROP 表/深盘退回/下盘保护化/M1-M5 命中）
-  ├─ fetch-results.ts getUniformMatchResultV1 → results（幂等，未终场不写）
-  ├─ fetch-live.ts    sporttery 比分直播 + okooo 缓存合并 → live_scores
-  ├─ settle.ts        真注（亚盘365/HAD/HHAD）+ 虚拟注结算（幂等）
-  └─ ingest_legacy.ts 首次迁移 data/ JSON → PG
-app/scripts/          运维诊断
-  ├─ inspect.ts       当日评分/视图/信息源状态
-  ├─ scan-now.ts      手动触发某天扫描计划
-  ├─ ws-test.ts       WS 端到端（订阅→写哨兵→收推送）
-  ├─ engine-check.ts  评分引擎关键规则断言（13 项）
-  └─ db-test.ts       PG 连接诊断（不打印密码）
+```text
+app/
+├── public/                    # v2 前端页面（index.html / self-upgrade.html / help.html）
+├── config/
+│   └── db.template.json       # PostgreSQL 连接模板（复制为 db.json，严禁提交）
+├── src/
+│   ├── server/
+│   │   ├── app.ts             # 服务入口：migrate → HTTP(127.0.0.1:9000) → WS Hub → 后台循环
+│   │   ├── api.ts             # REST 路由（只读接口 + 带 CSRF/Token 校验的写/触发接口）
+│   │   ├── ops.ts             # 研判层写入（虚拟注/日记/门禁体检/人工确认单）
+│   │   ├── auto-refresh.ts    # 13:05 开盘兜底 + 整点刷新（共享单飞互斥锁）
+│   │   ├── live-poller.ts     # 每 60s 实时比分轮询 + 每 6min 官方 Payout 赛果补拉
+│   │   ├── ws/
+│   │   │   ├── hub.ts         # WebSocket 多房间推送（Origin 校验 + 订阅上限）
+│   │   │   └── watcher.ts     # change_log 哨兵轮询（从 MAX(id) 起跳）
+│   │   ├── scheduler/
+│   │   │   ├── planner.ts     # 扫描排程（13:00 预扫 → 20:00 首扫 → kickoff-30m 临场）
+│   │   │   └── worker.ts      # 原子抢占 pending→running 执行器
+│   │   ├── llm/               # LLM 适配层（未配置时自动回落本地评分引擎）
+│   │   └── db/                # 连接池、20 表 schema.sql、store 数据访问层
+│   └── shared/
+│       ├── types.ts           # 前后端共享类型
+│       └── settlement.ts      # 生产结算校验内核（HAD / HHAD / AH / OU）
+├── tools/                     # 抓取、评分 v2.1、EV/M-04、结算、审计与 OOS 评估
+├── scripts/                   # 运维诊断脚本（db-test / inspect / engine-check / ws-test）
+├── tests/                     # settlement & betting 单元测试
+├── run-wf.vbs                 # Windows 无人值守触发器（UTF-8）
+└── watchdog.ps1               # 9000 端口精准 PID 健康看门狗
 ```
 
-## 配置
+## 配置说明
 
-- `app/config/db.json`：PG 连接（host/user/password/database）。模板见 `db.template.json`。
-- 数据全部在 PG；`data/` 目录仅 okooo 比分缓存 + 旧 JSON 备份读入用。
+支持两种方式配置 PostgreSQL（默认库名 `jc_assistant`，兼容已有生产库）：
 
-## 常用命令（cd app）
+1. **环境变量（推荐）**：`JC_DB_HOST`、`JC_DB_PORT`、`JC_DB_USER`、`JC_DB_PASSWORD`、`JC_DB_NAME`
+2. **本地配置文件**：复制 `app/config/db.template.json` 为 `app/config/db.json` 并填写真实凭据（已加入 `.gitignore`）
+
+可选安全与监听环境变量：
+- `HOST`：默认 `127.0.0.1`（仅本机访问）
+- `PORT`：默认 `9000`
+- `JC_API_TOKEN`：设置后，所有 `POST`/`DELETE` 写接口与 `/api/trigger/*` 需携带 `Authorization: Bearer <token>`
+
+## 常用命令（在 `app/` 目录下执行）
 
 | 命令 | 作用 |
-|------|------|
-| `npm run migrate` | 幂等建表 |
-| `npx tsx tools/refresh.ts` | 主刷新：抓盘+评分+赛果+排程（口令「更新」对应此） |
-| `npx tsx tools/settle.ts` | 结算真注+虚拟注（13:03/23:07 用） |
-| `npx tsx tools/fetch-live.ts` | 比分直播刷新 |
-| `npx tsx scripts/inspect.ts [date]` | 看当日评分/视图 |
-| `npx tsx scripts/scan-now.ts [date]` | 手动触发扫描计划 |
-| `npx tsx scripts/engine-check.ts` | 引擎规则断言 |
-| `npx tsx scripts/ws-test.ts [date] [port]` | WS 端到端测试 |
-| `npm run switch` | **一键切换**：ingest → 停旧 9000 → 起 v2 9000 → 验证 |
+|---|---|
+| `npm run migrate` | 幂等初始化/更新 PostgreSQL 表结构 |
+| `npm start` | 启动常驻服务（默认 `http://127.0.0.1:9000`） |
+| `npm run refresh` | 执行一次完整机械刷新（抓盘 + 欧亚水位 + 评分 + 官方赛果 + 排程） |
+| `npm run typecheck` | TypeScript 类型检查（`tsc --noEmit`） |
+| `npm run test:unit` | 运行结算内核单元测试（不依赖数据库） |
+| `npm test` | 运行全部单元与数据库集成测试 |
+| `npx tsx tools/settle.ts` | 按官方 Payout 赛果结算单关真注与虚拟注 |
+| `npx tsx tools/audit.ts` | 分档校准与 EV 门禁审计 |
+| `npx tsx scripts/engine-check.ts` | 评分引擎核心规则断言 |
 
-## 启动
+## 核心 HTTP 接口
 
-```bash
-cd app
-PORT=9001 npx tsx src/server/app.ts     # 临时验证（避开旧 9000）
-npm run switch                           # 正式切换：停旧起新，9000 变 v2
-```
+- **只读接口**：`GET /api/health` · `/api/summary` · `/api/days` · `/api/day/:date` · `/api/live/:date` · `/api/diary` · `/api/mistakes` · `/api/score-status` · `/api/gate?date=&num=`
+- **机械触发器（POST）**：`/api/trigger/refresh?date=` · `/api/trigger/settle` · `/api/trigger/audit`
+- **研判写入（POST/DELETE）**：`/api/virtual` · `/api/diary` · `/api/bet`（需 `confirmed: true` 且通过服务端五门禁）
 
-启动后：http://localhost:9000/（v2），WS `ws://localhost:9000/ws`。
+## Windows 生产托管说明
 
-## 定时任务（CronCreate durable，.claude/scheduled_tasks.json）
-
-| 触发 | 任务 | 动作 |
-|------|------|------|
-| 每日 13:03 | e78bfb7d | 开盘：refresh → 结算前日 → 模型扫描 → 可买早场 |
-| 每日 23:07 | adf0d8ba | 关盘：refresh → 结算 → 复盘 → 台账日记 |
-| 13:33–22:33 每小时 | 265f3a9d | 只 refresh（不结算不下单） |
-
-> 7 天过期，会话重启后先 `CronList` 核对重建。
-
-## 验证清单（本次已跑通）
-
-- [x] migrate OK，PG 连接（hr backend 凭据）
-- [x] refresh 全链路：8 场 → 评分 → 赛果 → scan 计划（9 条）
-- [x] 调度执行：7 计划 7 轮，引擎 fallback 全分析
-- [x] 引擎断言 13/13（降水/DROP/退回/保护化/M1/首盘）
-- [x] HTTP API 全端点 + 旧前端同构视图
-- [x] WS 端到端（订阅→哨兵→推送）
-- [x] 比分直播（100 场/29 封盘/okooo 16 合并）
-- [x] ingest 全量导入（4 天 55 场/71 分/38 虚拟注/1 实单）
-- [x] 结算链路（虚拟注 5 张已结）
-- [x] typecheck 0 错误
-- [x] `npm run switch` 一键切换：旧 server.js 停，v2 独占 9000（单实例，9001 已回收）
-- [x] planDay 修复：全量轮（开盘/首次）kickoff 存 NULL，临场批次存真实 ISO（原先 '全天' 字面量撞 timestamptz）
-- [x] 比赛日规则：`salesDateOf(num, kickoff)` 由编号前缀推导销售日，跨午夜场归前一天（周日001~024 整组归周日）；`repair-match-date.ts` 已归位存量 55 场并同步 scores
-- [x] 实时比分自动链路：server 内置 `live-poller.ts` 每 60s 抓 sporttery → live_scores（需求1「server 周期更新 live」）；refresh.ts 顺带补一次
+- 常驻服务由 Windows 任务计划 `JC9000` 托管，看门狗 `watchdog.ps1` 每 30 分钟巡检 `http://127.0.0.1:9000/api/health`（连续 3 次失败才按 9000 端口 PID 精准重启，绝不误杀其他 Node 进程）。
+- 定时值守任务（`JCOpen1303` / `JCClose2307` / `JCCloseY0933`）通过 `run-wf.vbs` 触发，仅调用 HTTP 接口完成机械刷新、复盘与虚拟注记录，不自动下真单。

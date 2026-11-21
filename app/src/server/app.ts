@@ -17,7 +17,7 @@ async function start() {
   const router = createRouter(hub);
   server.on('request', router);
   server.listen(PORT, HOST, () => {
-    console.log(`[app] 竞彩助手 v2 running on http://${HOST}:${PORT}`);
+    console.log(`[app] Odds-Lab v2 running on http://${HOST}:${PORT}`);
     console.log(`      WebSocket: ws://${HOST}:${PORT}/ws`);
   });
 

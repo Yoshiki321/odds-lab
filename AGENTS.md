@@ -1,4 +1,4 @@
-# AGENTS.md — 竞彩助手（OpenCode 会话入口）
+# AGENTS.md — Odds-Lab（盘口与赔率实验室 · 会话入口）
 
 ## 启动第一步（不可跳过）
 **必读**：`C:\zwkj\竞彩助手\.claude\CLAUDE.md`（全文，铁律+纪律+定时现状+自我提升闭环）。

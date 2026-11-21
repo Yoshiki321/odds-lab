@@ -1,96 +1,115 @@
-# 竞彩助手 — 数据抓取器
+# Odds-Lab（盘口与赔率实验室）
 
-抓取中国竞彩网(sporttery.cn)官方网关 `webapi.sporttery.cn` + 懂球帝(dongqiudi.com) 的竞彩相关数据。
-纯 Node.js HTTP 直连,无需浏览器/登录/签名。
+以**欧亚盘口（亚盘让球 / 欧赔 1X2 / 大小球）、多源水位定价偏差与可验证量化模型**为核心的数据采集、盘口分析与实验验证平台。
 
-## 数据源
+> **项目定位**：本项目并非“竞彩投注助手”。核心研究对象是欧亚盘口定价、隐含概率去水、盘口水位异动与样本外（OOS）统计验证；中国竞彩网（`sporttery.cn`）仅作为场次池与参考水位源之一，与开云体育、懂球帝、澳客、Understat xG 等多源数据交叉对照。
 
-| 数据源 | 覆盖 | 接口文档 |
+---
+
+## 核心能力
+
+- **多源盘口与赛果采集**：整合欧亚盘口（开云体育 API / 懂球帝 / 澳客）、参考场次与历史赛果（竞彩网网关）、以及五大联赛 xG 数据（Understat）。
+- **盘口定价与量化模型**：
+  - 1X2 去水、泊松/Dixon-Coles 进球分布反推、亚盘/大小球条件公平赔率与 EV 计算（`app/tools/ev-fit.ts`、`app/tools/m04.ts`、`tools/dixon_coles.py`、`tools/ou_calc.py`、`tools/xg_quant.py`）
+  - 严格隔离结算内核（`app/tools/settlement.ts`、`app/src/shared/settlement.ts`），区分三项让球盘、亚盘半/整/四分之一盘与大小球走水规则
+  - 样本外（OOS）时点级验证、Brier/LogLoss 基线对比与快照时间戳审计（`app/tools/match_level_eval.ts`、`app/tools/prob_metrics.ts`、`discussion_package_v4/`）
+- **实时看板与常驻服务（`app/`）**：TypeScript + PostgreSQL + WebSocket 服务端，提供盘口追踪、多维评分参考、实时比分轮询、虚拟注复盘与前端看板（详见 [`app/README.md`](app/README.md)）。
+- **实验隔离与风控守卫（`data/experiment_survival_100/`）**：模拟账本（`simulation.json`）与真实账本严格隔离，默认只观察与记录；所有自动化脚本遵循 Fail-Closed 风控门禁与时间窗校验。
+
+---
+
+## 目录结构
+
+```text
+odds-lab/
+├── app/                         # Odds-Lab v2 核心服务（TypeScript + PostgreSQL + WebSocket）
+│   ├── config/                  # 数据库配置模板（db.template.json；本地 db.json 已忽略）
+│   ├── public/                  # v2 前端看板（index / self-upgrade / help）
+│   ├── src/
+│   │   ├── server/              # HTTP/WS 服务、API 路由、扫描排程、实时轮询、DB 层
+│   │   └── shared/              # 共享类型与生产结算模块
+│   ├── tools/                   # 数据抓取、评分、EV/M-04、结算、快照与 OOS 评估工具
+│   ├── scripts/                 # 运维与诊断脚本
+│   ├── tests/                   # 结算与账本单元测试
+│   ├── run-wf.vbs               # Windows 定时值守启动器（UTF-8）
+│   └── watchdog.ps1             # 9000 端口精准 PID 健康看门狗
+├── tools/                       # 欧亚盘口采集、开云守护/快照、模拟账本测试、Python 量化脚本
+├── data/                        # 实验记录、风控配置、工作流模板、联赛资料与模型文档
+│   ├── experiment_survival_100/ # 生存实验配置、快照评估报告与复盘记录
+│   ├── betting/                 # 评分规则与策略记录
+│   ├── diary/                   # 复盘日记与规则迭代记录
+│   └── wf/                      # 开盘/关盘无人值守规格模板
+├── discussion_package_v4/       # 评估可信度与 T-30 采集方案自包含评审包
+├── memory/                      # 踩坑复盘与策略沉淀
+├── scraper.js                   # 历史赛果与参考盘口批量抓取器
+├── AGENTS.md                    # 代理会话入口与运行铁律
+└── .claude/                     # 项目规范与专项操作手册（skills）
+```
+
+---
+
+## 数据源概览
+
+| 数据源 | 用途与定位 | 主要入口 |
 |---|---|---|
-| [竞彩网](https://www.sporttery.cn/) | 竞彩足球/篮球/传统足彩,历史赛果(2015至今),赔率变化历史 | `.claude/skills/jingcai-scraper.md` 前十二节 |
-| [懂球帝](https://www.dongqiudi.com/) | 实时比分/赔率(欧赔亚盘大小球)/积分榜/动画直播 | `.claude/skills/jingcai-scraper.md` 懂球帝章节 |
-| [澳客](https://www.okooo.com/) | 百家欧赔/亚盘/大小球对比、实时技术统计 | `.claude/skills/jingcai-scraper.md` 澳客章节 |
+| **开云体育（欧亚主盘）** | 全场独赢 / 亚盘让球 / 大小球实时盘口、T−30 快照采集 | `tools/ky_api_engine.cjs`、`tools/ky_snapshot_collector.cjs` |
+| **懂球帝（magicball）** | 欧赔 / 亚盘 / 大小球初盘与即时水位对照 | `app/tools/fetch-europe-odds.ts` |
+| **澳客（okooo）** | 百家欧赔 / 亚盘对比与比分补全 | `tools/okooo_scraper.js`、`tools/fetch_okooo_live.js` |
+| **中国竞彩网（sporttery）** | 场次池筛选、参考水位、历史赛果（2016 至今） | `scraper.js`、`app/tools/fetch-today.ts`、`app/tools/fetch-results.ts` |
+| **Understat** | 五大联赛 xG / npxG 球队进攻防守数据 | `tools/fetch_xg.py`、`tools/xg_quant.py` |
 
-## 懂球帝核心接口
+---
 
+## 快速开始
+
+### 1. 环境要求
+- Node.js `>= 20`（运行 `app/` 下的 TypeScript 工具与服务）
+- PostgreSQL `>= 14`（服务数据库，配置见 `app/config/db.template.json` 或环境变量 `JC_DB_*`）
+- Python `>= 3.10`（可选，用于 `tools/dixon_coles.py`、`tools/ou_calc.py`、`tools/xg_quant.py`）
+
+### 2. 配置与启动 v2 服务
+```bash
+# 1) 复制数据库配置模板并填入本地凭据（db.json 已加入 .gitignore，严禁提交）
+cp app/config/db.template.json app/config/db.json
+
+# 2) 安装依赖并执行幂等建表
+cd app
+npm install
+npm run migrate
+
+# 3) 启动服务（默认仅监听 127.0.0.1:9000）
+npm start
 ```
-GET https://www.dongqiudi.com/magicball/v1/list/match_list?language=zh-CN&cmp_type=soccer&tab_type=all
-GET https://www.dongqiudi.com/magicball/v1/match/app/detail?id={match_id}&app=dqd&lang=zh-cn
-GET https://tracker-api.namitiyu.com/api/football/static_detail?id={tid}&uuid=&lang=zh
-GET https://tracker-api.namitiyu.com/api/football/variable_detail?id={tid}&uuid=&lang=zh
-```
+> 建议设置环境变量 `JC_API_TOKEN` 为写接口与触发器启用 Bearer Token 鉴权。Windows 生产环境由任务计划 `JC9000` 托管，详见 [`app/README.md`](app/README.md)。
 
-- `match_list` — 全量比赛+赔率(`score_odds.origin/spot` 欧赔/亚盘/大小球,逗号编码)
-- `app/detail` — 单场详情(仅顶级联赛含赔率历史/技术统计)
-- `tracker-api` — 动画直播实时事件
+### 3. 常用验证与测试
+```bash
+# 模拟账本、风控隔离与统计口径测试（21 组）
+node tools/sim_test.cjs
 
-数据详情见 `.claude/skills/jingcai-scraper.md`。
+# 扫盘计划与时间窗测试
+node tools/sweep_test.cjs
 
-## 启动
+# TypeScript 类型检查与单元测试（在 app/ 目录）
+cd app && npm run typecheck && npm run test:unit
 
-```
-node scraper.js all            # 全部(赔率+近30天历史+联赛)
-node scraper.js odds           # 即时赔率(足球/篮球全部玩法池)
-node scraper.js history        # 历史赛果全量 2016-01-01 至今
-node scraper.js history 2024-01-01   # 指定起始日期
-node scraper.js league         # 联赛资料(全部联赛×赛季)
-node scraper.js support        # 支持比例(默认2026-08起)
-node scraper.js ctzc [N]       # 传统足彩最近N期(N默认10)
-node scraper.js live           # 比分直播(实时)
-```
-数据落盘 `data/` 目录。
-
-## 接口清单(全部 GET,webapi.sporttery.cn/gateway/)
-
-| 数据域 | 接口 | 关键参数 | 历史深度 |
-|---|---|---|---|
-| 竞彩足球即时赔率 | `uniform/football/getMatchCalculatorV1.qry` | `poolCode=hhad,had` 或空=混合全池 | 仅当日在售 |
-| 竞彩篮球即时赔率 | `uniform/basketball/getMatchCalculatorV1.qry` | `poolCode=mnl,hdc,hilo,wnm` | 仅当日在售 |
-| 足球历史赛果 | `uniform/football/getUniformMatchResultV1.qry` | `matchBeginDate`/`matchEndDate`/`pageNo`/`pageSize` | **2016至今** |
-| 篮球历史赛果 | `uniform/basketball/getUniformMatchResultV1.qry` | 同上 | **2016至今** |
-| 赛程 | `uniform/football/getMatchListV1.qry` | `clientCode=3001` | 近几日 |
-| 支持比例-胜平负 | `uniform/football/getVoteV1.qry` | `poolCode=HAD/HHAD/CRS/TTG/HAFU` + `businessDate` | 仅可查最近日期 |
-| 临场热度-偏差点 | `uniform/football/getVotePlayV1.qry` | `poolCode=HAD&isToday=0` | 当日 |
-| 球迷支持率/概率 | `jc/common/getSupportRateV1.qry` | `matchIds=...&poolCode=hhad,had&sportType=1` | 仅当日在售 |
-| 联赛列表 | `uniform/football/league/getLeagueListV1.qry` | — | 全部 |
-| 联赛赛程/战绩 | `uniform/football/league/getMatchResultV1.qry` | `seasonId`+`uniformLeagueId` | 各联赛近3赛季 |
-| 比分直播 | `uniform/fb/getMatchDataPageListV1.qry` | `method=live` | 实时进行中 |
-| 传统足彩-开奖汇总 | `lottery/getFootBallDrawInfoV2.qry` | `param=94,0;90,0;98,0` | 50期 |
-| 传统足彩-单期回查 | `lottery/getFootBallDrawInfoByDrawNumV1.qry` | `lotteryGameNum=90&lotteryDrawNum=26109` | 全部历史期 |
-| 传统足彩-在售期 | `lottery/getFootBallMatchV1.qry` | `param=90,0` | 当日在售 |
-
-## 数据结构
-
-### 历史赛果 matchResult[ ]
-```
-matchId, matchNumStr(周日001), matchDate, leagueName/leagueId,
-homeTeam/allHomeTeam, awayTeam/allAwayTeam, homeTeamId, awayTeamId,
-h/d/a(胜平负赔率), goalLine(让球), sectionsNo1(半场比分), sectionsNo999(全场比分),
-winFlag(H/D/A), matchResultStatus(2=开奖), poolStatus, bettingSingle
-```
-足球/篮球共用此结构;篮球额外含 finalScore/oneScore~fourScore/overtimeScore。
-
-### 即时赔率 matchInfoList[].subMatchList[ ]
-```
-matchId, matchNumStr, matchDate/matchTime/matchWeek, businessDate,
-matchStatus, homeTeamAbbName/AwayTeamAbbName, homeRank/awayRank, leagueId,
-池字段: had(胜平负) hhad(让球,含goalLine) crs(比分) ttg(总进球)
-        hafu(半全场) mnl(篮-胜负) hdc(篮-让分) hilo(篮-大小) wnm(篮-胜分差)
-poolList[ ](是否单关/串关), oddsList[ ]
+# Python 大小球与 Dixon-Coles 精算示例
+python3 tools/ou_calc.py --odds 1.90 3.40 4.10
 ```
 
-### 传统足彩单期 value(flattened)
-```
-lotteryDrawNum/lotteryDrawTime/lotteryDrawResult(如 "3 3 1 0..." 30码),
-matchList[ ](每场 masterTeam/guestTeam/matchName/result/czScore/czHalfScore),
-prizeLevelList[ ](奖级/注数/奖金), totalSaleAmount, poolBalanceAfterdraw
+### 4. 参考数据批量抓取（`scraper.js`）
+```bash
+node scraper.js all              # 赔率 + 近30天历史 + 联赛 + 比分直播
+node scraper.js odds             # 即时参考赔率快照（UTC 时间戳）
+node scraper.js history 2024-01-01
+node scraper.js live             # 实时比分
 ```
 
-## 抓取注意
-- 接口均在腾讯 EdgeOne/WAF 后,但只校验 `referer` 头,无需签名;建议带浏览器 UA。
-- 疑似限流:请求间隔 350–600ms,可调 `sleep`。
-- 全量历史(2016至今,足球篮球)≈ 2500+ 天 × 2 类,约 2–3 万条赛果,单次跑完 1.5–2.5 小时。
+---
 
-## 增量更新建议
-- 历史赛果按日成文件 `history/{sport}/{date}.json`,可定时增量补当日。
-- 即时赔率按分钟快照存 `odds/_latest/`,保留一段时间用于赔率走势分析。
+## 安全与风控红线
+
+1. **凭据与账本绝不入库**：`app/config/db.json`、`*credentials*.json`、`ledger*` 均已在 `.gitignore` 屏蔽。
+2. **默认仅本机回环访问**：服务端默认绑定 `127.0.0.1:9000`，写接口内置 Origin CSRF 防护与可选 `JC_API_TOKEN` 鉴权。
+3. **自动流程只观察不下单**：所有定时刷新、扫盘、守护进程默认只读采集与记录；真实下单脚本（`tools/ky_bet_live.cjs` / `tools/ky_api_bet.cjs`）默认锁定，必须显式传入 `ALLOW_LIVE_BET=YES_I_CONFIRM` 且通过 Fail-Closed 账本风控校验。
+4. **先验证后上线**：任何预测模型必须通过严格样本外（OOS）与市场基线对比验证，未通过验证的模型（如当前篮球模型）信号门保持硬关闭。

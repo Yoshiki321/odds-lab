@@ -24,7 +24,7 @@ export class Hub {
     this.wss = new WebSocketServer({
       server,
       path: '/ws',
-      verifyClient: (info) => {
+      verifyClient: (info: { origin: string }) => {
         const origin = info.origin;
         if (!origin) return true;
         try {
