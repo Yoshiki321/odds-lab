@@ -87,6 +87,13 @@ npm start
 # 模拟账本、风控隔离与统计口径测试（21 组）
 node tools/sim_test.cjs
 
+# 定价、跨源对齐、五门禁与 CLV 审计全链路测试（8 组）
+node tools/pipeline_test.cjs
+
+# 足球“市场先验 + Dixon-Coles 残差”模型自检与周度 CLV 审计
+python3 tools/train_residual_model.py --self-test
+node tools/weekly_audit.cjs
+
 # 扫盘计划与时间窗测试
 node tools/sweep_test.cjs
 
@@ -113,3 +120,5 @@ node scraper.js live             # 实时比分
 2. **默认仅本机回环访问**：服务端默认绑定 `127.0.0.1:9000`，写接口内置 Origin CSRF 防护与可选 `JC_API_TOKEN` 鉴权。
 3. **自动流程只观察不下单**：所有定时刷新、扫盘、守护进程默认只读采集与记录；真实下单脚本（`tools/ky_bet_live.cjs` / `tools/ky_api_bet.cjs`）默认锁定，必须显式传入 `ALLOW_LIVE_BET=YES_I_CONFIRM` 且通过 Fail-Closed 账本风控校验。
 4. **先验证后上线**：任何预测模型必须通过严格样本外（OOS）与市场基线对比验证，未通过验证的模型（如当前篮球模型）信号门保持硬关闭。
+
+> 完整建模范式、每日循环采集计划与执行层/分析层 SOP 详见 [`docs/ARCHITECTURE_AND_OPS.md`](docs/ARCHITECTURE_AND_OPS.md)。

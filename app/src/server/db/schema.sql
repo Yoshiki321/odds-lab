@@ -288,3 +288,49 @@ CREATE TABLE IF NOT EXISTS docs (
   body       JSONB NOT NULL,
   updated_at TIMESTAMPTZ DEFAULT now()
 );
+
+-- ============================================================
+-- 跨源赛事唯一映射表（竞彩 / 开云 / 懂球帝 / 澳客 / Understat）
+-- ============================================================
+CREATE TABLE IF NOT EXISTS match_crosswalk (
+  canonical_id   VARCHAR(128) PRIMARY KEY,
+  kickoff_utc_ms BIGINT       NOT NULL,
+  league_tier    SMALLINT,
+  home_norm      VARCHAR(80)  NOT NULL,
+  away_norm      VARCHAR(80)  NOT NULL,
+  sporttery_id   VARCHAR(32),
+  kaiyun_mid     VARCHAR(32),
+  dqd_id         VARCHAR(32),
+  okooo_id       VARCHAR(32),
+  understat_id   VARCHAR(32),
+  updated_at     TIMESTAMPTZ  NOT NULL DEFAULT now()
+);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_cw_sporttery ON match_crosswalk(sporttery_id) WHERE sporttery_id IS NOT NULL;
+CREATE UNIQUE INDEX IF NOT EXISTS idx_cw_kaiyun    ON match_crosswalk(kaiyun_mid)   WHERE kaiyun_mid IS NOT NULL;
+CREATE INDEX IF NOT EXISTS idx_cw_kickoff          ON match_crosswalk(kickoff_utc_ms);
+
+-- ============================================================
+-- 不可变样本外预测与 CLV（收盘价价值）审计表
+-- ============================================================
+CREATE TABLE IF NOT EXISTS model_predictions (
+  prediction_id     VARCHAR(96) PRIMARY KEY,
+  canonical_id      VARCHAR(128) NOT NULL,
+  model_version     VARCHAR(48)  NOT NULL,
+  predicted_at      TIMESTAMPTZ  NOT NULL,
+  kickoff_at        TIMESTAMPTZ  NOT NULL,
+  market            VARCHAR(16)  NOT NULL, -- HAD / HHAD / AH / OU
+  side              VARCHAR(16)  NOT NULL, -- home / draw / away / over / under
+  line              NUMERIC(6,2),
+  p_market          NUMERIC(8,6) NOT NULL, -- Sharp/市场去水先验概率
+  p_model           NUMERIC(8,6) NOT NULL, -- 残差校准后模型概率
+  exec_odds         NUMERIC(8,4) NOT NULL, -- T-30 主窗口展示价
+  confirm_odds_30s  NUMERIC(8,4),          -- +30s 滑点确认价
+  closing_odds      NUMERIC(8,4),          -- T-2m 收盘参考价
+  ev_est            NUMERIC(8,6),          -- 模型估计净 EV
+  clv               NUMERIC(8,6),          -- 收盘价价值 (closingFairProb * execOdds - 1)
+  outcome           VARCHAR(16),           -- win / half-win / push / half-loss / lose
+  pnl_per_unit      NUMERIC(8,4),
+  created_at        TIMESTAMPTZ  NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS idx_mp_model_time ON model_predictions(model_version, predicted_at);
+CREATE INDEX IF NOT EXISTS idx_mp_canonical  ON model_predictions(canonical_id);
