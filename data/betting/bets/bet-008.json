@@ -1,0 +1,43 @@
+{
+  "betId": 8,
+  "type": "2串1",
+  "stake": 40,
+  "totalOdds": 3.15,
+  "potentialReturn": 126,
+  "placedAt": "2026-08-25T15:00:00+08:00",
+  "status": "settled",
+  "legs": [
+    {
+      "matchId": 2041049,
+      "matchNum": "周二001",
+      "home": "金泉尚武",
+      "away": "全北现代",
+      "league": "韩职",
+      "kickoff": "2026-08-25T18:30:00+08:00",
+      "pick": "客胜 (HAD A)",
+      "odds": 2.03,
+      "result": {
+        "winFlag": "D",
+        "sectionsNo999": "0:0"
+      }
+    },
+    {
+      "matchId": 2041050,
+      "matchNum": "周二002",
+      "home": "济州SK",
+      "away": "浦项制铁",
+      "league": "韩职",
+      "kickoff": "2026-08-25T18:30:00+08:00",
+      "pick": "受让-1客胜 (HHAD A)",
+      "odds": 1.55,
+      "result": {
+        "hhadResult": "A",
+        "sectionsNo999": "1:2"
+      }
+    }
+  ],
+  "settledAt": "2026-08-25T13:03:04.611Z",
+  "returnAmount": 0,
+  "profit": -40,
+  "theory": "韩职早场双打。全北客胜(2.03)变盘压热+排名压制+刚胜蔚山状态回升。浦项受让-1(1.55)济州主胜过热+11%，浦项受让-23%分歧机构明确看方向。两场均为18:30开球，距投注3.5h，R5窗口合规。串后3.15倍，投40元(连输2单后降额)。"
+}

@@ -1,0 +1,31 @@
+{
+  "generatedAt": "2026-11-19T09:39:24.564Z",
+  "dataset": {
+    "historyMatches": 2680,
+    "rows": 927
+  },
+  "matchedForEval": 68,
+  "model": {
+    "type": "independent-poisson-lite",
+    "caveat": "数据集未保存主客队 ID，模型退化为\"联赛平均强度\"；这不是完整的独立球队模型，仅验证流水线",
+    "brier": 0.18759552593268364,
+    "logLoss": 0.5573619108425143
+  },
+  "baseline": {
+    "brier": 0.16150522120286842,
+    "logLoss": 0.495554595193176
+  },
+  "paired": {
+    "status": "worse-than-baseline",
+    "n": 927,
+    "meanDiff": 0.02609,
+    "ci95": [
+      0.020203,
+      0.031977
+    ],
+    "alpha": 0.05,
+    "note": "配对 Brier 差均值 0.026090，95%CI [0.020203, 0.031977]；未调整相关性（同场多市场/同队多场）与多重比较；结论仅统计意义，不代表可盈利",
+    "problems": []
+  },
+  "independenceWarning": "同场 H/D/A 三行强相关，不能当独立样本；配对函数未做相关性调整"
+}

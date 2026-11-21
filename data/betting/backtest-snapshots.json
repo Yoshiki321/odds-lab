@@ -1,0 +1,66 @@
+{
+  "generatedAt": "2026-09-09T10:30:57.500Z",
+  "nFrames": 0,
+  "nMatches": 0,
+  "nSettled": 68,
+  "table1": [],
+  "table2": [
+    {
+      "bucket": "<-0.2",
+      "n": 0,
+      "hitRate": null,
+      "roi": null
+    },
+    {
+      "bucket": "-0.2~-0.1",
+      "n": 0,
+      "hitRate": null,
+      "roi": null
+    },
+    {
+      "bucket": "-0.1~-0.05",
+      "n": 0,
+      "hitRate": null,
+      "roi": null
+    },
+    {
+      "bucket": "-0.05~0",
+      "n": 0,
+      "hitRate": null,
+      "roi": null
+    },
+    {
+      "bucket": "0~0.05",
+      "n": 0,
+      "hitRate": null,
+      "roi": null
+    },
+    {
+      "bucket": ">0.05",
+      "n": 0,
+      "hitRate": null,
+      "roi": null
+    }
+  ],
+  "table3": [
+    {
+      "dir": "up",
+      "n": 0,
+      "hit": 0,
+      "hitRate": null
+    },
+    {
+      "dir": "down",
+      "n": 0,
+      "hit": 0,
+      "hitRate": null
+    },
+    {
+      "dir": "flat",
+      "n": 0,
+      "hit": 0,
+      "hitRate": null
+    }
+  ],
+  "table4": []
+}

@@ -1,0 +1,34 @@
+{
+  "name": "jc-assistant",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "dev": "tsx watch src/server/app.ts",
+    "start": "tsx src/server/app.ts",
+    "migrate": "tsx src/server/db/run-migrate.ts",
+    "ingest": "tsx tools/ingest_legacy.ts",
+    "score": "tsx tools/score.ts",
+    "refresh": "tsx tools/refresh.ts",
+    "switch": "tsx scripts/switch.ts",
+    "typecheck": "tsc --noEmit",
+    "view": "tsx tools/offline/market-view.ts",
+    "train": "tsx tools/offline/train.ts",
+    "test": "tsx --test tests/settlement.test.ts tests/betting.test.ts",
+    "test:unit": "tsx --test tests/settlement.test.ts",
+    "test:db": "tsx --test tests/betting.test.ts"
+  },
+  "dependencies": {
+    "pg": "^8.23.0",
+    "playwright": "^1.63.0",
+    "ws": "^8.21.3"
+  },
+  "devDependencies": {
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2",
+    "@types/node": "^22.0.0",
+    "@types/pg": "^8.11.0",
+    "@types/ws": "^8.5.0"
+  }
+}

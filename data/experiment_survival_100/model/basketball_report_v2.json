@@ -1,0 +1,66 @@
+{
+  "generatedAt": 1795245653696,
+  "version": "v2-splits-rest-normal",
+  "counts": {
+    "total": 2398,
+    "usable": 2190
+  },
+  "metrics": {
+    "brierModel": 0.28,
+    "brierBaseline": 0.2498,
+    "diff": 0.0303
+  },
+  "verdict": {
+    "status": "worse-than-baseline",
+    "n": 2190,
+    "meanDiff": 0.030257,
+    "ci95": [
+      0.022508,
+      0.038005
+    ],
+    "alpha": 0.05,
+    "note": "配对 Brier 差均值 0.030257，95%CI [0.022508, 0.038005]；未调整相关性（同场多市场/同队多场）与多重比较；结论仅统计意义，不代表可盈利",
+    "problems": []
+  },
+  "calibration": {
+    "modelProbMean": 0.4867,
+    "actualCoverRate": 0.5155,
+    "bins": [
+      {
+        "range": "0~0.2",
+        "n": 91,
+        "predMean": 0.116,
+        "actualHit": 0.44
+      },
+      {
+        "range": "0.2~0.4",
+        "n": 628,
+        "predMean": 0.318,
+        "actualHit": 0.513
+      },
+      {
+        "range": "0.4~0.6",
+        "n": 879,
+        "predMean": 0.498,
+        "actualHit": 0.531
+      },
+      {
+        "range": "0.6~0.8",
+        "n": 519,
+        "predMean": 0.683,
+        "actualHit": 0.513
+      },
+      {
+        "range": "0.8~1.0001",
+        "n": 73,
+        "predMean": 0.864,
+        "actualHit": 0.466
+      }
+    ]
+  },
+  "notes": [
+    "正态分差+主客场分拆+休息惩罚",
+    "温度缩放未启用（正式判定用 T=1）",
+    "日级 walk-forward，无时点级能力证明"
+  ]
+}

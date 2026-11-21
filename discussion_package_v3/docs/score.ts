@@ -1,0 +1,392 @@
+// score.ts — 全表逐场打分 v2.0（S0 六维重构：22/12/22/12/22/10 = 100）
+// 引擎: 真降水选侧；深盘退回同侧胜平负；v1.6 下盘保护化沿用
+// 六维:
+//   drop 22   降水/变盘：量级(0-16) + 形态(0-4, odds_history) + 时间(0-2)
+//   confirm 12 方向确认：4源(HHAD低赔/HAD低赔/大众支持侧/机构概率侧) 4源=12, 3源=10, 2源=7, 1源=4
+//   model 22  模型矩阵：M1 P2a_gl1完整=22 / M2 四维偏差=18 / M3 冷门错杀=12 / M4 让-1陷阱(仅虚拟)=8 / 降水规则=10 / M5 CRS=6
+//   history 12 联赛基准(贝叶斯先验 n≥20) + 平局环境修正 + 受让豁免
+//   risk 22   扣分制：深盘/强强/次级低赔主场/平局结构/临场追尾/大众拥挤
+//   value 10  严格 EV：欧洲市场去水概率（懂球帝欧赔）p × 竞彩赔率 - 1；无欧赔回退赔率档
+// R_draw 平局两阶段沿用（3因子→5因子：平赔集中+让球浅+主客赔接近+联赛平局基准+盘口分歧）
+// 输入: PG matches（含 support / odds_history / base_rates 上下文）
+// 输出: PG scores（scan_round 覆盖；dims JSONB 供前端直接渲染）
+import { getDayMatches, saveScore, getSupportMap, loadBaseRates, getOddsHistory, getRollingDrawRate, getEuropeanOdds } from '../src/server/db/store.js';
+import type { MatchRow, ScoreRow, AnalysisResult, SupportBlock, SupportRates, BaseRate, OddsHistEntry } from '../src/shared/types.js';
+import { fairProbForPick } from './ev-fit.js';
+
+export const SCORE_VERSION = 'v2.1';
+
+export const DROP_W = 22, CONFIRM_W = 12, MODEL_W = 22, HISTORY_W = 12, RISK_W = 22, VALUE_W = 10;
+
+const TOP5 = ['英超', '西甲', '德甲', '意甲', '法甲'];
+const SECOND = ['英冠', '德乙', '法乙', '意乙', '西乙', '葡超', '荷甲', '巴甲', '美职', '俄超'];
+const STRONG = ['曼城','利物浦','阿森纳','切尔西','热刺','曼联','纽卡斯尔','皇马','巴萨','马竞',
+  '拜仁','多特','勒沃库森','莱比锡','斯图加特','国米','AC米兰','尤文','那不勒斯','罗马','拉齐奥','亚特兰大',
+  '巴黎圣曼','马赛','摩纳哥','里昂','波尔图','本菲卡','里斯本竞技','阿贾克斯','埃因霍温','费耶诺德'];
+
+const signed = (n: number) => (n > 0 ? '+' : '') + n;
+const clamp = (n: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, n));
+/** "58%" / 0.58 → 0.58 */
+const pct = (v: unknown): number | null => {
+  if (v == null || v === '') return null;
+  const f = parseFloat(String(v).replace('%', ''));
+  return isNaN(f) ? null : f / 100;
+};
+const num = (v: unknown): number | null => {
+  if (v == null || v === '') return null;
+  const f = parseFloat(String(v));
+  return isNaN(f) ? null : f;
+};
+
+/** 评分上下文：评分前置数据（scoreDay 加载；analyzer fallback 不传 = 中立） */
+export interface ScoreContext {
+  support?: SupportRates | null;
+  oddsHistory?: OddsHistEntry[] | null;
+  baseRates?: Record<string, BaseRate> | null;
+  rollingDrawRate?: { rate: number; n: number } | null;
+  /** 欧洲市场赔率（懂球帝去水概率，独立于竞彩盘口 → 真 EV） */
+  europeOdds?: { prob: { h: number; d: number; a: number }; source: string; observedAt: string } | null;
+  now?: string;
+}
+
+interface Pick { side: 'H' | 'A'; market: 'HAD' | 'HHAD'; amt: number; odds: number }
+export interface EngineRow extends ScoreRow { betNote?: string }
+
+/** 变盘形态归约：每盘每侧 → 严格递减次数（按时间戳去重后的持续下降） */
+function reduceHistory(entries?: OddsHistEntry[] | null): { HAD: { h: number; d: number; a: number }; HHAD: { h: number; d: number; a: number } } {
+  const empty = { HAD: { h: 0, d: 0, a: 0 }, HHAD: { h: 0, d: 0, a: 0 } };
+  if (!entries?.length) return empty;
+  for (const market of ['HAD', 'HHAD'] as const) {
+    for (const side of ['h', 'd', 'a'] as const) {
+      const seq: { t: string; o: number }[] = [];
+      for (const e of entries) {
+        if (e.market !== market || e.side !== side) continue;
+        const o = e.odds;
+        if (seq.length && seq[seq.length - 1].t === e.observedAt) { seq[seq.length - 1].o = o; continue; }
+        seq.push({ t: e.observedAt, o });
+      }
+      let mov = 0;
+      for (let i = 1; i < seq.length; i++) if (seq[i].o < seq[i - 1].o) mov++;
+      empty[market][side] = mov;
+    }
+  }
+  return empty;
+}
+
+/** 解析方向候选（真降水选侧，无降水回落低赔侧） */
+function parsePick(m: MatchRow): { pick: Pick | null; hasBase: boolean; base: { had: MatchRow['hadBase']; hhad: MatchRow['hhadBase'] } | null } {
+  const hh = m.hhad || {};
+  const had = m.had || {};
+  const b = m.hadBase || m.hhadBase ? { had: m.hadBase, hhad: m.hhadBase } : null;
+  const hasBase = !!(b && b.hhad && num(b.hhad.h) != null);
+  const H = num(hh.h), A = num(hh.a);
+  const hadH = num(had.h), hadA = num(had.a);
+  if (H == null || A == null || !H) return { pick: null, hasBase, base: b };
+
+  const bH = hasBase ? num(b!.hhad!.h) : null;
+  const bA = hasBase ? num(b!.hhad!.a) : null;
+  const bHadH = b?.had ? num(b.had.h) : null;
+  const bHadA = b?.had ? num(b.had.a) : null;
+  const dH = hasBase && bH != null ? +(bH - H).toFixed(2) : 0;
+  const dA = hasBase && bA != null ? +(bA - A).toFixed(2) : 0;
+  const dWh = hasBase && bHadH != null && hadH != null ? +(bHadH - hadH).toFixed(2) : 0;
+  const dWa = hasBase && bHadA != null && hadA != null ? +(bHadA - hadA).toFixed(2) : 0;
+
+  type Cand = { side: 'H' | 'A'; market: 'HAD' | 'HHAD'; amt: number; odds: number | null };
+  const raw: Cand[] = [
+    { side: 'H' as const, market: 'HAD' as const, amt: dWh, odds: hadH },
+    { side: 'A' as const, market: 'HAD' as const, amt: dWa, odds: hadA },
+    { side: 'H' as const, market: 'HHAD' as const, amt: dH, odds: H },
+    { side: 'A' as const, market: 'HHAD' as const, amt: dA, odds: A },
+  ];
+  const cands: Pick[] = raw.filter((x): x is Pick => x.amt > 0 && x.odds != null && !isNaN(x.odds));
+  let pick: Pick | null = cands.sort((a, b) => b.amt - a.amt)[0] || null;
+  if (!pick || pick.odds == null || isNaN(pick.odds)) {
+    if (hadH != null && hadA != null) {
+      const low = hadH <= hadA ? 'H' : 'A';
+      pick = { side: low, market: 'HAD', amt: 0, odds: low === 'H' ? hadH : hadA };
+    } else {
+      pick = { side: 'H', market: 'HHAD', amt: Math.max(dH, 0), odds: H };
+    }
+  }
+  return { pick, hasBase, base: b };
+}
+
+/** 平局结构风险 0-1（5因子）；受让方豁免（平局=让球赢） */
+function computeDrawRisk(m: MatchRow, market: 'HAD' | 'HHAD', pred: 'H' | 'A', gln: number, baseRates?: Record<string, BaseRate> | null): number {
+  const vulnerable = market === 'HAD' || (market === 'HHAD' && ((pred === 'H' && gln < 0) || (pred === 'A' && gln > 0)));
+  if (!vulnerable) return 0;
+  const had = m.had || {};
+  const hh = m.hhad || {};
+  const hadD = num(had.d), hadH = num(had.h), hadA = num(had.a);
+  const hhadH = num(hh.h), hhadA = num(hh.a);
+  const glAbs = Math.abs(gln);
+  let r = 0;
+  if (hadD != null) r += hadD < 3.0 ? 0.4 : hadD < 3.2 ? 0.3 : hadD < 3.4 ? 0.2 : hadD < 3.6 ? 0.1 : 0;   // 平赔集中
+  r += glAbs <= 0.5 ? 0.3 : glAbs <= 1 ? 0.2 : 0;                                                          // 让球浅
+  if (hadH != null && hadA != null) r += Math.abs(hadH - hadA) <= 0.5 ? 0.3 : Math.abs(hadH - hadA) <= 1 ? 0.2 : 0; // 主客赔接近
+  const br = baseRates?.[m.league];
+  if (br && br.n >= 20) r += br.drawRate >= 0.33 ? 0.25 : br.drawRate >= 0.29 ? 0.15 : 0;                  // 联赛平局基准
+  if (hadH != null && hadA != null && hhadH != null && hhadA != null) {
+    const hadLow = hadH <= hadA ? 'H' : 'A';
+    const hhadLow = hhadH <= hhadA ? 'H' : 'A';
+    if (hadLow !== hhadLow) r += 0.2;                                                                       // 盘口分歧
+  }
+  return +Math.min(1, r).toFixed(2);
+}
+
+/** 单 block 最高支持率 / 最高机构概率 侧 */
+function sideOf(b: SupportBlock | null | undefined, key: 'hSupportRate' | 'hProbability'): 'H' | 'A' | 'D' | null {
+  if (!b) return null;
+  const h = pct(b.hSupportRate ?? b.hProbability), d = pct(b.dSupportRate ?? b.dProbability), a = pct(b.aSupportRate ?? b.aProbability);
+  const best = Math.max(h ?? 0, d ?? 0, a ?? 0);
+  if (best <= 0) return null;
+  const hs = key === 'hSupportRate' ? pct(b.hSupportRate) : pct(b.hProbability);
+  const as = key === 'hSupportRate' ? pct(b.aSupportRate) : pct(b.aProbability);
+  const ds = key === 'hSupportRate' ? pct(b.dSupportRate) : pct(b.dProbability);
+  return hs === best ? 'H' : as === best ? 'A' : ds === best ? 'D' : null;
+}
+
+/** 全场打分类引擎（纯函数；ctx 缺失 = 各源中立） */
+export function scoreMatch(m: MatchRow, ctx?: ScoreContext): EngineRow | { num: string; note: string } {
+  const hh = m.hhad || {};
+  const had = m.had || {};
+  const gln = parseFloat(String(hh.goalLine || ''));
+  const glAbs = isNaN(gln) ? 0 : Math.abs(gln);
+
+  const { pick, hasBase, base } = parsePick(m);
+  if (!pick || pick.odds == null || isNaN(pick.odds)) return { num: m.num, note: '未开盘' };
+
+  const dropSide: 'H' | 'A' = pick.side;
+  const dropAmt = pick.amt;
+
+  // === 深盘退回 + v1.6 下盘保护化（同 v1.8）===
+  const letting = pick.market === 'HHAD' && ((pick.side === 'H' && gln < 0) || (pick.side === 'A' && gln > 0));
+  const recvSide = gln > 0 ? 'H' : gln < 0 ? 'A' : null;
+  const recvCell: Pick | null = recvSide === 'H' ? { side: 'H', market: 'HHAD', amt: pick.side === 'H' ? pick.amt : 0, odds: num(hh.h) ?? NaN }
+    : recvSide === 'A' ? { side: 'A', market: 'HHAD', amt: pick.side === 'A' ? pick.amt : 0, odds: num(hh.a) ?? NaN } : null;
+  let bet: Pick = { side: dropSide, market: pick.market, odds: pick.odds, amt: pick.amt };
+  let betNote = letting ? '退回胜平负' : '';
+  if (pick.market === 'HAD' && recvCell && recvCell.side === dropSide && !isNaN(recvCell.odds)
+      && pick.odds >= 2.5 && recvCell.odds >= 1.6 && recvCell.odds <= 2.2) {
+    bet = { side: recvCell.side, market: 'HHAD', odds: recvCell.odds, amt: recvCell.amt };
+    betNote = '下盘保护化';
+  }
+
+  let market: 'HAD' | 'HHAD' = bet.market;
+  let dirOdds = bet.odds;
+  const hadOdds = dropSide === 'H' ? num(had.h) : num(had.a);
+  if (letting && hadOdds != null) { market = 'HAD'; dirOdds = hadOdds; }
+
+  let dirDesc: string;
+  if (market === 'HAD') dirDesc = dropSide === 'H' ? '主胜' : '主负';
+  else if (dropSide === 'H') dirDesc = '主' + signed(gln) + '胜';
+  else dirDesc = '客' + signed(-gln) + '胜';
+
+  // === 上下文 ===
+  const support = ctx?.support ?? null;
+  const hist = reduceHistory(ctx?.oddsHistory);
+  const baseRates = ctx?.baseRates ?? null;
+  const now = ctx?.now ?? new Date().toISOString();
+  const tKO = m.kickoff ? new Date(m.kickoff).getTime() : NaN;
+  const hoursToKO = isNaN(tKO) ? null : (tKO - new Date(now).getTime()) / 3600_000;
+
+  // === 六维 ===
+
+  // —— drop 22：量级(16) + 形态(4) + 时间(2) ——
+  const dropSc = hasBase
+    ? (dropAmt >= 0.5 ? 16 : dropAmt >= 0.4 ? 14 : dropAmt >= 0.3 ? 12 : dropAmt >= 0.2 ? 10
+      : dropAmt >= 0.1 ? 8 : dropAmt >= 0.05 ? 6 : dropAmt > 0 ? 4 : dropAmt === 0 ? 2 : 0)
+    : 0; // 首盘无基线，降水信号不可考
+  const sKey = dropSide === 'H' ? 'h' : 'a';
+  const dirMovHAD = hist.HAD[sKey];
+  const dirMovHHAD = hist.HHAD[sKey];
+  const totalMov = dirMovHAD + dirMovHHAD;
+  const aligned = dirMovHAD > 0 && dirMovHHAD > 0;
+  const dropPat = totalMov === 0 ? 0 : aligned && totalMov <= 2 ? 4 : 2;
+  const dropTime = hoursToKO == null ? 1 : hoursToKO >= 6 ? 2 : hoursToKO >= 2 ? 1 : 0;
+  const drop = clamp(dropSc + dropPat + dropTime, 0, DROP_W);
+
+  // —— confirm 12：4 源（HHAD低赔 / HAD低赔 / 大众支持侧 / 机构概率侧）——
+  const hhadH = num(hh.h), hhadA = num(hh.a);
+  const hadH = num(had.h), hadA = num(had.a);
+  const blk = (market === 'HHAD' ? support?.HHAD ?? support?.HAD : support?.HAD ?? support?.HHAD) ?? null;
+  const srcA = hhadH != null && hhadA != null && ((hhadH <= hhadA) === (dropSide === 'H'));
+  const srcB = hadH != null && hadA != null && ((hadH <= hadA) === (dropSide === 'H'));
+  const srcC = sideOf(blk, 'hSupportRate') === dropSide;
+  const srcD = sideOf(blk, 'hProbability') === dropSide;
+  const srcN = [srcA, srcB, srcC, srcD].filter(Boolean).length;
+  const confirm = srcN >= 4 ? 12 : srcN === 3 ? 10 : srcN === 2 ? 7 : srcN === 1 ? 4 : 0;
+
+  // —— model 22：模型矩阵（取最高命中，不叠加）——
+  const isTop5 = TOP5.includes(m.league);
+  const isSec = SECOND.includes(m.league);
+  const BR = baseRates?.[m.league];
+  let model = 0;
+  let modelNote = '';
+  // M1 P2a_gl1 完整：让球+1 + 非五大 + 非次级 + 方向=客 + 降水>0.05 + HHAD + 变盘1-2次(HAD/HHAD 同向)
+  // 注意用 pick（原始候选）而非退回后的 market：让球+1客降水 大量落入"深盘退回胜平负"，盘口仍是HHAD
+  const m1Base = gln === 1 && !isTop5 && !isSec && pick.market === 'HHAD' && pick.side === 'A' && pick.amt > 0.05;
+  if (m1Base) {
+    model = (aligned && totalMov >= 1 && totalMov <= 2) ? 22 : totalMov >= 3 ? 16 : 18;
+    modelNote = `M1 P2a_gl1${model === 22 ? '完整' : '弱化'}`;
+    if (model === 22 && blk) { // 大众低估让负：机构概率低于大众 → 降档
+      const as = pct(blk.aSupportRate), ap = pct(blk.aProbability);
+      if (ap != null && as != null && ap < as) { model = 18; modelNote = 'M1大众未低估，弱化'; }
+    }
+  }
+  // M2 四维偏差：大众偏差≥19pp + 方向=偏差侧 + 历史正（联赛主/客先验支持）
+  // 2026-09-09 校准加闸：dirOdds≥2.0（四维偏差=找被低估侧，1.3x 大热只是顺大众，非偏差；严格EV已把大热价值打0）
+  if (blk && Math.abs(blk.absValue ?? 0) >= 19 && dirOdds >= 2.0) {
+    const eSide: 'H' | 'A' | null = blk.eKey === 'h' ? 'H' : blk.eKey === 'a' ? 'A' : null;
+    const histPos = BR && BR.n >= 10 && (dropSide === 'H' ? BR.homeRate >= 0.45 : BR.awayRate >= 0.30);
+    if (eSide === dropSide) {
+      if (histPos) { if (model < 18) { model = 18; modelNote = 'M2 四维偏差'; } }
+      else { if (model < 12) { model = 12; modelNote = 'M2偏差·历史未证实'; } }
+    }
+  }
+  // M3 冷门错杀：大众低估≥15pp + 赔率 2.5-5.0
+  if (blk && dirOdds >= 2.5 && dirOdds <= 5.0) {
+    const k = dropSide === 'H' ? 'hProbability' : 'aProbability' as const;
+    const vote = dropSide === 'H' ? pct(blk.hSupportRate) : pct(blk.aSupportRate);
+    const prob = k === 'hProbability' ? pct(blk.hProbability) : pct(blk.aProbability);
+    if (prob != null && vote != null && prob - vote >= 0.15 && model < 12) { model = 12; modelNote = 'M3 冷门错杀'; }
+  }
+  // M4 让-1陷阱反向：深盘让-1 + 大众高估让负 → 反买客（仅虚拟验证，不押真钱）
+  if (gln === -1 && dropSide === 'A' && market === 'HAD' && blk) {
+    const as = pct(blk.aSupportRate), ap = pct(blk.aProbability);
+    if (as != null && ap != null && ap - as >= 0.15) { if (model < 8) { model = 8; modelNote = 'M4 让-1陷阱·仅虚拟'; betNote = (betNote ? betNote + ' / ' : '') + 'M4仅虚拟'; } }
+  }
+  // 降水规则：方向降水≥0.1 且 2+ 确认源
+  if (dropAmt >= 0.1 && confirm >= 7 && model < 10) { model = 10; modelNote = '降水规则'; }
+  // M5 CRS 比分（独立娱乐池）：大热场 ≤1.5
+  if (model === 0 && dirOdds <= 1.5) { model = 6; modelNote = 'M5 CRS比分'; }
+
+  // —— history 12：联赛基准 + 平局环境 + 受让豁免 ——
+  let history = 0;
+  if (BR && BR.n >= 20) history += 6;
+  else if (BR && BR.n >= 10) history += 4;
+  else if (BR) history += 2;
+  else history = 1; // 无联赛基准，弱给基础分
+  const vulnerable = market === 'HAD' || (market === 'HHAD' && ((dropSide === 'H' && gln < 0) || (dropSide === 'A' && gln > 0)));
+  if (vulnerable && BR && BR.n >= 20) history -= BR.drawRate >= 0.33 ? 4 : BR.drawRate >= 0.29 ? 2 : 0; // 平局高发联赛，方向易被平
+  if (market === 'HHAD' && ((dropSide === 'H' && gln > 0) || (dropSide === 'A' && gln < 0))) history += 2; // 受让方平局=赢
+  history = clamp(history, 0, HISTORY_W);
+
+  // —— risk 22：扣分制 ——
+  let risk = RISK_W;
+  const rdraw = computeDrawRisk(m, market, dropSide, gln, baseRates);
+  if (glAbs >= 2 || letting) risk -= 6;                                  // 深盘
+  if (STRONG.includes(m.home) && STRONG.includes(m.away)) risk -= 3;     // 强强对话
+  if (isSec && market === 'HHAD' && dropSide === 'H' && dirOdds < 1.7) risk -= 5; // 次级低赔主场
+  if (vulnerable) {                                                       // 平局结构
+    if (rdraw >= 0.5) risk -= 4;
+    else if (rdraw >= 0.35) risk -= 3;
+    else if (rdraw >= 0.2) risk -= 2;
+  }
+  if (hoursToKO != null && hoursToKO < 2 && dropAmt >= 0.2) risk -= 3;   // 临场猛降水追尾
+  if (blk) {                                                              // 大众拥挤（支持率≥70%单边）
+    const h = pct(blk.hSupportRate), a = pct(blk.aSupportRate);
+    if ((h ?? 0) >= 0.7 || (a ?? 0) >= 0.7) risk -= 2;
+  }
+  if (ctx?.rollingDrawRate && ctx.rollingDrawRate.n >= 8 && ctx.rollingDrawRate.rate >= 0.35) risk -= 3; // 全局平局杠杆
+  risk = clamp(risk, 0, RISK_W);
+
+  // —— value 10：严格 EV（欧洲市场去水概率 × 竞彩赔率 − 1）——
+  // v2.1: 弃用官方去水概率（同源循环，恒 −11%）；改用懂球帝欧赔去水概率 = 独立公平概率
+  // 让球盘公平概率由欧赔拟合泊松强度（Skellam 边差分）求 P(边差>让球线)
+  let value = 0;
+  let valueNote = '';
+  const eu = ctx?.europeOdds;
+  if (eu && eu.prob.h > 0 && eu.prob.a > 0 && eu.prob.d > 0) {
+    const pDir = fairProbForPick({ home: eu.prob.h, draw: eu.prob.d, away: eu.prob.a }, dropSide, market, gln);
+    if (pDir != null && pDir > 0) {
+      const ev = pDir * dirOdds - 1;
+      value = ev >= 0.08 ? 10 : ev >= 0.04 ? 8 : ev >= 0 ? 6 : ev >= -0.04 ? 4 : ev >= -0.08 ? 2 : 0;
+      valueNote = `欧EV ${(ev >= 0 ? '+' : '')}${(ev * 100).toFixed(1)}% ${market === 'HHAD' ? `让球P${(pDir * 100).toFixed(0)}%` : ''}${eu.observedAt ? '@' + eu.observedAt.slice(11, 16) : ''}`;
+    } else valueNote = '欧赔概率缺失';
+  }
+  if (value === 0 && !valueNote) { // 无欧赔可比回退：按赔率档给微基础分（不鼓励无信息投注）
+    if (dirOdds >= 1.6 && dirOdds <= 5.0) value = dirOdds >= 2.0 ? 3 : 2;
+    valueNote = '无欧赔可比';
+  }
+
+  // —— R_draw 平局两阶段（阶段A弃投 / 阶段B候选）+ 全局杠杆 ——
+  const R_draw = rdraw;
+  let total = drop + confirm + model + history + risk + value;
+  const dropNote = !hasBase ? '首盘' : dropAmt > 0 ? '💧' + Number(dropAmt).toFixed(2) : dropAmt < 0 ? '↑升' + Math.abs(dropAmt).toFixed(2) : '静';
+  // v2.0 档位（2026-09-09 校准）：严格EV压缩分布→阈值下移。加注≥58/实单48-57/候选40-47/弱30-39
+  let band = total >= 58 ? '🔨加注' : total >= 48 ? '✅实单' : total >= 40 ? '⏳候选' : total >= 30 ? '👀弱' : '❌放弃';
+  if (R_draw >= 0.7) { if (total > 47) total = 47; band = '❌弃投·平局'; }
+  else if (R_draw >= 0.5 && total > 47) { total = 47; band = '⏳候选·平局'; }
+  else if (R_draw >= 0.5) band = band + '·平局';
+
+  const hasBaseMark: 'v' | '!' = hasBase ? 'v' : '!';
+
+  // —— dims 明细 ——
+  const dims: AnalysisResult['dims'] = {
+    drop: { score: drop, max: DROP_W, note: `${dropNote} 形态${dropPat} 时间${dropTime}` },
+    confirm: { score: confirm, max: CONFIRM_W, note: `${srcN}源(A${srcA ? '+' : '-'}B${srcB ? '+' : '-'}C${srcC ? '+' : '-'}D${srcD ? '+' : '-'})` },
+    model: { score: model, max: MODEL_W, note: modelNote || '未命中' },
+    history: { score: history, max: HISTORY_W, note: BR ? `${m.league}${BR.n}样本 H${(BR.homeRate * 100).toFixed(0)}%/${(BR.drawRate * 100).toFixed(0)}%平` : '无联赛基线' },
+    risk: { score: risk, max: RISK_W, note: `R_draw${rdraw.toFixed(2)}${hoursToKO != null && hoursToKO < 2 ? ' 临场' : ''}` },
+    value: { score: value, max: VALUE_W, note: valueNote },
+  };
+  if (betNote) dims.drop.note += ' ' + betNote;
+
+  return {
+    num: m.num, league: m.league, home: m.home, away: m.away,
+    time: (m.matchTime || '').slice(0, 5),
+    matchId: m.matchId,
+    dir: dirDesc, odds: dirOdds, dropAmt, hasBaseMark, dropNote, confirm, model,
+    history, risk, value, total, band, market, pred: dropSide,
+    betNote: betNote ? betNote : (R_draw >= 0.5 ? `平局险${R_draw}` : undefined),
+    had: m.had || {}, hhad: m.hhad || {},
+    base: hasBase ? { had: base!.had, hhad: base!.hhad } : null,
+    analysis: {
+      dir: dirDesc, market, pred: dropSide, odds: dirOdds, drop: dropAmt,
+      confirm, model, history, risk, value, total, band, dims,
+      reasoning: `引擎${SCORE_VERSION} ${dropNote} 方向=${dirDesc}${betNote ? ` (${betNote})` : ''}`,
+      from: 'engine', generatedAt: new Date().toISOString(),
+    },
+  };
+}
+
+/** 整日打分类（写回 PG scores，scan_round=1 覆盖当日）；加载 support/base_rates/滚动平局率注入上下文 */
+export async function scoreDay(date: string, scanRound = 1, now?: string): Promise<EngineRow[]> {
+  const [matches, supportMap, baseRates, rolling] = await Promise.all([
+    getDayMatches(date),
+    getSupportMap(date),
+    loadBaseRates(),
+    getRollingDrawRate(date),
+  ]);
+  const rows: EngineRow[] = [];
+  for (const m of matches) {
+    const [oddsHistory, europeOdds] = await Promise.all([getOddsHistory(m.matchId), getEuropeanOdds(m.matchId)]);
+    const r = scoreMatch(m, {
+      support: supportMap[m.matchId] ?? null,
+      oddsHistory,
+      europeOdds,
+      baseRates,
+      rollingDrawRate: rolling,
+      now: now ?? new Date().toISOString(),
+    });
+    if ('note' in r) continue; // 未开盘跳过
+    rows.push(r);
+    await saveScore({ ...r, scanRound });
+  }
+  return rows.sort((a, b) => b.total - a.total);
+}
+
+if (process.argv[1]?.replace(/\\/g, '/').endsWith('score.ts')) {
+  const d = process.argv[2];
+  scoreDay(d || new Date().toISOString().slice(0, 10))
+    .then(rows => {
+      console.log(`信息值评分 ${SCORE_VERSION} | ${rows.length} 场 | 档位: >=58加注 | 48-57实单 | 40-47候选 | 30-39弱`);
+      for (const r of rows) {
+        const dm = r.analysis?.dims;
+        console.log(`${r.num} ${r.league.padEnd(5)} ${(r.home + '-' + r.away).padEnd(18)} ${r.time} ${(r.dir + '@' + r.odds).padEnd(22)} ${String(r.total).padStart(3)} ${r.band} ${r.dropNote} ${r.betNote || ''} [降水${dm?.drop?.score ?? 0}/确认${r.confirm}/模型${r.model}/历史${r.history}/风险${r.risk}/价值${r.value}]`);
+      }
+    })
+    .catch(e => { console.error('评分失败:', e); process.exit(1); });
+}

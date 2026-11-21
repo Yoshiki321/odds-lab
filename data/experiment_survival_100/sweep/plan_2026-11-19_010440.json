@@ -1,0 +1,246 @@
+{
+  "version": "sweep-plan-v2",
+  "configVersion": "sweep-config-v2",
+  "createdAt": "2026-11-19T01:04:40+08:00",
+  "mode": "manual",
+  "observedAt": "2026-11-19T01:04:40+08:00",
+  "sourcePage": "https://user-pc-new.zqt0510.com/#/home",
+  "parsedMatches": 13,
+  "advertisedTotal": 96,
+  "coverageNote": "页面宣称未开赛 96 场，本次解析到 13 场（首屏/可见区限制，覆盖率 13.5%，未解析到的记未检查，不得当作已排除）",
+  "sel": {
+    "total": 7,
+    "included": [
+      {
+        "id": "拜仁慕尼黑-科隆-1795203000000",
+        "league": "德国甲级联赛",
+        "home": "拜仁慕尼黑",
+        "away": "科隆",
+        "kickoffMs": 1795203000000,
+        "kickoff": "2026-11-21T03:30:00+08:00",
+        "markets": {
+          "had": {
+            "h": 1.06,
+            "d": 1.97,
+            "a": null
+          },
+          "hhad": null,
+          "ou": {
+            "line": "4.5",
+            "over": 2.03,
+            "under": 1.83
+          }
+        },
+        "dateTab": "11/20",
+        "tier": 1
+      },
+      {
+        "id": "特鲁瓦-勒阿弗尔-1795203900000",
+        "league": "法国甲级联赛",
+        "home": "特鲁瓦",
+        "away": "勒阿弗尔",
+        "kickoffMs": 1795203900000,
+        "kickoff": "2026-11-21T03:45:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "dateTab": "11/20",
+        "tier": 1
+      },
+      {
+        "id": "毕尔巴鄂竞技-西班牙人-1795204800000",
+        "league": "西班牙甲级联赛",
+        "home": "毕尔巴鄂竞技",
+        "away": "西班牙人",
+        "kickoffMs": 1795204800000,
+        "kickoff": "2026-11-21T04:00:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "dateTab": "11/20",
+        "tier": 1
+      },
+      {
+        "id": "曼城-富勒姆-1795264200000",
+        "league": "英格兰超级联赛",
+        "home": "曼城",
+        "away": "富勒姆",
+        "kickoffMs": 1795264200000,
+        "kickoff": "2026-11-21T20:30:00+08:00",
+        "markets": {
+          "had": {
+            "h": 1.38,
+            "d": 4.95,
+            "a": 6.4
+          },
+          "hhad": null,
+          "ou": {
+            "line": "3/3.5",
+            "over": 2.05,
+            "under": 1.81
+          }
+        },
+        "dateTab": "11/21",
+        "tier": 1
+      },
+      {
+        "id": "伯恩茅斯-诺丁汉森林-1795273200000",
+        "league": "英格兰超级联赛",
+        "home": "伯恩茅斯",
+        "away": "诺丁汉森林",
+        "kickoffMs": 1795273200000,
+        "kickoff": "2026-11-21T23:00:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "dateTab": "11/21",
+        "tier": 1
+      },
+      {
+        "id": "切尔西-利兹联-1795273200000",
+        "league": "英格兰超级联赛",
+        "home": "切尔西",
+        "away": "利兹联",
+        "kickoffMs": 1795273200000,
+        "kickoff": "2026-11-21T23:00:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "dateTab": "11/21",
+        "tier": 1
+      },
+      {
+        "id": "托特纳姆热刺-伊普斯维奇-1795273200000",
+        "league": "英格兰超级联赛",
+        "home": "托特纳姆热刺",
+        "away": "伊普斯维奇",
+        "kickoffMs": 1795273200000,
+        "kickoff": "2026-11-21T23:00:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "dateTab": "11/21",
+        "tier": 1
+      }
+    ],
+    "excluded": [],
+    "capped": false
+  },
+  "rechecks": [
+    {
+      "eventId": "拜仁慕尼黑-科隆-1795203000000",
+      "home": "拜仁慕尼黑",
+      "away": "科隆",
+      "league": "德国甲级联赛",
+      "tier": 1,
+      "kickoff": "2026-11-21T03:30:00+08:00",
+      "kickoffMs": 1795203000000,
+      "planAtMs": 1795201200000,
+      "planAtBeijing": "2026-11-21T03:00:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "特鲁瓦-勒阿弗尔-1795203900000",
+      "home": "特鲁瓦",
+      "away": "勒阿弗尔",
+      "league": "法国甲级联赛",
+      "tier": 1,
+      "kickoff": "2026-11-21T03:45:00+08:00",
+      "kickoffMs": 1795203900000,
+      "planAtMs": 1795202100000,
+      "planAtBeijing": "2026-11-21T03:15:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "毕尔巴鄂竞技-西班牙人-1795204800000",
+      "home": "毕尔巴鄂竞技",
+      "away": "西班牙人",
+      "league": "西班牙甲级联赛",
+      "tier": 1,
+      "kickoff": "2026-11-21T04:00:00+08:00",
+      "kickoffMs": 1795204800000,
+      "planAtMs": 1795203000000,
+      "planAtBeijing": "2026-11-21T03:30:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "曼城-富勒姆-1795264200000",
+      "home": "曼城",
+      "away": "富勒姆",
+      "league": "英格兰超级联赛",
+      "tier": 1,
+      "kickoff": "2026-11-21T20:30:00+08:00",
+      "kickoffMs": 1795264200000,
+      "planAtMs": 1795262400000,
+      "planAtBeijing": "2026-11-21T20:00:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "伯恩茅斯-诺丁汉森林-1795273200000",
+      "home": "伯恩茅斯",
+      "away": "诺丁汉森林",
+      "league": "英格兰超级联赛",
+      "tier": 1,
+      "kickoff": "2026-11-21T23:00:00+08:00",
+      "kickoffMs": 1795273200000,
+      "planAtMs": 1795271400000,
+      "planAtBeijing": "2026-11-21T22:30:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "切尔西-利兹联-1795273200000",
+      "home": "切尔西",
+      "away": "利兹联",
+      "league": "英格兰超级联赛",
+      "tier": 1,
+      "kickoff": "2026-11-21T23:00:00+08:00",
+      "kickoffMs": 1795273200000,
+      "planAtMs": 1795271400000,
+      "planAtBeijing": "2026-11-21T22:30:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "托特纳姆热刺-伊普斯维奇-1795273200000",
+      "home": "托特纳姆热刺",
+      "away": "伊普斯维奇",
+      "league": "英格兰超级联赛",
+      "tier": 1,
+      "kickoff": "2026-11-21T23:00:00+08:00",
+      "kickoffMs": 1795273200000,
+      "planAtMs": 1795271400000,
+      "planAtBeijing": "2026-11-21T22:30:00+08:00",
+      "offsetMin": 30
+    }
+  ],
+  "note": "解析为粗解析（页面文本），赔率等明细以页面为准；只观察不下单"
+}

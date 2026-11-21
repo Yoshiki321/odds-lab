@@ -1,0 +1,26 @@
+# AGENTS.md — 竞彩助手（OpenCode 会话入口）
+
+## 启动第一步（不可跳过）
+**必读**：`C:\zwkj\竞彩助手\.claude\CLAUDE.md`（全文，铁律+纪律+定时现状+自我提升闭环）。
+读不到就停下来问，不要凭猜测干活。
+
+## 架构现状（2026-09-30）
+- 常驻服 v2 在 **9000**，由 Windows 任务计划 `JC9000` 托管（开机自启+崩溃拉起），**不是** OpenCode 的子进程，别去杀它、别重复起（EADDRINUSE）。
+- `C:\JCapp` = `C:\zwkj\竞彩助手\app`（ASCII 结，任务计划/脚本一律用这个路径，中文路径会被任务计划存成 `???`）。
+- `C:\JCroot` = `C:\zwkj\竞彩助手`（同上）。
+
+## 干活方式（省窗口）
+- 全部操作走 `http://127.0.0.1:9000` 的 HTTP 接口，**不要用 shell 跑 npx/tsx**（Windows 下每次 shell 调用都会弹 CMD 窗口）。
+- 现成触发器（POST）：
+  - `/api/trigger/refresh?date=YYYY-MM-DD` 抓盘+评分+赛果+快照
+  - `/api/trigger/settle` 结算真注/虚拟注
+  - `/api/trigger/audit` 分档校准+EV门审计
+- 只读接口：`/api/health` `/api/summary` `/api/day/<date>` `/api/days` `/api/diary[/<date>]` `/api/mistakes` `/api/score-status`。
+
+## 铁律速记（详见 CLAUDE.md）
+- 研判/下单/写日记只能由我做，server 只做机械层（抓取+评分），不研判。
+- 实单五门禁：分≥48 · R5窗(30min~8h) · M-04欧赔EV>0 · 欧赔齐全 · 让球选向含「让」。
+- 注额：实单50 / 加注100 / 单日累计≤300 / 单场一单 / 日亏150停手。
+- 缺席默认 = 不买。任何复盘点没覆盖到，就当没信号。
+- EV门是印钞机，分数只负责入围；无欧赔永不实单（audit 247场：EV>0 组 ROI+39% vs EV≤0 组 −10%）。
+- 日记：只写球（场次/盘口/信号/买卖/资金/结算），空仓也记一行。

@@ -1,0 +1,19 @@
+{
+  "version": "sweep-plan-v2",
+  "configVersion": "sweep-config-v2",
+  "createdAt": "2026-11-19T09:42:13+08:00",
+  "mode": "manual",
+  "observedAt": "2026-11-19T09:42:13+08:00",
+  "sourcePage": "https://user-pc-new.zqt0510.com/#/home",
+  "parsedMatches": 0,
+  "advertisedTotal": 501,
+  "coverageNote": "页面宣称未开赛 501 场，本次解析到 0 场（首屏/可见区限制，覆盖率 0.0%，未解析到的记未检查，不得当作已排除）",
+  "sel": {
+    "total": 0,
+    "included": [],
+    "excluded": [],
+    "capped": false
+  },
+  "rechecks": [],
+  "note": "解析为粗解析（页面文本），赔率等明细以页面为准；只观察不下单"
+}

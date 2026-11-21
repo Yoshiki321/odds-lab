@@ -1,0 +1,20 @@
+{
+  "eventId": "奥兰多城-辛辛那提FC-1795134600000",
+  "dateAsiaShanghai": "2026-11-20",
+  "observedAt": "2026-11-20T08:00:11+08:00",
+  "planAt": "2026-11-20T08:00:00+08:00",
+  "planAtMs": 1795132800000,
+  "actualAtMs": 1795132811353,
+  "minutesToKickoff": 30,
+  "morning": {
+    "league": "美国职业大联盟 - 附加赛",
+    "tier": 2,
+    "kickoff": "2026-11-20T08:30:00+08:00"
+  },
+  "latestOdds": {
+    "markets": null
+  },
+  "autoBet": false,
+  "decision": "待人工判断（自动流程不下单）",
+  "dataQuality": "接口未返回该场盘口"
+}

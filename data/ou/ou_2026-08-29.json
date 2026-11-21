@@ -1,0 +1,2156 @@
+{
+  "date": "2026-08-29",
+  "generatedAt": "2026-08-30T00:49:26.351658",
+  "matches": [
+    {
+      "num": "周六014",
+      "league": "英超",
+      "home": "考文垂",
+      "away": "赫尔城",
+      "kickoff": "22:00:00",
+      "expected_goals": {
+        "home": 2.0,
+        "away": 1.1,
+        "total": 3.1
+      },
+      "fair_prob": {
+        "home": 0.571,
+        "draw": 0.238,
+        "away": 0.19
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.5987,
+          "under_prob": 0.4013,
+          "fair_over": 1.67,
+          "fair_under": 2.492
+        },
+        "3.0": {
+          "over_prob": 0.375,
+          "under_prob": 0.625,
+          "fair_over": 2.667,
+          "fair_under": 1.6
+        },
+        "3.5": {
+          "over_prob": 0.375,
+          "under_prob": 0.625,
+          "fair_over": 2.667,
+          "fair_under": 1.6
+        }
+      },
+      "odds_source": "jingcai_had",
+      "odds": [
+        1.55,
+        3.72,
+        4.65
+      ]
+    },
+    {
+      "num": "周六015",
+      "league": "英超",
+      "home": "伯恩茅斯",
+      "away": "埃弗顿",
+      "kickoff": "22:00:00",
+      "expected_goals": {
+        "home": 1.75,
+        "away": 1.3,
+        "total": 3.05
+      },
+      "fair_prob": {
+        "home": 0.463,
+        "draw": 0.264,
+        "away": 0.272
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.5879,
+          "under_prob": 0.4121,
+          "fair_over": 1.701,
+          "fair_under": 2.426
+        },
+        "3.0": {
+          "over_prob": 0.3639,
+          "under_prob": 0.6361,
+          "fair_over": 2.748,
+          "fair_under": 1.572
+        },
+        "3.5": {
+          "over_prob": 0.3639,
+          "under_prob": 0.6361,
+          "fair_over": 2.748,
+          "fair_under": 1.572
+        }
+      },
+      "odds_source": "jingcai_had",
+      "odds": [
+        1.91,
+        3.35,
+        3.25
+      ]
+    },
+    {
+      "num": "周六016",
+      "league": "西甲",
+      "home": "莱万特",
+      "away": "贝蒂斯",
+      "kickoff": "23:00:00",
+      "expected_goals": {
+        "home": 1.3,
+        "away": 1.7,
+        "total": 3.0
+      },
+      "fair_prob": {
+        "home": 0.277,
+        "draw": 0.269,
+        "away": 0.454
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.5768,
+          "under_prob": 0.4232,
+          "fair_over": 1.734,
+          "fair_under": 2.363
+        },
+        "3.0": {
+          "over_prob": 0.3527,
+          "under_prob": 0.6473,
+          "fair_over": 2.835,
+          "fair_under": 1.545
+        },
+        "3.5": {
+          "over_prob": 0.3527,
+          "under_prob": 0.6473,
+          "fair_over": 2.835,
+          "fair_under": 1.545
+        }
+      },
+      "odds_source": "jingcai_had",
+      "odds": [
+        3.2,
+        3.3,
+        1.95
+      ]
+    },
+    {
+      "num": "周六017",
+      "league": "法甲",
+      "home": "斯特拉斯",
+      "away": "朗斯",
+      "kickoff": "23:15:00",
+      "expected_goals": {
+        "home": 1.4,
+        "away": 2.1,
+        "total": 3.5
+      },
+      "fair_prob": {
+        "home": 0.243,
+        "draw": 0.236,
+        "away": 0.521
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.679,
+          "under_prob": 0.321,
+          "fair_over": 1.473,
+          "fair_under": 3.116
+        },
+        "3.0": {
+          "over_prob": 0.4632,
+          "under_prob": 0.5368,
+          "fair_over": 2.159,
+          "fair_under": 1.863
+        },
+        "3.5": {
+          "over_prob": 0.4632,
+          "under_prob": 0.5368,
+          "fair_over": 2.159,
+          "fair_under": 1.863
+        }
+      },
+      "odds_source": "jingcai_had",
+      "odds": [
+        3.65,
+        3.75,
+        1.7
+      ]
+    },
+    {
+      "num": "周六018",
+      "league": "挪超",
+      "home": "维京",
+      "away": "奥勒松",
+      "kickoff": "23:00:00",
+      "expected_goals": {
+        "home": 3.05,
+        "away": 1.05,
+        "total": 4.1
+      },
+      "fair_prob": {
+        "home": 0.77,
+        "draw": 0.136,
+        "away": 0.093
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.7752,
+          "under_prob": 0.2248,
+          "fair_over": 1.29,
+          "fair_under": 4.449
+        },
+        "3.0": {
+          "over_prob": 0.5841,
+          "under_prob": 0.4159,
+          "fair_over": 1.712,
+          "fair_under": 2.404
+        },
+        "3.5": {
+          "over_prob": 0.5841,
+          "under_prob": 0.4159,
+          "fair_over": 1.712,
+          "fair_under": 2.404
+        }
+      },
+      "odds_source": "jingcai_had",
+      "odds": [
+        1.15,
+        6.5,
+        9.5
+      ]
+    },
+    {
+      "num": "周六019",
+      "league": "英超",
+      "home": "热刺",
+      "away": "纽卡斯尔",
+      "kickoff": "00:30:00",
+      "expected_goals": {
+        "home": 1.75,
+        "away": 1.45,
+        "total": 3.2
+      },
+      "fair_prob": {
+        "home": 0.436,
+        "draw": 0.257,
+        "away": 0.307
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.6201,
+          "under_prob": 0.3799,
+          "fair_over": 1.613,
+          "fair_under": 2.632
+        },
+        "3.0": {
+          "over_prob": 0.3974,
+          "under_prob": 0.6026,
+          "fair_over": 2.516,
+          "fair_under": 1.66
+        },
+        "3.5": {
+          "over_prob": 0.3974,
+          "under_prob": 0.6026,
+          "fair_over": 2.516,
+          "fair_under": 1.66
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        2.18,
+        3.7,
+        3.1
+      ]
+    },
+    {
+      "num": "周六020",
+      "league": "德甲",
+      "home": "多特蒙德",
+      "away": "汉堡",
+      "kickoff": "00:30:00",
+      "expected_goals": {
+        "home": 2.7,
+        "away": 1.1,
+        "total": 3.8
+      },
+      "fair_prob": {
+        "home": 0.701,
+        "draw": 0.177,
+        "away": 0.122
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.7306,
+          "under_prob": 0.2694,
+          "fair_over": 1.369,
+          "fair_under": 3.712
+        },
+        "3.0": {
+          "over_prob": 0.5256,
+          "under_prob": 0.4744,
+          "fair_over": 1.903,
+          "fair_under": 2.108
+        },
+        "3.5": {
+          "over_prob": 0.5256,
+          "under_prob": 0.4744,
+          "fair_over": 1.903,
+          "fair_under": 2.108
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        1.35,
+        5.34,
+        7.76
+      ]
+    },
+    {
+      "num": "周六021",
+      "league": "意甲",
+      "home": "蒙扎",
+      "away": "乌迪内斯",
+      "kickoff": "00:30:00",
+      "expected_goals": {
+        "home": 1.15,
+        "away": 1.3,
+        "total": 2.45
+      },
+      "fair_prob": {
+        "home": 0.313,
+        "draw": 0.308,
+        "away": 0.379
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.4433,
+          "under_prob": 0.5567,
+          "fair_over": 2.256,
+          "fair_under": 1.796
+        },
+        "3.0": {
+          "over_prob": 0.2318,
+          "under_prob": 0.7682,
+          "fair_over": 4.314,
+          "fair_under": 1.302
+        },
+        "3.5": {
+          "over_prob": 0.2318,
+          "under_prob": 0.7682,
+          "fair_over": 4.314,
+          "fair_under": 1.302
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        3.03,
+        3.08,
+        2.5
+      ]
+    },
+    {
+      "num": "周六022",
+      "league": "意甲",
+      "home": "佛罗伦萨",
+      "away": "弗洛西诺",
+      "kickoff": "00:30:00",
+      "expected_goals": {
+        "home": 1.95,
+        "away": 1.1,
+        "total": 3.05
+      },
+      "fair_prob": {
+        "home": 0.562,
+        "draw": 0.241,
+        "away": 0.197
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.5878,
+          "under_prob": 0.4122,
+          "fair_over": 1.701,
+          "fair_under": 2.426
+        },
+        "3.0": {
+          "over_prob": 0.3638,
+          "under_prob": 0.6362,
+          "fair_over": 2.748,
+          "fair_under": 1.572
+        },
+        "3.5": {
+          "over_prob": 0.3638,
+          "under_prob": 0.6362,
+          "fair_over": 2.748,
+          "fair_under": 1.572
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        1.69,
+        3.94,
+        4.81
+      ]
+    },
+    {
+      "num": "周六023",
+      "league": "意甲",
+      "home": "萨索洛",
+      "away": "都灵",
+      "kickoff": "00:30:00",
+      "expected_goals": {
+        "home": 1.45,
+        "away": 1.2,
+        "total": 2.65
+      },
+      "fair_prob": {
+        "home": 0.416,
+        "draw": 0.291,
+        "away": 0.293
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.494,
+          "under_prob": 0.506,
+          "fair_over": 2.024,
+          "fair_under": 1.976
+        },
+        "3.0": {
+          "over_prob": 0.2749,
+          "under_prob": 0.7251,
+          "fair_over": 3.638,
+          "fair_under": 1.379
+        },
+        "3.5": {
+          "over_prob": 0.2749,
+          "under_prob": 0.7251,
+          "fair_over": 3.638,
+          "fair_under": 1.379
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        2.28,
+        3.26,
+        3.23
+      ]
+    },
+    {
+      "num": "周六024",
+      "league": "荷甲",
+      "home": "阿尔克马",
+      "away": "前进之鹰",
+      "kickoff": "00:45:00",
+      "expected_goals": {
+        "home": 2.8,
+        "away": 1.2,
+        "total": 4.0
+      },
+      "fair_prob": {
+        "home": 0.697,
+        "draw": 0.173,
+        "away": 0.131
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.7613,
+          "under_prob": 0.2387,
+          "fair_over": 1.314,
+          "fair_under": 4.19
+        },
+        "3.0": {
+          "over_prob": 0.5655,
+          "under_prob": 0.4345,
+          "fair_over": 1.768,
+          "fair_under": 2.301
+        },
+        "3.5": {
+          "over_prob": 0.5655,
+          "under_prob": 0.4345,
+          "fair_over": 1.768,
+          "fair_under": 2.301
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        1.35,
+        5.45,
+        7.18
+      ]
+    },
+    {
+      "num": "周六025",
+      "league": "西甲",
+      "home": "皇家社会",
+      "away": "西班牙人",
+      "kickoff": "01:00:00",
+      "expected_goals": {
+        "home": 1.85,
+        "away": 1.15,
+        "total": 3.0
+      },
+      "fair_prob": {
+        "home": 0.522,
+        "draw": 0.255,
+        "away": 0.223
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.5768,
+          "under_prob": 0.4232,
+          "fair_over": 1.734,
+          "fair_under": 2.363
+        },
+        "3.0": {
+          "over_prob": 0.3527,
+          "under_prob": 0.6473,
+          "fair_over": 2.835,
+          "fair_under": 1.545
+        },
+        "3.5": {
+          "over_prob": 0.3527,
+          "under_prob": 0.6473,
+          "fair_over": 2.835,
+          "fair_under": 1.545
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        1.82,
+        3.72,
+        4.25
+      ]
+    },
+    {
+      "num": "周六026",
+      "league": "葡超",
+      "home": "维塞乌",
+      "away": "波尔图",
+      "kickoff": "01:00:00",
+      "expected_goals": {
+        "home": 0.9,
+        "away": 2.7,
+        "total": 3.6
+      },
+      "fair_prob": {
+        "home": 0.091,
+        "draw": 0.167,
+        "away": 0.742
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.6967,
+          "under_prob": 0.3033,
+          "fair_over": 1.435,
+          "fair_under": 3.297
+        },
+        "3.0": {
+          "over_prob": 0.4838,
+          "under_prob": 0.5162,
+          "fair_over": 2.067,
+          "fair_under": 1.937
+        },
+        "3.5": {
+          "over_prob": 0.4838,
+          "under_prob": 0.5162,
+          "fair_over": 2.067,
+          "fair_under": 1.937
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        10.27,
+        5.61,
+        1.26
+      ]
+    },
+    {
+      "num": "周六027",
+      "league": "意甲",
+      "home": "尤文图斯",
+      "away": "帕尔马",
+      "kickoff": "02:45:00",
+      "expected_goals": {
+        "home": 2.65,
+        "away": 0.7,
+        "total": 3.35
+      },
+      "fair_prob": {
+        "home": 0.776,
+        "draw": 0.154,
+        "away": 0.07
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.6499,
+          "under_prob": 0.3501,
+          "fair_over": 1.539,
+          "fair_under": 2.857
+        },
+        "3.0": {
+          "over_prob": 0.4297,
+          "under_prob": 0.5703,
+          "fair_over": 2.327,
+          "fair_under": 1.754
+        },
+        "3.5": {
+          "over_prob": 0.4297,
+          "under_prob": 0.5703,
+          "fair_over": 2.327,
+          "fair_under": 1.754
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        1.22,
+        6.14,
+        13.56
+      ]
+    },
+    {
+      "num": "周六028",
+      "league": "西甲",
+      "home": "塞维利亚",
+      "away": "马竞",
+      "kickoff": "03:30:00",
+      "expected_goals": {
+        "home": 1.05,
+        "away": 1.6,
+        "total": 2.65
+      },
+      "fair_prob": {
+        "home": 0.234,
+        "draw": 0.281,
+        "away": 0.485
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.494,
+          "under_prob": 0.506,
+          "fair_over": 2.024,
+          "fair_under": 1.976
+        },
+        "3.0": {
+          "over_prob": 0.2749,
+          "under_prob": 0.7251,
+          "fair_over": 3.638,
+          "fair_under": 1.379
+        },
+        "3.5": {
+          "over_prob": 0.2749,
+          "under_prob": 0.7251,
+          "fair_over": 3.638,
+          "fair_under": 1.379
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        4.07,
+        3.39,
+        1.96
+      ]
+    },
+    {
+      "num": "周六029",
+      "league": "美职",
+      "home": "华盛顿",
+      "away": "洛杉矶FC",
+      "kickoff": "07:30:00",
+      "expected_goals": {
+        "home": 1.35,
+        "away": 1.85,
+        "total": 3.2
+      },
+      "fair_prob": {
+        "home": 0.263,
+        "draw": 0.253,
+        "away": 0.484
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.62,
+          "under_prob": 0.38,
+          "fair_over": 1.613,
+          "fair_under": 2.632
+        },
+        "3.0": {
+          "over_prob": 0.3974,
+          "under_prob": 0.6026,
+          "fair_over": 2.516,
+          "fair_under": 1.659
+        },
+        "3.5": {
+          "over_prob": 0.3974,
+          "under_prob": 0.6026,
+          "fair_over": 2.516,
+          "fair_under": 1.659
+        }
+      },
+      "odds_source": "jingcai_had",
+      "odds": [
+        3.36,
+        3.5,
+        1.83
+      ]
+    },
+    {
+      "num": "周日001",
+      "league": "荷甲",
+      "home": "乌德勒支",
+      "away": "埃因霍温",
+      "kickoff": "18:15:00",
+      "expected_goals": {
+        "home": 1.5,
+        "away": 2.55,
+        "total": 4.05
+      },
+      "fair_prob": {
+        "home": 0.208,
+        "draw": 0.201,
+        "away": 0.59
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.7688,
+          "under_prob": 0.2312,
+          "fair_over": 1.301,
+          "fair_under": 4.326
+        },
+        "3.0": {
+          "over_prob": 0.5757,
+          "under_prob": 0.4243,
+          "fair_over": 1.737,
+          "fair_under": 2.357
+        },
+        "3.5": {
+          "over_prob": 0.5757,
+          "under_prob": 0.4243,
+          "fair_over": 1.737,
+          "fair_under": 2.357
+        }
+      },
+      "odds_source": "jingcai_had",
+      "odds": [
+        4.25,
+        4.4,
+        1.5
+      ]
+    },
+    {
+      "num": "周日002",
+      "league": "韩职",
+      "home": "济州SK",
+      "away": "大田市民",
+      "kickoff": "18:30:00",
+      "expected_goals": {
+        "home": 1.2,
+        "away": 1.7,
+        "total": 2.9
+      },
+      "fair_prob": {
+        "home": 0.253,
+        "draw": 0.268,
+        "away": 0.479
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.554,
+          "under_prob": 0.446,
+          "fair_over": 1.805,
+          "fair_under": 2.242
+        },
+        "3.0": {
+          "over_prob": 0.3303,
+          "under_prob": 0.6697,
+          "fair_over": 3.027,
+          "fair_under": 1.493
+        },
+        "3.5": {
+          "over_prob": 0.3303,
+          "under_prob": 0.6697,
+          "fair_over": 3.027,
+          "fair_under": 1.493
+        }
+      },
+      "odds_source": "jingcai_had",
+      "odds": [
+        3.5,
+        3.3,
+        1.85
+      ]
+    },
+    {
+      "num": "周日003",
+      "league": "韩职",
+      "home": "仁川联",
+      "away": "全北现代",
+      "kickoff": "18:30:00",
+      "expected_goals": {
+        "home": 1.2,
+        "away": 1.4,
+        "total": 2.6
+      },
+      "fair_prob": {
+        "home": 0.3,
+        "draw": 0.295,
+        "away": 0.404
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.4816,
+          "under_prob": 0.5184,
+          "fair_over": 2.077,
+          "fair_under": 1.929
+        },
+        "3.0": {
+          "over_prob": 0.264,
+          "under_prob": 0.736,
+          "fair_over": 3.788,
+          "fair_under": 1.359
+        },
+        "3.5": {
+          "over_prob": 0.264,
+          "under_prob": 0.736,
+          "fair_over": 3.788,
+          "fair_under": 1.359
+        }
+      },
+      "odds_source": "jingcai_had",
+      "odds": [
+        2.95,
+        3.0,
+        2.19
+      ]
+    },
+    {
+      "num": "周日004",
+      "league": "德乙",
+      "home": "圣保利",
+      "away": "凯泽",
+      "kickoff": "19:30:00",
+      "expected_goals": {
+        "home": 1.95,
+        "away": 1.3,
+        "total": 3.25
+      },
+      "fair_prob": {
+        "home": 0.515,
+        "draw": 0.246,
+        "away": 0.239
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.6304,
+          "under_prob": 0.3696,
+          "fair_over": 1.586,
+          "fair_under": 2.705
+        },
+        "3.0": {
+          "over_prob": 0.4085,
+          "under_prob": 0.5915,
+          "fair_over": 2.448,
+          "fair_under": 1.691
+        },
+        "3.5": {
+          "over_prob": 0.4085,
+          "under_prob": 0.5915,
+          "fair_over": 2.448,
+          "fair_under": 1.691
+        }
+      },
+      "odds_source": "jingcai_had",
+      "odds": [
+        1.72,
+        3.6,
+        3.7
+      ]
+    },
+    {
+      "num": "周日005",
+      "league": "瑞超",
+      "home": "索尔纳",
+      "away": "哈马比",
+      "kickoff": "20:00:00",
+      "expected_goals": {
+        "home": 1.4,
+        "away": 2.55,
+        "total": 3.95
+      },
+      "fair_prob": {
+        "home": 0.183,
+        "draw": 0.202,
+        "away": 0.616
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.7542,
+          "under_prob": 0.2458,
+          "fair_over": 1.326,
+          "fair_under": 4.068
+        },
+        "3.0": {
+          "over_prob": 0.5561,
+          "under_prob": 0.4439,
+          "fair_over": 1.798,
+          "fair_under": 2.253
+        },
+        "3.5": {
+          "over_prob": 0.5561,
+          "under_prob": 0.4439,
+          "fair_over": 1.798,
+          "fair_under": 2.253
+        }
+      },
+      "odds_source": "jingcai_had",
+      "odds": [
+        4.85,
+        4.4,
+        1.44
+      ]
+    },
+    {
+      "num": "周日007",
+      "league": "挪超",
+      "home": "博德闪耀",
+      "away": "罗森博格",
+      "kickoff": "20:30:00",
+      "expected_goals": {
+        "home": 2.85,
+        "away": 1.15,
+        "total": 4.0
+      },
+      "fair_prob": {
+        "home": 0.715,
+        "draw": 0.166,
+        "away": 0.12
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.7612,
+          "under_prob": 0.2388,
+          "fair_over": 1.314,
+          "fair_under": 4.188
+        },
+        "3.0": {
+          "over_prob": 0.5653,
+          "under_prob": 0.4347,
+          "fair_over": 1.769,
+          "fair_under": 2.301
+        },
+        "3.5": {
+          "over_prob": 0.5653,
+          "under_prob": 0.4347,
+          "fair_over": 1.769,
+          "fair_under": 2.301
+        }
+      },
+      "odds_source": "jingcai_had",
+      "odds": [
+        1.24,
+        5.35,
+        7.4
+      ]
+    },
+    {
+      "num": "周日008",
+      "league": "英超",
+      "home": "桑德兰",
+      "away": "富勒姆",
+      "kickoff": "21:00:00",
+      "expected_goals": {
+        "home": 1.4,
+        "away": 1.25,
+        "total": 2.65
+      },
+      "fair_prob": {
+        "home": 0.387,
+        "draw": 0.29,
+        "away": 0.323
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.494,
+          "under_prob": 0.506,
+          "fair_over": 2.024,
+          "fair_under": 1.976
+        },
+        "3.0": {
+          "over_prob": 0.2749,
+          "under_prob": 0.7251,
+          "fair_over": 3.638,
+          "fair_under": 1.379
+        },
+        "3.5": {
+          "over_prob": 0.2749,
+          "under_prob": 0.7251,
+          "fair_over": 3.638,
+          "fair_under": 1.379
+        }
+      },
+      "odds_source": "jingcai_had",
+      "odds": [
+        2.29,
+        3.05,
+        2.74
+      ]
+    },
+    {
+      "num": "周日009",
+      "league": "英超",
+      "home": "利兹联",
+      "away": "布伦特",
+      "kickoff": "21:00:00",
+      "expected_goals": {
+        "home": 1.5,
+        "away": 1.4,
+        "total": 2.9
+      },
+      "fair_prob": {
+        "home": 0.385,
+        "draw": 0.277,
+        "away": 0.338
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.554,
+          "under_prob": 0.446,
+          "fair_over": 1.805,
+          "fair_under": 2.242
+        },
+        "3.0": {
+          "over_prob": 0.3303,
+          "under_prob": 0.6697,
+          "fair_over": 3.027,
+          "fair_under": 1.493
+        },
+        "3.5": {
+          "over_prob": 0.3303,
+          "under_prob": 0.6697,
+          "fair_over": 3.027,
+          "fair_under": 1.493
+        }
+      },
+      "odds_source": "jingcai_had",
+      "odds": [
+        2.3,
+        3.2,
+        2.62
+      ]
+    },
+    {
+      "num": "周日010",
+      "league": "法甲",
+      "home": "巴黎FC",
+      "away": "尼斯",
+      "kickoff": "21:00:00",
+      "expected_goals": {
+        "home": 1.6,
+        "away": 1.2,
+        "total": 2.8
+      },
+      "fair_prob": {
+        "home": 0.447,
+        "draw": 0.281,
+        "away": 0.272
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.5305,
+          "under_prob": 0.4695,
+          "fair_over": 1.885,
+          "fair_under": 2.13
+        },
+        "3.0": {
+          "over_prob": 0.308,
+          "under_prob": 0.692,
+          "fair_over": 3.246,
+          "fair_under": 1.445
+        },
+        "3.5": {
+          "over_prob": 0.308,
+          "under_prob": 0.692,
+          "fair_over": 3.246,
+          "fair_under": 1.445
+        }
+      },
+      "odds_source": "jingcai_had",
+      "odds": [
+        1.98,
+        3.15,
+        3.26
+      ]
+    },
+    {
+      "num": "周日011",
+      "league": "德甲",
+      "home": "弗赖堡",
+      "away": "不来梅",
+      "kickoff": "21:30:00",
+      "expected_goals": {
+        "home": 1.85,
+        "away": 1.25,
+        "total": 3.1
+      },
+      "fair_prob": {
+        "home": 0.506,
+        "draw": 0.253,
+        "away": 0.241
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.5988,
+          "under_prob": 0.4012,
+          "fair_over": 1.67,
+          "fair_under": 2.492
+        },
+        "3.0": {
+          "over_prob": 0.3751,
+          "under_prob": 0.6249,
+          "fair_over": 2.666,
+          "fair_under": 1.6
+        },
+        "3.5": {
+          "over_prob": 0.3751,
+          "under_prob": 0.6249,
+          "fair_over": 2.666,
+          "fair_under": 1.6
+        }
+      },
+      "odds_source": "jingcai_had",
+      "odds": [
+        1.75,
+        3.5,
+        3.67
+      ]
+    },
+    {
+      "num": "周日012",
+      "league": "荷甲",
+      "home": "特尔斯达",
+      "away": "阿贾克斯",
+      "kickoff": "22:45:00",
+      "expected_goals": {
+        "home": 1.3,
+        "away": 2.45,
+        "total": 3.75
+      },
+      "fair_prob": {
+        "home": 0.179,
+        "draw": 0.201,
+        "away": 0.62
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.7227,
+          "under_prob": 0.2773,
+          "fair_over": 1.384,
+          "fair_under": 3.606
+        },
+        "3.0": {
+          "over_prob": 0.5157,
+          "under_prob": 0.4843,
+          "fair_over": 1.939,
+          "fair_under": 2.065
+        },
+        "3.5": {
+          "over_prob": 0.5157,
+          "under_prob": 0.4843,
+          "fair_over": 1.939,
+          "fair_under": 2.065
+        }
+      },
+      "odds_source": "jingcai_had",
+      "odds": [
+        4.95,
+        4.4,
+        1.43
+      ]
+    },
+    {
+      "num": "周日014",
+      "league": "英超",
+      "home": "曼联",
+      "away": "伊普斯",
+      "kickoff": "23:30:00",
+      "expected_goals": {
+        "home": 2.7,
+        "away": 1.1,
+        "total": 3.8
+      },
+      "fair_prob": {
+        "home": 0.703,
+        "draw": 0.177,
+        "away": 0.12
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.7306,
+          "under_prob": 0.2694,
+          "fair_over": 1.369,
+          "fair_under": 3.712
+        },
+        "3.0": {
+          "over_prob": 0.5256,
+          "under_prob": 0.4744,
+          "fair_over": 1.903,
+          "fair_under": 2.108
+        },
+        "3.5": {
+          "over_prob": 0.5256,
+          "under_prob": 0.4744,
+          "fair_over": 1.903,
+          "fair_under": 2.108
+        }
+      },
+      "odds_source": "jingcai_had",
+      "odds": [
+        1.26,
+        5.0,
+        7.35
+      ]
+    },
+    {
+      "num": "周日015",
+      "league": "德甲",
+      "home": "奥格斯堡",
+      "away": "沙尔克04",
+      "kickoff": "23:30:00",
+      "expected_goals": {
+        "home": 1.75,
+        "away": 1.35,
+        "total": 3.1
+      },
+      "fair_prob": {
+        "home": 0.459,
+        "draw": 0.26,
+        "away": 0.281
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.5988,
+          "under_prob": 0.4012,
+          "fair_over": 1.67,
+          "fair_under": 2.492
+        },
+        "3.0": {
+          "over_prob": 0.3751,
+          "under_prob": 0.6249,
+          "fair_over": 2.666,
+          "fair_under": 1.6
+        },
+        "3.5": {
+          "over_prob": 0.3751,
+          "under_prob": 0.6249,
+          "fair_over": 2.666,
+          "fair_under": 1.6
+        }
+      },
+      "odds_source": "jingcai_had",
+      "odds": [
+        1.93,
+        3.4,
+        3.15
+      ]
+    },
+    {
+      "num": "周日016",
+      "league": "意甲",
+      "home": "那不勒斯",
+      "away": "科莫",
+      "kickoff": "00:30:00",
+      "expected_goals": {
+        "home": 1.25,
+        "away": 1.1,
+        "total": 2.35
+      },
+      "fair_prob": {
+        "home": 0.377,
+        "draw": 0.311,
+        "away": 0.311
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.4172,
+          "under_prob": 0.5828,
+          "fair_over": 2.397,
+          "fair_under": 1.716
+        },
+        "3.0": {
+          "over_prob": 0.2109,
+          "under_prob": 0.7891,
+          "fair_over": 4.742,
+          "fair_under": 1.267
+        },
+        "3.5": {
+          "over_prob": 0.2109,
+          "under_prob": 0.7891,
+          "fair_over": 4.742,
+          "fair_under": 1.267
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        2.5,
+        3.03,
+        3.03
+      ]
+    },
+    {
+      "num": "周日017",
+      "league": "西甲",
+      "home": "拉科",
+      "away": "巴伦西亚",
+      "kickoff": "01:30:00",
+      "expected_goals": {
+        "home": 1.25,
+        "away": 1.1,
+        "total": 2.35
+      },
+      "fair_prob": {
+        "home": 0.375,
+        "draw": 0.312,
+        "away": 0.314
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.4172,
+          "under_prob": 0.5828,
+          "fair_over": 2.397,
+          "fair_under": 1.716
+        },
+        "3.0": {
+          "over_prob": 0.2109,
+          "under_prob": 0.7891,
+          "fair_over": 4.742,
+          "fair_under": 1.267
+        },
+        "3.5": {
+          "over_prob": 0.2109,
+          "under_prob": 0.7891,
+          "fair_over": 4.742,
+          "fair_under": 1.267
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        2.52,
+        3.03,
+        3.01
+      ]
+    },
+    {
+      "num": "周日018",
+      "league": "荷甲",
+      "home": "坎布尔",
+      "away": "特温特",
+      "kickoff": "02:00:00",
+      "expected_goals": {
+        "home": 1.15,
+        "away": 2.75,
+        "total": 3.9
+      },
+      "fair_prob": {
+        "home": 0.127,
+        "draw": 0.176,
+        "away": 0.697
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.7463,
+          "under_prob": 0.2537,
+          "fair_over": 1.34,
+          "fair_under": 3.942
+        },
+        "3.0": {
+          "over_prob": 0.5458,
+          "under_prob": 0.4542,
+          "fair_over": 1.832,
+          "fair_under": 2.202
+        },
+        "3.5": {
+          "over_prob": 0.5458,
+          "under_prob": 0.4542,
+          "fair_over": 1.832,
+          "fair_under": 2.202
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        7.35,
+        5.31,
+        1.34
+      ]
+    },
+    {
+      "num": "周日019",
+      "league": "意甲",
+      "home": "拉齐奥",
+      "away": "热那亚",
+      "kickoff": "02:45:00",
+      "expected_goals": {
+        "home": 1.35,
+        "away": 0.9,
+        "total": 2.25
+      },
+      "fair_prob": {
+        "home": 0.461,
+        "draw": 0.307,
+        "away": 0.233
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.3907,
+          "under_prob": 0.6093,
+          "fair_over": 2.56,
+          "fair_under": 1.641
+        },
+        "3.0": {
+          "over_prob": 0.1906,
+          "under_prob": 0.8094,
+          "fair_over": 5.248,
+          "fair_under": 1.235
+        },
+        "3.5": {
+          "over_prob": 0.1906,
+          "under_prob": 0.8094,
+          "fair_over": 5.248,
+          "fair_under": 1.235
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        2.05,
+        3.08,
+        4.06
+      ]
+    },
+    {
+      "num": "周日020",
+      "league": "意甲",
+      "home": "卡利亚里",
+      "away": "国际米兰",
+      "kickoff": "02:45:00",
+      "expected_goals": {
+        "home": 0.85,
+        "away": 2.15,
+        "total": 3.0
+      },
+      "fair_prob": {
+        "home": 0.124,
+        "draw": 0.212,
+        "away": 0.664
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.5766,
+          "under_prob": 0.4234,
+          "fair_over": 1.734,
+          "fair_under": 2.362
+        },
+        "3.0": {
+          "over_prob": 0.3525,
+          "under_prob": 0.6475,
+          "fair_over": 2.837,
+          "fair_under": 1.544
+        },
+        "3.5": {
+          "over_prob": 0.3525,
+          "under_prob": 0.6475,
+          "fair_over": 2.837,
+          "fair_under": 1.544
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        7.63,
+        4.45,
+        1.42
+      ]
+    },
+    {
+      "num": "周日021",
+      "league": "法甲",
+      "home": "摩纳哥",
+      "away": "马赛",
+      "kickoff": "02:45:00",
+      "expected_goals": {
+        "home": 1.65,
+        "away": 1.55,
+        "total": 3.2
+      },
+      "fair_prob": {
+        "home": 0.391,
+        "draw": 0.259,
+        "away": 0.35
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.6201,
+          "under_prob": 0.3799,
+          "fair_over": 1.613,
+          "fair_under": 2.632
+        },
+        "3.0": {
+          "over_prob": 0.3974,
+          "under_prob": 0.6026,
+          "fair_over": 2.516,
+          "fair_under": 1.66
+        },
+        "3.5": {
+          "over_prob": 0.3974,
+          "under_prob": 0.6026,
+          "fair_over": 2.516,
+          "fair_under": 1.66
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        2.41,
+        3.64,
+        2.69
+      ]
+    },
+    {
+      "num": "周日022",
+      "league": "巴甲",
+      "home": "弗拉门戈",
+      "away": "博塔弗戈",
+      "kickoff": "03:00:00",
+      "expected_goals": {
+        "home": 2.45,
+        "away": 1.1,
+        "total": 3.55
+      },
+      "fair_prob": {
+        "home": 0.662,
+        "draw": 0.2,
+        "away": 0.138
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.688,
+          "under_prob": 0.312,
+          "fair_over": 1.454,
+          "fair_under": 3.205
+        },
+        "3.0": {
+          "over_prob": 0.4736,
+          "under_prob": 0.5264,
+          "fair_over": 2.112,
+          "fair_under": 1.9
+        },
+        "3.5": {
+          "over_prob": 0.4736,
+          "under_prob": 0.5264,
+          "fair_over": 2.112,
+          "fair_under": 1.9
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        1.41,
+        4.66,
+        6.78
+      ]
+    },
+    {
+      "num": "周日023",
+      "league": "西甲",
+      "home": "塞尔塔",
+      "away": "毕尔巴鄂",
+      "kickoff": "03:30:00",
+      "expected_goals": {
+        "home": 1.45,
+        "away": 1.25,
+        "total": 2.7
+      },
+      "fair_prob": {
+        "home": 0.396,
+        "draw": 0.292,
+        "away": 0.312
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.5064,
+          "under_prob": 0.4936,
+          "fair_over": 1.975,
+          "fair_under": 2.026
+        },
+        "3.0": {
+          "over_prob": 0.2859,
+          "under_prob": 0.7141,
+          "fair_over": 3.498,
+          "fair_under": 1.4
+        },
+        "3.5": {
+          "over_prob": 0.2859,
+          "under_prob": 0.7141,
+          "fair_over": 3.498,
+          "fair_under": 1.4
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        2.38,
+        3.23,
+        3.02
+      ]
+    },
+    {
+      "num": "周日024",
+      "league": "葡超",
+      "home": "法马利康",
+      "away": "吉维森特",
+      "kickoff": "03:30:00",
+      "expected_goals": {
+        "home": 1.45,
+        "away": 1.1,
+        "total": 2.55
+      },
+      "fair_prob": {
+        "home": 0.44,
+        "draw": 0.296,
+        "away": 0.265
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.4689,
+          "under_prob": 0.5311,
+          "fair_over": 2.132,
+          "fair_under": 1.883
+        },
+        "3.0": {
+          "over_prob": 0.2531,
+          "under_prob": 0.7469,
+          "fair_over": 3.95,
+          "fair_under": 1.339
+        },
+        "3.5": {
+          "over_prob": 0.2531,
+          "under_prob": 0.7469,
+          "fair_over": 3.95,
+          "fair_under": 1.339
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        2.12,
+        3.15,
+        3.52
+      ]
+    },
+    {
+      "num": "周日025",
+      "league": "美职",
+      "home": "圣路易城",
+      "away": "达拉斯",
+      "kickoff": "07:00:00",
+      "expected_goals": {
+        "home": 1.9,
+        "away": 1.4,
+        "total": 3.3
+      },
+      "fair_prob": {
+        "home": 0.476,
+        "draw": 0.251,
+        "away": 0.273
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.6405,
+          "under_prob": 0.3595,
+          "fair_over": 1.561,
+          "fair_under": 2.782
+        },
+        "3.0": {
+          "over_prob": 0.4196,
+          "under_prob": 0.5804,
+          "fair_over": 2.383,
+          "fair_under": 1.723
+        },
+        "3.5": {
+          "over_prob": 0.4196,
+          "under_prob": 0.5804,
+          "fair_over": 2.383,
+          "fair_under": 1.723
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        1.95,
+        3.69,
+        3.4
+      ]
+    },
+    {
+      "num": "周一001",
+      "league": "芬超",
+      "home": "国际图尔",
+      "away": "库奥皮奥",
+      "kickoff": "00:00:00",
+      "expected_goals": {
+        "home": 1.55,
+        "away": 1.3,
+        "total": 2.85
+      },
+      "fair_prob": {
+        "home": 0.412,
+        "draw": 0.277,
+        "away": 0.311
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.5424,
+          "under_prob": 0.4576,
+          "fair_over": 1.844,
+          "fair_under": 2.185
+        },
+        "3.0": {
+          "over_prob": 0.3192,
+          "under_prob": 0.6808,
+          "fair_over": 3.133,
+          "fair_under": 1.469
+        },
+        "3.5": {
+          "over_prob": 0.3192,
+          "under_prob": 0.6808,
+          "fair_over": 3.133,
+          "fair_under": 1.469
+        }
+      },
+      "odds_source": "jingcai_had",
+      "odds": [
+        2.15,
+        3.2,
+        2.85
+      ]
+    },
+    {
+      "num": "周一002",
+      "league": "芬超",
+      "home": "赫尔火花",
+      "away": "TPS图尔",
+      "kickoff": "00:00:00",
+      "expected_goals": {
+        "home": 1.85,
+        "away": 1.4,
+        "total": 3.25
+      },
+      "fair_prob": {
+        "home": 0.466,
+        "draw": 0.253,
+        "away": 0.281
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.6304,
+          "under_prob": 0.3696,
+          "fair_over": 1.586,
+          "fair_under": 2.705
+        },
+        "3.0": {
+          "over_prob": 0.4085,
+          "under_prob": 0.5915,
+          "fair_over": 2.448,
+          "fair_under": 1.691
+        },
+        "3.5": {
+          "over_prob": 0.4085,
+          "under_prob": 0.5915,
+          "fair_over": 2.448,
+          "fair_under": 1.691
+        }
+      },
+      "odds_source": "jingcai_had",
+      "odds": [
+        1.9,
+        3.5,
+        3.15
+      ]
+    },
+    {
+      "num": "周一003",
+      "league": "意甲",
+      "home": "莱切",
+      "away": "罗马",
+      "kickoff": "00:30:00",
+      "expected_goals": {
+        "home": 0.8,
+        "away": 2.0,
+        "total": 2.8
+      },
+      "fair_prob": {
+        "home": 0.129,
+        "draw": 0.225,
+        "away": 0.646
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.5304,
+          "under_prob": 0.4696,
+          "fair_over": 1.885,
+          "fair_under": 2.13
+        },
+        "3.0": {
+          "over_prob": 0.3079,
+          "under_prob": 0.6921,
+          "fair_over": 3.248,
+          "fair_under": 1.445
+        },
+        "3.5": {
+          "over_prob": 0.3079,
+          "under_prob": 0.6921,
+          "fair_over": 3.248,
+          "fair_under": 1.445
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        7.29,
+        4.19,
+        1.46
+      ]
+    },
+    {
+      "num": "周一004",
+      "league": "瑞超",
+      "home": "佐加顿斯",
+      "away": "米亚尔比",
+      "kickoff": "01:00:00",
+      "expected_goals": {
+        "home": 2.3,
+        "away": 1.2,
+        "total": 3.5
+      },
+      "fair_prob": {
+        "home": 0.61,
+        "draw": 0.214,
+        "away": 0.177
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.6789,
+          "under_prob": 0.3211,
+          "fair_over": 1.473,
+          "fair_under": 3.115
+        },
+        "3.0": {
+          "over_prob": 0.463,
+          "under_prob": 0.537,
+          "fair_over": 2.16,
+          "fair_under": 1.862
+        },
+        "3.5": {
+          "over_prob": 0.463,
+          "under_prob": 0.537,
+          "fair_over": 2.16,
+          "fair_under": 1.862
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        1.52,
+        4.34,
+        5.24
+      ]
+    },
+    {
+      "num": "周一005",
+      "league": "瑞超",
+      "home": "天狼星",
+      "away": "马尔默",
+      "kickoff": "01:00:00",
+      "expected_goals": {
+        "home": 1.95,
+        "away": 1.4,
+        "total": 3.35
+      },
+      "fair_prob": {
+        "home": 0.492,
+        "draw": 0.242,
+        "away": 0.266
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.6504,
+          "under_prob": 0.3496,
+          "fair_over": 1.537,
+          "fair_under": 2.861
+        },
+        "3.0": {
+          "over_prob": 0.4306,
+          "under_prob": 0.5694,
+          "fair_over": 2.323,
+          "fair_under": 1.756
+        },
+        "3.5": {
+          "over_prob": 0.4306,
+          "under_prob": 0.5694,
+          "fair_over": 2.323,
+          "fair_under": 1.756
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        1.88,
+        3.82,
+        3.47
+      ]
+    },
+    {
+      "num": "周一006",
+      "league": "西甲",
+      "home": "奥萨苏纳",
+      "away": "赫塔费",
+      "kickoff": "01:30:00",
+      "expected_goals": {
+        "home": 1.3,
+        "away": 0.9,
+        "total": 2.2
+      },
+      "fair_prob": {
+        "home": 0.435,
+        "draw": 0.318,
+        "away": 0.248
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.3773,
+          "under_prob": 0.6227,
+          "fair_over": 2.651,
+          "fair_under": 1.606
+        },
+        "3.0": {
+          "over_prob": 0.1806,
+          "under_prob": 0.8194,
+          "fair_over": 5.536,
+          "fair_under": 1.22
+        },
+        "3.5": {
+          "over_prob": 0.1806,
+          "under_prob": 0.8194,
+          "fair_over": 5.536,
+          "fair_under": 1.22
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        2.17,
+        2.97,
+        3.81
+      ]
+    },
+    {
+      "num": "周一007",
+      "league": "意甲",
+      "home": "亚特兰大",
+      "away": "博洛尼亚",
+      "kickoff": "02:45:00",
+      "expected_goals": {
+        "home": 1.75,
+        "away": 1.15,
+        "total": 2.9
+      },
+      "fair_prob": {
+        "home": 0.5,
+        "draw": 0.264,
+        "away": 0.237
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.554,
+          "under_prob": 0.446,
+          "fair_over": 1.805,
+          "fair_under": 2.242
+        },
+        "3.0": {
+          "over_prob": 0.3303,
+          "under_prob": 0.6697,
+          "fair_over": 3.027,
+          "fair_under": 1.493
+        },
+        "3.5": {
+          "over_prob": 0.3303,
+          "under_prob": 0.6697,
+          "fair_over": 3.027,
+          "fair_under": 1.493
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        1.89,
+        3.58,
+        3.99
+      ]
+    },
+    {
+      "num": "周一008",
+      "league": "法乙",
+      "home": "第戎",
+      "away": "圣埃蒂安",
+      "kickoff": "02:45:00",
+      "expected_goals": {
+        "home": 1.1,
+        "away": 1.7,
+        "total": 2.8
+      },
+      "fair_prob": {
+        "home": 0.228,
+        "draw": 0.268,
+        "away": 0.504
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.5305,
+          "under_prob": 0.4695,
+          "fair_over": 1.885,
+          "fair_under": 2.13
+        },
+        "3.0": {
+          "over_prob": 0.308,
+          "under_prob": 0.692,
+          "fair_over": 3.247,
+          "fair_under": 1.445
+        },
+        "3.5": {
+          "over_prob": 0.308,
+          "under_prob": 0.692,
+          "fair_over": 3.247,
+          "fair_under": 1.445
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        4.05,
+        3.45,
+        1.83
+      ]
+    },
+    {
+      "num": "周一009",
+      "league": "英超",
+      "home": "维拉",
+      "away": "阿森纳",
+      "kickoff": "03:00:00",
+      "expected_goals": {
+        "home": 1.0,
+        "away": 2.15,
+        "total": 3.15
+      },
+      "fair_prob": {
+        "home": 0.154,
+        "draw": 0.226,
+        "away": 0.62
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.6094,
+          "under_prob": 0.3906,
+          "fair_over": 1.641,
+          "fair_under": 2.56
+        },
+        "3.0": {
+          "over_prob": 0.3861,
+          "under_prob": 0.6139,
+          "fair_over": 2.59,
+          "fair_under": 1.629
+        },
+        "3.5": {
+          "over_prob": 0.3861,
+          "under_prob": 0.6139,
+          "fair_over": 2.59,
+          "fair_under": 1.629
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        6.11,
+        4.18,
+        1.52
+      ]
+    },
+    {
+      "num": "周一011",
+      "league": "葡超",
+      "home": "布拉加",
+      "away": "吉马良斯",
+      "kickoff": "03:15:00",
+      "expected_goals": {
+        "home": 1.75,
+        "away": 1.0,
+        "total": 2.75
+      },
+      "fair_prob": {
+        "home": 0.535,
+        "draw": 0.261,
+        "away": 0.204
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.5185,
+          "under_prob": 0.4815,
+          "fair_over": 1.929,
+          "fair_under": 2.077
+        },
+        "3.0": {
+          "over_prob": 0.2969,
+          "under_prob": 0.7031,
+          "fair_over": 3.368,
+          "fair_under": 1.422
+        },
+        "3.5": {
+          "over_prob": 0.2969,
+          "under_prob": 0.7031,
+          "fair_over": 3.368,
+          "fair_under": 1.422
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        1.74,
+        3.56,
+        4.56
+      ]
+    },
+    {
+      "num": "周一012",
+      "league": "西甲",
+      "home": "巴萨",
+      "away": "巴列卡诺",
+      "kickoff": "03:30:00",
+      "expected_goals": {
+        "home": 3.15,
+        "away": 0.85,
+        "total": 4.0
+      },
+      "fair_prob": {
+        "home": 0.814,
+        "draw": 0.121,
+        "away": 0.065
+      },
+      "ou": {
+        "2.5": {
+          "over_prob": 0.7607,
+          "under_prob": 0.2393,
+          "fair_over": 1.315,
+          "fair_under": 4.178
+        },
+        "3.0": {
+          "over_prob": 0.5643,
+          "under_prob": 0.4357,
+          "fair_over": 1.772,
+          "fair_under": 2.295
+        },
+        "3.5": {
+          "over_prob": 0.5643,
+          "under_prob": 0.4357,
+          "fair_over": 1.772,
+          "fair_under": 2.295
+        }
+      },
+      "odds_source": "okooo_99",
+      "odds": [
+        1.16,
+        7.82,
+        14.58
+      ]
+    }
+  ]
+}

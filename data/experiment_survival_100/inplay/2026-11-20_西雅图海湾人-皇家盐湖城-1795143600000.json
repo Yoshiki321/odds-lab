@@ -1,0 +1,20 @@
+{
+  "eventId": "西雅图海湾人-皇家盐湖城-1795143600000",
+  "dateAsiaShanghai": "2026-11-20",
+  "observedAt": "2026-11-20T10:30:25+08:00",
+  "planAt": "2026-11-20T10:30:00+08:00",
+  "planAtMs": 1795141800000,
+  "actualAtMs": 1795141825193,
+  "minutesToKickoff": 30,
+  "morning": {
+    "league": "美国职业大联盟 - 附加赛",
+    "tier": 2,
+    "kickoff": "2026-11-20T11:00:00+08:00"
+  },
+  "latestOdds": {
+    "markets": null
+  },
+  "autoBet": false,
+  "decision": "待人工判断（自动流程不下单）",
+  "dataQuality": "接口未返回该场盘口"
+}

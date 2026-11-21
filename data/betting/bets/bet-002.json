@@ -1,0 +1,37 @@
+{
+  "betId": 2,
+  "type": "2串1",
+  "stake": 60,
+  "totalOdds": 2.28,
+  "potentialReturn": 136.8,
+  "placedAt": "2026-08-24T01:00:00+08:00",
+  "status": "void",
+  "legs": [
+    {
+      "matchId": 2041023,
+      "matchNum": "周日023",
+      "home": "亚特兰大",
+      "away": "萨索洛",
+      "league": "意甲",
+      "kickoff": "2026-08-24T02:45:00+08:00",
+      "pick": "主胜 (HAD H)",
+      "odds": 1.41,
+      "result": null
+    },
+    {
+      "matchId": 2041031,
+      "matchNum": "周一004",
+      "home": "奥萨苏纳",
+      "away": "莱万特",
+      "league": "西甲",
+      "kickoff": "2026-08-25T01:30:00+08:00",
+      "pick": "主胜 (HAD H)",
+      "odds": 1.62,
+      "result": null
+    }
+  ],
+  "settledAt": null,
+  "returnAmount": null,
+  "profit": null,
+  "voidReason": "第2期重置，作废不计"
+}

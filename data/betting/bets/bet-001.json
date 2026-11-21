@@ -1,0 +1,37 @@
+{
+  "betId": 1,
+  "type": "2串1",
+  "stake": 80,
+  "totalOdds": 2.136,
+  "potentialReturn": 170.88,
+  "placedAt": "2026-08-24T01:00:00+08:00",
+  "status": "void",
+  "legs": [
+    {
+      "matchId": 2041024,
+      "matchNum": "周日024",
+      "home": "埃尔切",
+      "away": "巴萨",
+      "league": "西甲",
+      "kickoff": "2026-08-24T03:30:00+08:00",
+      "pick": "客胜 (HAD A)",
+      "odds": 1.2,
+      "result": null
+    },
+    {
+      "matchId": 2041035,
+      "matchNum": "周一008",
+      "home": "富勒姆",
+      "away": "切尔西",
+      "league": "英超",
+      "kickoff": "2026-08-25T03:00:00+08:00",
+      "pick": "客胜 (HAD A)",
+      "odds": 1.78,
+      "result": null
+    }
+  ],
+  "settledAt": null,
+  "returnAmount": null,
+  "profit": null,
+  "voidReason": "第2期重置，作废不计"
+}

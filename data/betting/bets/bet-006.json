@@ -1,0 +1,43 @@
+{
+  "betId": 6,
+  "type": "2串1",
+  "stake": 100,
+  "totalOdds": 3.17,
+  "potentialReturn": 317,
+  "placedAt": "2026-08-24T02:10:00+08:00",
+  "status": "settled",
+  "legs": [
+    {
+      "matchId": 2041022,
+      "matchNum": "周日022",
+      "home": "都灵",
+      "away": "AC米兰",
+      "league": "意甲",
+      "kickoff": "2026-08-24T02:45:00+08:00",
+      "pick": "让球主胜 (HHAD H)",
+      "odds": 1.91,
+      "result": {
+        "winFlag": "A",
+        "status": "2"
+      }
+    },
+    {
+      "matchId": 2041027,
+      "matchNum": "周日027",
+      "home": "桑托斯",
+      "away": "米拉索尔",
+      "league": "巴甲",
+      "kickoff": "2026-08-24T05:30:00+08:00",
+      "pick": "主胜 (HAD H)",
+      "odds": 1.66,
+      "result": {
+        "winFlag": "D",
+        "status": "2"
+      }
+    }
+  ],
+  "settledAt": "2026-08-24T13:39:00+08:00",
+  "returnAmount": 0,
+  "profit": -100,
+  "theory": "都灵受让+1保护(覆盖赢/平)跟机构7次变盘方向 × 桑托斯主胜1.66(机构明确看好赔率合理)。结果：桑托斯平局，腿2输，全单损失100"
+}

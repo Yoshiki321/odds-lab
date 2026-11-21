@@ -1,0 +1,129 @@
+{
+  "generatedAt": 1795227287133,
+  "generatedAtBJ": "2026-11-21 10:14:47",
+  "design": {
+    "model": "联赛内球队攻防强度（向1收缩K=8）+ 主客期望得分 + Skellam 分差",
+    "validation": "日级 walk-forward：预测某日只用该日之前完赛数据；同日不互用",
+    "baseline": "竞彩让分盘赔率 h/a 两路去水（接近50/50，水位约17%）",
+    "scoreOrder": "finalScore=客:主（已用 winFlag 交叉验证）",
+    "caveat": "数据无开赛时刻，无法做时点级验证；篮球独立泊松会高估分差方差"
+  },
+  "counts": {
+    "total": 2398,
+    "usable": 2190,
+    "noLine": 0,
+    "noOdds": 0,
+    "noPred": 208
+  },
+  "metrics": {
+    "brierModel": 0.2723,
+    "brierBaseline": 0.2498,
+    "diff": 0.0226
+  },
+  "verdict": {
+    "status": "worse-than-baseline",
+    "n": 2190,
+    "meanDiff": 0.022554,
+    "ci95": [
+      0.016074,
+      0.029035
+    ],
+    "alpha": 0.05,
+    "note": "配对 Brier 差均值 0.022554，95%CI [0.016074, 0.029035]；未调整相关性（同场多市场/同队多场）与多重比较；结论仅统计意义，不代表可盈利",
+    "problems": []
+  },
+  "calibration": {
+    "modelProbMean": 0.4852,
+    "actualCoverRate": 0.5155,
+    "bins": [
+      {
+        "range": "0~0.2",
+        "n": 60,
+        "predMean": 0.106,
+        "actualHit": 0.533
+      },
+      {
+        "range": "0.2~0.4",
+        "n": 527,
+        "predMean": 0.335,
+        "actualHit": 0.509
+      },
+      {
+        "range": "0.4~0.6",
+        "n": 1159,
+        "predMean": 0.497,
+        "actualHit": 0.521
+      },
+      {
+        "range": "0.6~0.8",
+        "n": 405,
+        "predMean": 0.664,
+        "actualHit": 0.514
+      },
+      {
+        "range": "0.8~1.0001",
+        "n": 39,
+        "predMean": 0.882,
+        "actualHit": 0.436
+      }
+    ]
+  },
+  "byLeague": [
+    {
+      "league": "美国职业篮球联盟",
+      "n": 938,
+      "brierModel": 0.2678,
+      "brierBaseline": 0.2494,
+      "diff": 0.0184
+    },
+    {
+      "league": "美国女子篮球联盟",
+      "n": 330,
+      "brierModel": 0.2599,
+      "brierBaseline": 0.2503,
+      "diff": 0.0096
+    },
+    {
+      "league": "德国篮球联赛",
+      "n": 253,
+      "brierModel": 0.2742,
+      "brierBaseline": 0.249,
+      "diff": 0.0252
+    },
+    {
+      "league": "西班牙篮球联赛",
+      "n": 247,
+      "brierModel": 0.2608,
+      "brierBaseline": 0.2517,
+      "diff": 0.0091
+    },
+    {
+      "league": "欧洲篮球联赛",
+      "n": 217,
+      "brierModel": 0.2474,
+      "brierBaseline": 0.2493,
+      "diff": -0.0018
+    },
+    {
+      "league": "男篮世界杯预选赛",
+      "n": 116,
+      "brierModel": 0.3874,
+      "brierBaseline": 0.2489,
+      "diff": 0.1384
+    },
+    {
+      "league": "澳大利亚篮球联赛",
+      "n": 75,
+      "brierModel": 0.2873,
+      "brierBaseline": 0.2509,
+      "diff": 0.0364
+    }
+  ],
+  "limitations": [
+    "日级而非时点级：同日比赛共享同一预测时点，无法证明赛前T-30机制",
+    "终盘赔率作基线，含轻微前视（终盘是赛前最后定价）",
+    "独立泊松假设对篮球分差方差偏大，极端盘口概率可能偏保守",
+    "未按主客场分拆球队攻防，只分拆联赛主场优势",
+    "样本跨度 2026-01-01 ~ 2026-11-20，含跨赛季与联赛结构变化"
+  ]
+}

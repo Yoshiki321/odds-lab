@@ -1,0 +1,14 @@
+{
+  "version": "sweep-plan-v4-api-native",
+  "createdAt": "2026-11-19T10:15:51+08:00",
+  "stats": {
+    "capturedAll": 2527,
+    "football": 3,
+    "inScope": 71,
+    "named": 0,
+    "tier1": 0,
+    "tier2": 0
+  },
+  "coverageNote": "全量接口返回 2527 场；一/二类未来72h 71 场，补到队名 0 场（未取到队名的不计）",
+  "rechecks": []
+}

@@ -1,0 +1,311 @@
+[
+  {
+    "match": {
+      "matchId": "2041060",
+      "num": "周三003",
+      "league": "英联赛杯",
+      "home": "热刺",
+      "away": "查尔顿",
+      "matchDate": "2026-08-27",
+      "matchTime": "02:45:00",
+      "goalLine": "-2",
+      "h": 1.12,
+      "d": 6.85,
+      "a": 11,
+      "hh": 2.4,
+      "hd": 4,
+      "ha": 2.16,
+      "hadChanges": 0,
+      "hhadChanges": 0,
+      "hadHF": 0,
+      "hadAF": 0,
+      "hadAD": 0,
+      "hhadHF": 0,
+      "hhadAF": 0,
+      "hhadAD": 0,
+      "hadSingle": false,
+      "hhadADir": "flat",
+      "hhadHDir": "flat",
+      "hadADir": "flat"
+    },
+    "sigs": [
+      {
+        "id": "P2a",
+        "name": "P2a基础",
+        "desc": "HHAD-A(让球负) + 非五大非次级(不限制让球)",
+        "winRate": "46.5%",
+        "preciseEV": "120.1%",
+        "roi": "+114% (99注)",
+        "bonus": null
+      },
+      {
+        "id": "P2a_hdir_flat",
+        "name": "P2a主向稳定",
+        "desc": "P2a + 让球主方向flat",
+        "winRate": "58.6%",
+        "preciseEV": "150.3%",
+        "roi": "+150% (29注)",
+        "bonus": null
+      }
+    ]
+  },
+  {
+    "match": {
+      "matchId": "2041061",
+      "num": "周三004",
+      "league": "英联赛杯",
+      "home": "纽卡斯尔",
+      "away": "西布罗姆",
+      "matchDate": "2026-08-27",
+      "matchTime": "02:45:00",
+      "goalLine": "-1",
+      "h": 1.23,
+      "d": 5.3,
+      "a": 7.8,
+      "hh": 1.8,
+      "hd": 3.7,
+      "ha": 3.3,
+      "hadChanges": 0,
+      "hhadChanges": 0,
+      "hadHF": 0,
+      "hadAF": 0,
+      "hadAD": 0,
+      "hhadHF": 0,
+      "hhadAF": 0,
+      "hhadAD": 0,
+      "hadSingle": false,
+      "hhadADir": "flat",
+      "hhadHDir": "flat",
+      "hadADir": "flat"
+    },
+    "sigs": [
+      {
+        "id": "P2a",
+        "name": "P2a基础",
+        "desc": "HHAD-A(让球负) + 非五大非次级(不限制让球)",
+        "winRate": "46.5%",
+        "preciseEV": "120.1%",
+        "roi": "+114% (99注)",
+        "bonus": null
+      },
+      {
+        "id": "P2a_hdir_flat",
+        "name": "P2a主向稳定",
+        "desc": "P2a + 让球主方向flat",
+        "winRate": "58.6%",
+        "preciseEV": "150.3%",
+        "roi": "+150% (29注)",
+        "bonus": null
+      }
+    ]
+  },
+  {
+    "match": {
+      "matchId": "2041066",
+      "num": "周三009",
+      "league": "英联赛杯",
+      "home": "普雷斯顿",
+      "away": "埃弗顿",
+      "matchDate": "2026-08-27",
+      "matchTime": "03:00:00",
+      "goalLine": "+1",
+      "h": 6,
+      "d": 4.2,
+      "a": 1.38,
+      "hh": 2.58,
+      "hd": 3.5,
+      "ha": 2.2,
+      "hadChanges": 0,
+      "hhadChanges": 0,
+      "hadHF": 0,
+      "hadAF": 0,
+      "hadAD": 0,
+      "hhadHF": 0,
+      "hhadAF": 0,
+      "hhadAD": 0,
+      "hadSingle": false,
+      "hhadADir": "flat",
+      "hhadHDir": "flat",
+      "hadADir": "flat"
+    },
+    "sigs": [
+      {
+        "id": "P2a_gl1",
+        "name": "🏆 最强信号",
+        "desc": "HHAD-A(让球负) + 非五大非次级 + 让球+1 + 非单关",
+        "winRate": "44.1%",
+        "preciseEV": "172.6%",
+        "roi": "+288% (34注)",
+        "bonus": "🟢让球负方向平(最稳)"
+      },
+      {
+        "id": "P2a",
+        "name": "P2a基础",
+        "desc": "HHAD-A(让球负) + 非五大非次级(不限制让球)",
+        "winRate": "46.5%",
+        "preciseEV": "120.1%",
+        "roi": "+114% (99注)",
+        "bonus": null
+      },
+      {
+        "id": "P2a_hdir_flat",
+        "name": "P2a主向稳定",
+        "desc": "P2a + 让球主方向flat",
+        "winRate": "58.6%",
+        "preciseEV": "150.3%",
+        "roi": "+150% (29注)",
+        "bonus": null
+      }
+    ]
+  },
+  {
+    "match": {
+      "matchId": "2041068",
+      "num": "周三011",
+      "league": "巴西杯",
+      "home": "帕梅拉斯",
+      "away": "桑托斯",
+      "matchDate": "2026-08-27",
+      "matchTime": "08:30:00",
+      "goalLine": "-1",
+      "h": 1.46,
+      "d": 3.7,
+      "a": 5.8,
+      "hh": 2.6,
+      "hd": 3.15,
+      "ha": 2.35,
+      "hadChanges": 0,
+      "hhadChanges": 0,
+      "hadHF": 0,
+      "hadAF": 0,
+      "hadAD": 0,
+      "hhadHF": 0,
+      "hhadAF": 0,
+      "hhadAD": 0,
+      "hadSingle": false,
+      "hhadADir": "flat",
+      "hhadHDir": "flat",
+      "hadADir": "flat"
+    },
+    "sigs": [
+      {
+        "id": "P2a",
+        "name": "P2a基础",
+        "desc": "HHAD-A(让球负) + 非五大非次级(不限制让球)",
+        "winRate": "46.5%",
+        "preciseEV": "120.1%",
+        "roi": "+114% (99注)",
+        "bonus": null
+      },
+      {
+        "id": "P2a_hdir_flat",
+        "name": "P2a主向稳定",
+        "desc": "P2a + 让球主方向flat",
+        "winRate": "58.6%",
+        "preciseEV": "150.3%",
+        "roi": "+150% (29注)",
+        "bonus": null
+      }
+    ]
+  },
+  {
+    "match": {
+      "matchId": "2041069",
+      "num": "周三012",
+      "league": "巴西杯",
+      "home": "达伽马",
+      "away": "维多利亚",
+      "matchDate": "2026-08-27",
+      "matchTime": "08:30:00",
+      "goalLine": "-1",
+      "h": 1.47,
+      "d": 3.6,
+      "a": 5.85,
+      "hh": 2.7,
+      "hd": 3.2,
+      "ha": 2.25,
+      "hadChanges": 0,
+      "hhadChanges": 0,
+      "hadHF": 0,
+      "hadAF": 0,
+      "hadAD": 0,
+      "hhadHF": 0,
+      "hhadAF": 0,
+      "hhadAD": 0,
+      "hadSingle": false,
+      "hhadADir": "flat",
+      "hhadHDir": "flat",
+      "hadADir": "flat"
+    },
+    "sigs": [
+      {
+        "id": "P2a",
+        "name": "P2a基础",
+        "desc": "HHAD-A(让球负) + 非五大非次级(不限制让球)",
+        "winRate": "46.5%",
+        "preciseEV": "120.1%",
+        "roi": "+114% (99注)",
+        "bonus": null
+      },
+      {
+        "id": "P2a_hdir_flat",
+        "name": "P2a主向稳定",
+        "desc": "P2a + 让球主方向flat",
+        "winRate": "58.6%",
+        "preciseEV": "150.3%",
+        "roi": "+150% (29注)",
+        "bonus": null
+      }
+    ]
+  },
+  {
+    "match": {
+      "matchId": "2041077",
+      "num": "周四009",
+      "league": "巴西杯",
+      "home": "巴西国际",
+      "away": "格雷米奥",
+      "matchDate": "2026-08-28",
+      "matchTime": "07:00:00",
+      "goalLine": "-1",
+      "h": 1.72,
+      "d": 3.15,
+      "a": 4.35,
+      "hh": 3.5,
+      "hd": 3.25,
+      "ha": 1.87,
+      "hadChanges": 0,
+      "hhadChanges": 0,
+      "hadHF": 0,
+      "hadAF": 0,
+      "hadAD": 0,
+      "hhadHF": 0,
+      "hhadAF": 0,
+      "hhadAD": 0,
+      "hadSingle": false,
+      "hhadADir": "flat",
+      "hhadHDir": "flat",
+      "hadADir": "flat"
+    },
+    "sigs": [
+      {
+        "id": "P2a",
+        "name": "P2a基础",
+        "desc": "HHAD-A(让球负) + 非五大非次级(不限制让球)",
+        "winRate": "46.5%",
+        "preciseEV": "120.1%",
+        "roi": "+114% (99注)",
+        "bonus": null
+      },
+      {
+        "id": "P2a_hdir_flat",
+        "name": "P2a主向稳定",
+        "desc": "P2a + 让球主方向flat",
+        "winRate": "58.6%",
+        "preciseEV": "150.3%",
+        "roi": "+150% (29注)",
+        "bonus": null
+      }
+    ]
+  }
+]

@@ -1,0 +1,45 @@
+{
+  "betId": 7,
+  "type": "2串1",
+  "stake": 100,
+  "totalOdds": 2.62,
+  "potentialReturn": 262,
+  "placedAt": "2026-08-24T23:35:00+08:00",
+  "status": "settled",
+  "legs": [
+    {
+      "matchId": 2041034,
+      "matchNum": "周一007",
+      "home": "兰斯",
+      "away": "阿纳西",
+      "league": "法乙",
+      "kickoff": "2026-08-25T02:45:00+08:00",
+      "pick": "主胜 (HAD H)",
+      "odds": 1.62,
+      "result": {
+        "winFlag": "H",
+        "score": "3:1",
+        "status": "2"
+      }
+    },
+    {
+      "matchId": 2041031,
+      "matchNum": "周一004",
+      "home": "奥萨苏纳",
+      "away": "莱万特",
+      "league": "西甲",
+      "kickoff": "2026-08-25T01:30:00+08:00",
+      "pick": "主胜 (HAD H)",
+      "odds": 1.62,
+      "result": {
+        "winFlag": "D",
+        "score": "0:0",
+        "status": "2"
+      }
+    }
+  ],
+  "settledAt": "2026-08-25T13:45:00+08:00",
+  "returnAmount": 0,
+  "profit": -100,
+  "theory": "兰斯主胜(1.62)变盘方向明确命中3-1 ✅ 但奥萨苏纳0-0闷平主胜腿输 → 2串1全输"
+}

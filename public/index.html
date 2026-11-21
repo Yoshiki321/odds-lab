@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>我的竞彩日记</title>
+<style>
+:root{--bg:#0b0f17;--card:#151b28;--border:#1e2638;--text:#e2e6f0;--dim:#5a6288;--green:#22c55e;--red:#ef4444;--yellow:#eab308;--blue:#3b82f6;--purple:#a78bfa;--pink:#f472b6}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden}
+/* ===== 布局 ===== */
+.layout{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:340px 1fr;gap:24px;padding:24px;min-width:0}
+@media(max-width:820px){.layout{grid-template-columns:1fr;padding:12px;gap:12px}}
+/* ===== 左侧面板 ===== */
+.side{position:sticky;top:24px;align-self:start;min-width:0}
+@media(max-width:820px){.side{position:static;display:flex;flex-wrap:wrap;gap:10px}.side>*{flex:1 1 100%}}
+@media(max-width:820px){.side .brand,.side .bill{flex:1 1 calc(50% - 5px);margin-bottom:0}.side .cal{flex:1 1 100%}}
+.brand{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px}
+@media(max-width:820px){.brand{padding:14px 16px;margin-bottom:0}.brand .logo{font-size:17px}.brand .sub{font-size:11px}.brand .tagline{font-size:10px;margin-top:6px}.brand .tagline b{font-size:14px}}
+/* 账单卡片 */
+.bill{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px}
+@media(max-width:820px){.bill{padding:14px 16px;margin-bottom:0}.bill .row{font-size:12px;padding:5px 0}.bill .row .v{font-size:14px}}
+.bill h3{font-size:12px;color:var(--dim);font-weight:600;letter-spacing:.5px;margin-bottom:14px;text-transform:uppercase}
+@media(max-width:820px){.bill h3{font-size:11px;margin-bottom:10px}}
+.bill .row{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px}
+.bill .row:last-child{border-bottom:none}
+.bill .row .l{color:var(--dim)}
+.bill .row .v{font-weight:700;font-size:16px}
+.bill .row .v.green{color:var(--green)}
+.bill .row .v.red{color:var(--red)}
+.bill .row .v.yellow{color:var(--yellow)}
+.bill .progress{height:6px;background:var(--border);border-radius:4px;margin-top:12px;overflow:hidden}
+.bill .progress div{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--green),var(--yellow))}
+.bill .goal-note{font-size:11px;color:var(--dim);text-align:right;margin-top:6px}
+/* ===== 日历 ===== */
+.cal{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px}
+@media(max-width:820px){.cal{padding:14px 12px;border-radius:12px}.cal .cal-header .ym{font-size:14px}}
+.cal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.cal-header .ym{font-size:15px;font-weight:700}
+.cal-header .nav{display:flex;gap:8px}
+.cal-header button{background:var(--bg);border:1px solid var(--border);color:var(--dim);border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:14px;line-height:1}
+.cal-header button:hover{color:var(--text);border-color:var(--dim)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+@media(max-width:820px){.cal-grid{gap:2px}}
+.cal-grid .dow{font-size:10px;color:var(--dim);text-align:center;padding:6px 0}
+@media(max-width:820px){.cal-grid .dow{padding:4px 0;font-size:9px}}
+.cal-grid .day{min-height:36px;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;font-size:13px;position:relative;transition:all .15s;border:1px solid transparent;padding:4px 0}
+.cal-grid .day.empty{cursor:default}
+.cal-grid .day:hover:not(.empty){background:var(--border)}
+.cal-grid .day:active{background:var(--border);transform:scale(0.92)}
+.cal-grid .day.active{background:var(--blue);color:#fff;font-weight:700;box-shadow:0 0 12px rgba(59,130,246,.3)}
+.cal-grid .day .dot{width:4px;height:4px;border-radius:50%;margin-top:3px}
+.cal-grid .day .dot.g{background:var(--green)}
+.cal-grid .day .dot.r{background:var(--red)}
+.cal-grid .day .dot.y{background:var(--yellow)}
+/* ===== 右侧日记 ===== */
+.diary{padding:4px 0 40px;min-width:0}
+@media(max-width:820px){.diary{padding:0 0 24px}}
+.diary-head{display:flex;align-items:center;gap:16px;margin-bottom:8px}
+.diary-head .date-big{font-size:42px;font-weight:800;letter-spacing:-1px;line-height:1}
+@media(max-width:820px){.diary-head .date-big{font-size:32px}}
+.diary-head .date-sub{color:var(--dim);font-size:13px;padding-top:8px}
+@media(max-width:820px){.diary-head .date-sub{font-size:12px;padding-top:4px}}
+.diary-head .mood{font-size:26px}
+.diary-title{font-size:20px;font-weight:700;color:var(--yellow);margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+@media(max-width:820px){.diary-title{font-size:17px;margin-bottom:16px;padding-bottom:12px}}
+/* 日记条目 */
+.entry{position:relative;padding:0 0 28px 28px;border-left:2px solid var(--border)}
+@media(max-width:820px){.entry{padding:0 0 20px 20px}}
+.entry:last-child{border-left-color:transparent;padding-bottom:8px}
+.entry::before{content:'';position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--dim)}
+@media(max-width:820px){.entry::before{left:-6px;width:10px;height:10px}}
+.entry[data-type="mistake"]::before{border-color:var(--red);background:var(--red)}
+.entry[data-type="lesson"]::before{border-color:var(--yellow);background:var(--yellow)}
+.entry[data-type="action"]::before{border-color:var(--green);background:var(--green)}
+.entry[data-type="analysis"]::before{border-color:var(--blue);background:var(--blue)}
+.entry .time{font-size:11px;color:var(--dim);font-weight:600;letter-spacing:.5px;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.entry .content{font-size:14px;line-height:1.75;color:#cdd3e3;white-space:pre-line;overflow-wrap:break-word;word-break:break-word}
+@media(max-width:820px){.entry .content{font-size:13px;line-height:1.7}.entry .time{font-size:10px}}
+.entry .content b{color:var(--text)}
+.entry .content em{font-style:normal;color:var(--yellow)}
+/* 类型标签 */
+.tag{display:inline-block;padding:1px 8px;border-radius:4px;font-size:10px;font-weight:600;letter-spacing:.3px}
+.tag.thought{background:rgba(59,130,246,.15);color:var(--blue)}
+.tag.mistake{background:rgba(239,68,68,.15);color:var(--red)}
+.tag.lesson{background:rgba(234,179,8,.15);color:var(--yellow)}
+.tag.action{background:rgba(34,197,94,.15);color:var(--green)}
+.tag.analysis{background:rgba(167,139,250,.15);color:var(--purple)}
+/* 当日投注卡片 */
+.day-bets{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap}
+@media(max-width:820px){.day-bets{gap:8px;margin-bottom:16px}}
+.day-bet{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;font-size:12px;min-width:200px;flex:1}
+@media(max-width:820px){.day-bet{min-width:0;padding:10px 12px;font-size:11px;flex:1 1 100%}}
+.day-bet .b-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.day-bet .b-id{font-weight:700;font-size:13px}
+.day-bet .b-status{font-size:10px;padding:2px 8px;border-radius:6px;font-weight:600}
+.day-bet .b-status.win{background:rgba(34,197,94,.15);color:var(--green)}
+.day-bet .b-status.lose{background:rgba(239,68,68,.15);color:var(--red)}
+.day-bet .b-status.active{background:rgba(234,179,8,.15);color:var(--yellow)}
+.day-bet .b-legs{color:var(--dim);line-height:1.6}
+.day-bet .b-odd{margin-top:8px;color:var(--text);font-weight:600}
+.empty{background:var(--card);border:1px dashed var(--border);border-radius:16px;padding:40px;text-align:center;color:var(--dim);font-size:13px}
+@media(max-width:820px){.empty{padding:24px;font-size:12px}}
+.footer{text-align:center;padding:20px;font-size:11px;color:var(--dim);border-top:1px solid var(--border);margin-top:20px}
+.link{color:var(--blue);text-decoration:none;font-size:12px}
+</style>
+</head>
+<body>
+<div class="layout">
+  <!-- 左侧 -->
+  <div class="side">
+    <div class="brand">
+      <div class="logo">📖 我的日记</div>
+      <div class="sub">竞彩 · 思考 · 教训</div>
+      <div class="tagline">目标：<b>¥10000</b> · 从1000到10000</div>
+    </div>
+    <div class="bill" id="bill"></div>
+    <div class="cal">
+      <div class="cal-header">
+        <div class="ym" id="cal-ym"></div>
+        <div class="nav">
+          <button onclick="calMove(-1)">‹</button>
+          <button onclick="calMove(1)">›</button>
+        </div>
+      </div>
+      <div class="cal-grid" id="cal-grid"></div>
+    </div>
+  </div>
+  <!-- 右侧日记 -->
+  <div class="diary" id="diary"><div class="empty">加载中…</div></div>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+let state={ journals:[], selectedDate:null, calYear:2026, calMonth:8 };
+let summaryData={ledger:{},bets:[]};
+
+async function load(){
+  const [s,r]=await Promise.all([
+    fetch('/api/summary').then(x=>x.ok?x.json():{}).catch(()=>({})),
+    fetch('/api/diary').then(x=>x.ok?x.json():{journals:[]}).catch(()=>({journals:[]}))
+  ]);
+  summaryData=s;
+  state.journals=(r.journals||[]).sort((a,b)=>a.date<b.date?-1:1);
+  state.selectedDate=state.journals[state.journals.length-1]?.date||'';
+  renderBill();renderCal();renderDiary();
+}
+
+function renderBill(){
+  const L=summaryData.ledger||{};
+  const cash=L.cash||0, start=L.startBankroll||1000;
+  const profit=L.settledProfit||0;
+  const pct=Math.min(cash/10000*100,100);
+  $('#bill').innerHTML=`
+    <h3>📊 账单</h3>
+    <div class="row"><span class="l">本金</span><span class="v">¥${start}</span></div>
+    <div class="row"><span class="l">可用</span><span class="v ${cash<start?'red':'green'}">¥${cash}</span></div>
+    <div class="row"><span class="l">盈亏</span><span class="v ${profit>=0?'green':'red'}">${profit>=0?'+':''}${profit}</span></div>
+    <div class="row"><span class="l">在途</span><span class="v yellow">${(L.inPlay||[]).length} 单</span></div>
+    <div class="progress"><div style="width:${pct}%"></div></div>
+    <div class="goal-note">距 ¥10000 还差 ${(10000-cash).toFixed(0)} · ${pct.toFixed(1)}%</div>`;
+}
+
+function calMove(delta){
+  state.calMonth+=delta;
+  if(state.calMonth<1){state.calMonth=12;state.calYear--}
+  if(state.calMonth>12){state.calMonth=1;state.calYear++}
+  renderCal();
+}
+
+function renderCal(){
+  const y=state.calYear,m=state.calMonth;
+  $('#cal-ym').textContent=`${y}年 ${m}月`;
+  const first=new Date(y,m-1,1).getDay();
+  const days=new Date(y,m,0).getDate();
+  const dow=['日','一','二','三','四','五','六'];
+  let h=dow.map(d=>`<div class="dow">${d}</div>`).join('');
+  for(let i=0;i<first;i++)h+=`<div class="day empty"></div>`;
+  for(let d=1;d<=days;d++){
+    const ds=`${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const j=state.journals.find(x=>x.date===ds);
+    const isToday=ds===state.selectedDate;
+    const dot=j ? (j.bankroll.change>0?'g':j.bankroll.change<0?'r':'y') : '';
+    h+=`<div class="day ${isToday?'active':''}" onclick="selectDay('${ds}')" title="${j?'有日记':'无'}">
+      ${d}${j?`<div class="dot ${dot}"></div>`:''}</div>`;
+  }
+  $('#cal-grid').innerHTML=h;
+}
+
+function selectDay(ds){
+  state.selectedDate=ds;
+  renderCal();renderDiary();
+  // 移动端：点击日期后滚动到日记区
+  if(window.innerWidth<=820){
+    document.querySelector('.diary').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+}
+
+function renderDiary(){
+  const j=state.journals.find(x=>x.date===state.selectedDate);
+  const el=$('#diary');
+  if(!j){
+    el.innerHTML=`<div class="diary-head"><div class="date-big">${state.selectedDate.slice(5)}</div><div class="date-sub">${state.selectedDate}</div></div>
+    <div class="empty">这一天没有写日记。<br><a class="link" onclick="selectDay('${state.journals[state.journals.length-1]?.date||''}')">← 回到最近一篇</a></div>`;
+    return;
+  }
+  const typeLabel={thought:'思考',mistake:'教训',lesson:'心得',action:'行动',analysis:'分析'};
+  let bets='';
+  if(j.bets&&j.bets.length){
+    bets=`<div class="day-bets">${j.bets.map(b=>{
+      const st=b.status==='loss'?'lose':b.status==='win'?'win':'active';
+      const stTxt=b.status==='loss'?'❌ 输':b.status==='win'?'✅ 赢':b.status==='active'?'🔄 在途':'—';
+      const ret=b.return!=null?` → ${b.return}`:'';
+      return `<div class="day-bet"><div class="b-head"><span class="b-id">bet #${b.id}</span><span class="b-status ${st}">${stTxt}</span></div><div class="b-legs">${b.legs}</div><div class="b-odd">投${b.stake}元${ret}${b.return!=null?` · 盈亏 ${b.return-b.stake>=0?'+':''}${b.return-b.stake}`:''}</div></div>`;
+    }).join('')}</div>`;
+  }
+  let content='';
+  (j.content||[]).forEach((e,i)=>{
+    content+=`<div class="entry" data-type="${e.type}">
+      <div class="time"><span class="tag ${e.type}">${typeLabel[e.type]||e.type}</span> · ${e.time}</div>
+      <div class="content">${md(e.text)}</div>
+    </div>`;
+  });
+  el.innerHTML=`<div class="diary-head">
+      <div class="date-big">${j.date.slice(5)}</div>
+      <div class="date-sub">${j.date}<br>盈亏 ${j.bankroll.change>=0?'+':''}${j.bankroll.change}元<br>${j.mood||''}</div>
+    </div>
+    <div class="diary-title">${j.title}</div>
+    ${bets}
+    ${content}`;
+}
+
+/* 简单 md: 加粗 + 代码块 + 换行 */
+function md(s){
+  if(!s)return '';
+  let t=s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  t=t.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>')
+     .replace(/`(.+?)`/g,'<code style="background:var(--bg);padding:1px 6px;border-radius:4px;font-size:12px">$1</code>')
+     .replace(/^- (.+)$/gm,'<li style="margin-left:16px">$1</li>')
+     .replace(/\n/g,'\n');
+  return t;
+}
+load();
+</script>
+</body>
+</html>

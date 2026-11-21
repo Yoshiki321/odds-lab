@@ -1,0 +1,23 @@
+{
+  "snapshots": 26,
+  "matchesSeen": 594,
+  "rows": 927,
+  "distinctMatches": 68,
+  "dropped": {
+    "noResult": 267,
+    "badOdds": 0,
+    "afterKickoff": 0,
+    "noTime": 18,
+    "noKickoff": 0
+  },
+  "captureRange": {
+    "from": "2026-08-23T16:54:31.000Z",
+    "to": "2026-08-29T08:55:57.000Z"
+  },
+  "kickoffRange": {
+    "from": "2026-08-23T17:00:00.000Z",
+    "to": "2026-08-29T11:30:00.000Z"
+  },
+  "rowsWithLateOdds": 0,
+  "note": "predictMs = max(captureMs, oddsMs)；要求 predictMs < kickoffMs"
+}

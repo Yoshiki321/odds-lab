@@ -1,0 +1,19 @@
+{
+  "version": "sweep-plan-v2",
+  "configVersion": "sweep-config-v2",
+  "createdAt": "2026-11-19T09:43:51+08:00",
+  "mode": "manual",
+  "observedAt": "2026-11-19T09:43:51+08:00",
+  "sourcePage": "https://user-pc-new.zqt0510.com/#/home",
+  "parsedMatches": 4,
+  "advertisedTotal": null,
+  "coverageNote": "页面未读到总量；解析到 4 场（覆盖情况未知）",
+  "sel": {
+    "total": 0,
+    "included": [],
+    "excluded": [],
+    "capped": false
+  },
+  "rechecks": [],
+  "note": "解析为粗解析（页面文本），赔率等明细以页面为准；只观察不下单"
+}

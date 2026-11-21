@@ -1,0 +1,52 @@
+/** M-04: 竞彩负 EV 时，只有欧亚结算价格仍为正 EV 才允许改投。 */
+import { fairProbForPick } from './ev-fit.js';
+
+export interface M04Input {
+  score: number;
+  line: number;
+  market: 'HAD' | 'HHAD';
+  side: 'H' | 'A';
+  jcOdds: number;
+  europe: { home: number; draw: number; away: number } | null;
+  settleOdds: number | null;
+  hoursToKickoff: number | null;
+}
+
+export interface M04Decision {
+  eligible: boolean;
+  reason: string;
+  jcEv: number | null;
+  settleEv: number | null;
+  fairProb: number | null;
+}
+
+const valid = (n: number | null): n is number => n != null && Number.isFinite(n) && n > 1;
+
+/** Pure gate shared by open/close workflows; it never places a bet. */
+export function evaluateM04(i: M04Input): M04Decision {
+  if (i.score < 48) return { eligible: false, reason: 'score<48', jcEv: null, settleEv: null, fairProb: null };
+  if (i.hoursToKickoff == null || i.hoursToKickoff < 0.5 || i.hoursToKickoff > 8)
+    return { eligible: false, reason: 'R5时间窗外', jcEv: null, settleEv: null, fairProb: null };
+  if (!valid(i.jcOdds)) return { eligible: false, reason: '竞彩赔率缺失', jcEv: null, settleEv: null, fairProb: null };
+  if (!i.europe || !valid(i.europe.home) || !valid(i.europe.draw) || !valid(i.europe.away))
+    return { eligible: false, reason: '独立欧赔缺失', jcEv: null, settleEv: null, fairProb: null };
+
+  const raw = { home: 1 / i.europe.home, draw: 1 / i.europe.draw, away: 1 / i.europe.away };
+  const z = raw.home + raw.draw + raw.away;
+  const fair = { home: raw.home / z, draw: raw.draw / z, away: raw.away / z };
+  const p = fairProbForPick(fair, i.side, i.market, i.line);
+  if (p == null) return { eligible: false, reason: '公平概率计算失败', jcEv: null, settleEv: null, fairProb: null };
+  const jcEv = p * i.jcOdds - 1;
+  const settleEv = valid(i.settleOdds) ? p * i.settleOdds - 1 : null;
+  if (jcEv >= 0) return { eligible: false, reason: '竞彩本身非负EV，无需M-04改投', jcEv, settleEv, fairProb: p };
+  if (settleEv == null) return { eligible: false, reason: '欧亚结算赔率缺失', jcEv, settleEv, fairProb: p };
+  if (settleEv < 0) return { eligible: false, reason: '欧亚结算仍为负EV', jcEv, settleEv, fairProb: p };
+  return { eligible: true, reason: 'M-04欧亚改投通过', jcEv, settleEv, fairProb: p };
+}
+
+if (process.argv[1]?.replace(/\\/g, '/').endsWith('m04.ts')) {
+  const d = evaluateM04({ score: 48, line: 0, market: 'HAD', side: 'A', jcOdds: 1.36,
+    europe: { home: 6.5, draw: 4, away: 1.53 }, settleOdds: 1.8, hoursToKickoff: 4 });
+  if (!d.eligible || d.jcEv >= 0 || d.settleEv == null || d.settleEv < 0) throw new Error(JSON.stringify(d));
+  console.log(`M-04 self-check OK: jcEV=${(d.jcEv * 100).toFixed(1)}%, settleEV=${(d.settleEv * 100).toFixed(1)}%`);
+}

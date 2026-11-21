@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>评分说明 · 竞彩助手</title>
+<script>if(/\bembed=/.test(location.search))document.documentElement.classList.add('embed')</script>
+<style>
+/* 与 index.html 同一套设计令牌（design-taste-frontend skill） */
+:root{
+  --bg0:#05070d; --bg1:#0a0e17; --bg2:#0e1421; --bg3:#151d30;
+  --ln:rgba(145,164,204,.10); --ln2:rgba(145,164,204,.20);
+  --t1:#e9edf6; --t2:#a6b0ca; --t3:#7b86a4;
+  --acc:#34d399; --acc-strong:#10b981; --acc-ink:#04231a;
+  --up:#3fd9a0; --down:#fb7185; --wait:#f6b94a; --info:#74a7f2; --model:#9c8ff0; --cyan:#4fe0c4;
+  --d0:#4fe0c4; --d1:#74a7f2; --d2:#9c8ff0; --d3:#e8b45f; --d4:#e78a9c; --d5:#aeb9dc;
+  --sans:-apple-system,'PingFang SC','Microsoft YaHei','Noto Sans SC',system-ui,sans-serif;
+  --mono:ui-monospace,'Cascadia Mono','SF Mono',Consolas,'Roboto Mono',Menlo,monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+html{color-scheme:dark;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:rgba(145,164,204,.32) transparent}
+*{margin:0;padding:0;box-sizing:border-box}
+*::-webkit-scrollbar{width:8px;height:8px}
+*::-webkit-scrollbar-track{background:transparent}
+*::-webkit-scrollbar-thumb{background:rgba(145,164,204,.22);border-radius:999px;border:2px solid transparent;background-clip:padding-box}
+*::-webkit-scrollbar-thumb:hover{background:rgba(145,164,204,.42);border:2px solid transparent;background-clip:padding-box}
+*::-webkit-scrollbar-corner{background:transparent}
+body{font-family:var(--sans);background:var(--bg0);color:var(--t1);padding:36px 20px 60px;line-height:1.7;font-size:14px;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0 0 auto 0;height:380px;background:radial-gradient(800px 280px at 50% -140px,rgba(52,211,153,.06),transparent 70%);pointer-events:none;z-index:0}
+::selection{background:rgba(52,211,153,.28)}
+.container{max-width:880px;margin:0 auto;position:relative;z-index:1}
+.ic{display:inline-block;vertical-align:-2px}
+.head{display:flex;align-items:center;gap:14px;margin-bottom:8px}
+.head .mark{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;color:var(--acc);background:linear-gradient(135deg,rgba(52,211,153,.2),rgba(52,211,153,.04));border:1px solid rgba(52,211,153,.32);box-shadow:0 0 18px rgba(52,211,153,.12)}
+h1{font-size:21px;font-weight:800;letter-spacing:.01em}
+.sub{font-size:13px;color:var(--t3);margin:2px 0 8px}
+.back{display:inline-flex;align-items:center;gap:7px;margin:0 0 22px;font-size:12.5px;color:var(--info);text-decoration:none;font-weight:600;border:1px solid var(--ln2);background:var(--bg2);padding:7px 13px;border-radius:8px;transition:all .18s var(--ease)}
+.back:hover{color:var(--t1);border-color:var(--ln2);background:var(--bg3)}
+.back:active{transform:scale(.97)}
+h2{font-size:15.5px;font-weight:700;margin:34px 0 12px;color:var(--t1);display:flex;align-items:center;gap:9px}
+h2::before{content:'';width:3px;height:16px;border-radius:2px;background:linear-gradient(180deg,var(--acc),var(--cyan));flex:none}
+h2 .c{background:var(--bg2);padding:1px 10px;border-radius:999px;font-size:11px;color:var(--t3);margin-left:2px;font-weight:600;font-family:var(--mono)}
+h3{font-size:13.5px;font-weight:700;margin:18px 0 8px;color:var(--t1)}
+p{margin:8px 0;color:var(--t2)}
+b{color:var(--t1)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+code{background:var(--bg0);border:1px solid var(--ln);padding:1px 7px;border-radius:6px;font-size:12px;font-family:var(--mono);color:var(--cyan)}
+.callout{background:linear-gradient(180deg,var(--bg2),var(--bg1));border:1px solid var(--ln2);border-left:3px solid var(--info);border-radius:10px;padding:13px 16px;font-size:13px;color:var(--t2);margin:14px 0}
+.callout.warn{border-left-color:var(--wait)}
+.callout b{color:var(--t1)}
+
+/* 总分公式框：换行芯片，不横滑 */
+.formula{background:var(--bg1);border:1px solid var(--ln2);border-radius:12px;padding:14px 16px;margin:14px 0;font-family:var(--mono);font-size:13px;overflow:visible}
+.formula .f{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.formula .term{display:inline-flex;align-items:center;gap:6px;background:var(--bg2);border:1px solid var(--ln);border-radius:8px;padding:6px 11px;white-space:nowrap;color:var(--t2)}
+.formula .dim{color:var(--d0);font-weight:700}
+.formula .dim.d1{color:var(--d1)}.formula .dim.d2{color:var(--d2)}.formula .dim.d3{color:var(--d3)}.formula .dim.d4{color:var(--d4)}.formula .dim.d5{color:var(--d5)}
+.formula .op,.formula .eq{color:var(--t3);flex:none}
+.formula .sum{color:var(--acc);font-weight:800;padding:6px 4px}
+
+/* 档位胶囊 */
+.bands{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.band{display:inline-flex;align-items:center;gap:6px;padding:5px 13px;border-radius:999px;font-size:12.5px;font-weight:700;border:1px solid var(--ln2)}
+.band b{font-family:var(--mono)}
+.band.hammer{background:rgba(52,211,153,.14);color:var(--acc);border-color:rgba(52,211,153,.3)}
+.band.real{background:rgba(63,217,160,.12);color:var(--up);border-color:rgba(63,217,160,.26)}
+.band.cand{background:rgba(246,185,74,.12);color:var(--wait);border-color:rgba(246,185,74,.26)}
+.band.weak{background:rgba(116,167,242,.12);color:var(--info);border-color:rgba(116,167,242,.26)}
+.band.drop{background:rgba(255,255,255,.06);color:var(--t3)}
+
+/* 六维卡片 */
+.dim{background:var(--bg1);border:1px solid var(--ln);border-radius:12px;padding:15px 17px;margin-bottom:10px;transition:border-color .18s var(--ease)}
+.dim:hover{border-color:var(--ln2)}
+.dim .top{display:flex;align-items:center;gap:10px;margin-bottom:9px;flex-wrap:wrap}
+.dim .rank{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-family:var(--mono);font-size:12px;font-weight:800;flex:none;background:var(--bg2);border:1px solid var(--ln2)}
+.dim .nm{font-size:14.5px;font-weight:800}
+.dim .max{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--t3);background:var(--bg0);border:1px solid var(--ln);padding:2px 10px;border-radius:999px}
+.dim .max b{color:var(--t1);font-size:13px}
+.dim .desc{font-size:12.5px;color:var(--t3);margin-bottom:9px}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin:8px 0}
+.tbl th{font-size:10.5px;color:var(--t3);font-weight:700;letter-spacing:.06em;text-align:left;padding:6px 8px;border-bottom:1px solid var(--ln2);white-space:nowrap}
+.tbl td{padding:6px 8px;border-bottom:1px solid var(--ln);color:var(--t2)}
+.tbl td.mono,.tbl th.mono{font-family:var(--mono);white-space:nowrap}
+.tbl tr:last-child td{border-bottom:none}
+.tbl .hl{color:var(--up);font-weight:700}
+.tbl .hlr{color:var(--down);font-weight:700}
+.tbl .t1{color:var(--t1);font-weight:700}
+
+/* 实战算例 */
+.calc{background:var(--bg1);border:1px solid var(--ln2);border-radius:12px;overflow:hidden;margin:14px 0}
+.calc .ch{display:flex;align-items:center;gap:10px;padding:11px 16px;background:linear-gradient(180deg,var(--bg2),var(--bg1));border-bottom:1px solid var(--ln2);font-size:13px;font-weight:700;flex-wrap:wrap}
+.calc .ch .res{margin-left:auto;font-family:var(--mono);font-size:14px}
+.calc table{width:100%;border-collapse:collapse}
+.calc th{font-size:10.5px;color:var(--t3);font-weight:700;letter-spacing:.05em;text-align:left;padding:8px 12px;border-bottom:1px solid var(--ln2);white-space:nowrap;background:var(--bg0)}
+.calc td{padding:8px 12px;border-bottom:1px solid var(--ln);font-size:12.5px;vertical-align:top;color:var(--t2)}
+.calc tr:last-child td{border-bottom:none}
+.calc td.mono{font-family:var(--mono);white-space:nowrap}
+.calc td.d{color:var(--t1);font-weight:700;font-family:var(--mono)}
+.calc tr.total td{background:rgba(52,211,153,.06);border-top:1px solid rgba(52,211,153,.25);font-weight:700;color:var(--t1)}
+
+/* FAQ */
+.faq{background:var(--bg1);border:1px solid var(--ln);border-radius:12px;padding:15px 17px;margin-bottom:10px}
+.faq .q{font-size:13.5px;font-weight:700;color:var(--t1);margin-bottom:7px;display:flex;gap:8px;align-items:flex-start}
+.faq .q .qmark{color:var(--wait);font-weight:800;flex:none}
+.faq .a{font-size:13px;color:var(--t2);line-height:1.8}
+.faq .a .step{margin:6px 0;padding-left:4px}
+
+.footer{text-align:center;padding:22px;font-size:11px;color:var(--t3);margin-top:26px;border-top:1px solid var(--ln);letter-spacing:.08em}
+html.embed body{padding:4px 8px 16px}
+html.embed body::before,.embed .back,.embed .footer,.embed .head{display:none}
+@media(max-width:820px){
+  .calc .ch .res{margin-left:0}
+  .tbl th,.tbl td{padding:5px 6px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="head">
+    <div class="mark"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.2"/><circle cx="12" cy="12" r=".8" fill="currentColor"/></svg></div>
+    <div>
+      <h1>评分说明 · 六维怎么算</h1>
+      <div class="sub">信息值评分 v1.4 · 引擎 score_sat_full · 规则 data/betting/scoring-system.md</div>
+    </div>
+  </div>
+
+  <a class="back" href="/"><svg class="ic" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></svg>返回看板</a>
+
+  <h2>一句话 <span class="c">核心哲学</span></h2>
+  <p><b>一注的分数 = 它携带了多少可验证的高质量信息。</b>信息足、方向受独立信号确认、风险被排除 → 高分 → 该下；信息缺、方向矛盾、风险未排 → 低分 → 弃。分数是<code>信息完整度与可靠度</code>打分，<b>不是「信心打分」</b>——防止凭感觉下单，也防止为等信号错过已成型的单子。</p>
+
+  <h2>总分公式 <span class="c">6 维相加</span></h2>
+  <div class="formula">
+    <div class="f">
+      <span class="term"><span class="dim">降水/变盘</span> ≤35</span>
+      <span class="op">+</span>
+      <span class="term"><span class="dim d1">方向确认</span> ≤8</span>
+      <span class="op">+</span>
+      <span class="term"><span class="dim d2">模型命中</span> ≤20</span>
+      <span class="op">+</span>
+      <span class="term"><span class="dim d3">历史验证</span> ≤10</span>
+      <span class="op">+</span>
+      <span class="term"><span class="dim d4">风险排除</span> ≤10</span>
+      <span class="op">+</span>
+      <span class="term"><span class="dim d5">赔率价值</span> ≤5</span>
+      <span class="eq">=</span>
+      <span class="sum">总分</span>
+    </div>
+  </div>
+  <p>六维各有封顶。点开一场比赛，详情里每一维显示为 <code class="mono">得分/满分</code>，条越长越足。</p>
+  <div class="bands">
+    <span class="band hammer">≥80 <b>加注</b></span>
+    <span class="band real">70-79 <b>实单</b></span>
+    <span class="band cand">60-69 <b>候选</b></span>
+    <span class="band weak">40-59 <b>弱</b></span>
+    <span class="band drop">&lt;40 <b>放弃</b></span>
+  </div>
+  <div class="callout warn">⚠️ <b>当前引擎实际满分约 76</b>（方向确认按 8 分制、历史验证固定 6 分）。v1.5 档位下移：70-79 实单、≥80 加注。读分数看相对强弱，不是绝对刻度。</div>
+
+  <h2>六维明细 <span class="c">怎么算</span></h2>
+
+  <!-- 1 降水 -->
+  <div class="dim">
+    <div class="top"><span class="rank" style="color:var(--d0)">1</span><span class="nm" style="color:var(--d0)">降水/变盘</span><span class="max">满分 <b>35</b></span></div>
+    <div class="desc">盘口的钱往哪边走、走了多少。「降水」= 赔率下降 = 机构买这个方向，是打分里最重的信号（历史命中 69%～73%）。</div>
+    <table class="tbl">
+      <tr><th>算法</th><td>方向降水分量 D = <code class="mono">开盘价 − 临场价</code>（只算投注方向；反向不奖）</td></tr>
+      <tr><th>四个候选</th><td>胜平负主 / 胜平负客 / 让球主 / 让球客，取 <b>降水最大且为正</b> 的方向作为「降水方向」，这一维就按它给分</td></tr>
+      <tr><th>分档表</th>
+        <td class="mono">D≥0.5 → 35 · 0.40-0.49 → 32 · 0.30-0.39 → 29 · 0.20-0.29 → 26 · 0.10-0.19 → 22 · 0.05-0.09 → 15 · 0&lt;D&lt;0.05 → 10 · D=0 静盘 → 5 · D&lt;0 反向升水 → 0</td></tr>
+      <tr><th>没有基线</th><td>该场是开盘首盘（无快照可对比）→ 降水按 0 计，得分里看不到水分</td></tr>
+    </table>
+  </div>
+
+  <!-- 2 方向确认 -->
+  <div class="dim">
+    <div class="top"><span class="rank" style="color:var(--d1)">2</span><span class="nm" style="color:var(--d1)">方向确认</span><span class="max">满分 <b>8</b></span></div>
+    <div class="desc">多个独立信号源指向同一方向 = 交叉验证。当前引擎实现两个源，同向给足 8 分。</div>
+    <table class="tbl">
+      <tr><th>判定</th><td>让球盘「降水方向」，与 胜平负低赔一侧（赔率最低的那边）<b>同向</b> → <b>8 分</b>；不一致 → 只给 <b>4 分</b></td></tr>
+      <tr><th>数据来源</th><td>竞彩官方：让球盘（hhad）+ 胜平负（had），同一次抓取</td></tr>
+      <tr><th>说明</th><td class="note">规则文档规划过 20 分制、含大众支持率/欧亚错配共 4 源；当前版本只落地前 2 源，满分为 8</td></tr>
+    </table>
+  </div>
+
+  <!-- 3 模型命中 -->
+  <div class="dim">
+    <div class="top"><span class="rank" style="color:var(--d2)">2</span><span class="nm" style="color:var(--d2)">模型命中</span><span class="max">满分 <b>20</b></span></div>
+    <div class="desc">当前形态是否命中历史回测验证过的模型 → 命中继承其胜率/EV。取最高命中，不叠加。全部未命中 = 0。</div>
+    <table class="tbl">
+      <tr><th>M1 P2a_gl1</th><td>让球线 +1（主让一球，非深盘）+ 非五大 + 非次级联赛 + 降水方向为客队 + 降水 &gt; 0.05 + 落在让球盘 → <b>20 分</b>（历史回测 EV +172%）</td></tr>
+      <tr><th>降水规则</th><td>让球盘 + 降水 ≥ 0.3 + 方向确认=2（同向） → <b>12 分</b>（HAD 69% / HHAD 73% 命中线）</td></tr>
+      <tr><th>未命中</th><td>0 分</td></tr>
+    </table>
+  </div>
+
+  <!-- 4 历史验证 -->
+  <div class="dim">
+    <div class="top"><span class="rank" style="color:var(--d3)">2</span><span class="nm" style="color:var(--d3)">历史验证</span><span class="max">满分 <b>10</b></span></div>
+    <div class="desc">当前形态在历史复盘里有没有同类支持。</div>
+    <table class="tbl">
+      <tr><th>当前版本</th><td>固定 <b>6 分</b>（同类联赛/盘口/强弱结构有验证的基础档）</td></tr>
+      <tr><th>规划档位</th><td class="note">文档规划：回测明确为正 10 / 同类样本 6 / 少样本首次 2 / 历史反复失手 0（并升级进风险排除）——逐场落档尚未实现</td></tr>
+    </table>
+  </div>
+
+  <!-- 5 风险排除 -->
+  <div class="dim">
+    <div class="top"><span class="rank" style="color:var(--d4)">2</span><span class="nm" style="color:var(--d4)">风险排除</span><span class="max">满分 <b>10</b></span></div>
+    <div class="desc">从 10 分起逐个扣，扣到 0 为止。每命中一个历史踩过的坑就扣一档，坑越多越不值得投。</div>
+    <table class="tbl">
+      <tr><th>深盘</th><td>|让球| ≥ 2（让球盘）→ <b>−5</b>（要净胜 3 球才穿盘，波尔图案例；结构风险，退回后也保留）</td></tr>
+      <tr><th>强强对话</th><td>双方都是传统强队 → <b>−2</b>（一场论翻车高发）</td></tr>
+      <tr><th>次级低赔让球</th><td>次级联赛 + 让球盘 + 主队方向 + 赔率 &lt; 1.7 → <b>−4</b>（定价不稳无容错，格勒诺布/福伦丹案例；仅未退回时）</td></tr>
+      <tr><th>已移除</th><td>深口高赔 −4（v1.4）：它只命中「退回」场，退回后投注已是胜平负，让球盘穿盘疑虑不再适用</td></tr>
+    </table>
+  </div>
+
+  <!-- 6 赔率价值 -->
+  <div class="dim">
+    <div class="top"><span class="rank" style="color:var(--d5)">2</span><span class="nm" style="color:var(--d5)">赔率价值</span><span class="max">满分 <b>5</b></span></div>
+    <div class="desc">方向赔率的回报/风险比：赔率太低是死钱没赚头，太高又难中。</div>
+    <table class="tbl">
+      <tr><th>分档表</th>
+        <td class="mono">2.0-5.0 → 5（最优回报风险比） · 1.5-2.0 → 4 · &gt;5.0 → 3（高赔难中） · 1.2-1.5 → 2（低赔死钱） · &lt;1.2 → 0（无价值）</td></tr>
+      <tr><th>按哪个赔率</th><td>按<b>最终投注方向</b>的赔率计：深盘退回的场按退回后的胜平负赔率（v1.4），不再用退回前的让球盘赔率虚高（见 FAQ）</td></tr>
+    </table>
+  </div>
+
+  <h2>实战算例 <span class="c">周六023 马里迪莫 vs 本菲卡</span></h2>
+  <p class="note">基准盘 09-04 09:50 快照 → 当前盘 09-05 15:25，让球线 +2（主队让 2 球）。网页显示「主负 @1.11 · 45 分 · 弱」。</p>
+  <div class="calc">
+    <div class="ch">周六023 葡超 马里迪莫 vs 本菲卡 让球+2（深盘→退回主负）<span class="res">45 分 · 👀 弱</span></div>
+    <table>
+      <tr><th>维度</th><th>怎么算的</th><th class="mono">得分</th></tr>
+      <tr><td>降水/变盘</td><td>让球+2 客：2.65 → 2.37，跌 <b>0.28</b>，落在 0.20-0.29 档</td><td class="d">26/35</td></tr>
+      <tr><td>方向确认</td><td>降水方向=客（让球+2客） 与 胜平负低赔侧=客（1.11）<b>同向</b></td><td class="d">8/8</td></tr>
+      <tr><td>模型命中</td><td>让球线是 +2（M1 要 +1）且降水 0.28 &lt; 0.3（降水规则要 ≥0.3）→ 都不触发</td><td class="d">0/20</td></tr>
+      <tr><td>历史验证</td><td>同类联赛/盘口/强弱结构基础档（固定 6）</td><td class="d">6/10</td></tr>
+      <tr><td>风险排除</td><td>深盘 |让球|=2 → 扣 5（结构风险，退回也保留）</td><td class="d">5/10</td></tr>
+      <tr><td>赔率价值</td><td>退回后投注是<b>主负 @1.11</b> → &lt;1.2 无价值（v1.4 不再按退回前的 2.37 算）</td><td class="d">0/5</td></tr>
+      <tr class="total"><td>总分</td><td>26 + 8 + 0 + 6 + 5 + 0</td><td class="d">45 · 弱</td></tr>
+    </table>
+  </div>
+
+  <h2>常见疑问 <span class="c">FAQ</span></h2>
+
+  <div class="faq">
+    <div class="q"><span class="qmark">Q</span>为什么画面显示「主负 @1.11」，赔率价值却是 0？</div>
+    <div class="a">
+      <div class="step">1. 引擎先扫四个方向找「降水最大」的方向 → 是<b>让球+2客</b>（2.65→2.37，跌 0.28），先按它的信号打降水/方向确认/模型分。</div>
+      <div class="step">2. 但让球 +2 是深盘（主队要净胜 3 球才穿盘），系统铁律让球深口退回同侧胜平负，不打让胜/让负 → 投注方向改成<b>主负 @1.11</b>。</div>
+      <div class="step">3. v1.4 起「退回」发生在<b>打分前</b>：价值（和依托赔率的风险规则）按退回后的主负 @1.11 重算 → 1.11 &lt; 1.2 → 价值 0。</div>
+      <div class="step">结论：1.11 的深盘大热，信号（降水）是有，但投注质量（赔率价值）是 0——信息足、没肉，这正是读分要看的。</div>
+    </div>
+  </div>
+
+  <div class="faq">
+    <div class="q"><span class="qmark">Q</span>为什么有些场次六维不全 / 没有分？</div>
+    <div class="a"><div class="step">未开盘的场不参与打分；首盘（无基线快照）降水 0 分、但其余五维照常；历史日（只有盘口没有评分文件）不做评分。</div></div>
+  </div>
+
+  <div class="faq">
+    <div class="q"><span class="qmark">Q</span>分数多久更新一次、谁在打分？</div>
+    <div class="a"><div class="step">网页只展示不计算。评分由刷新任务跑 <code>score_sat_full.cjs</code> 抓当日盘 → 合入平台 → 全表重算 → 落盘 <code>data/scores/&lt;日期&gt;.json</code>。刷新网页即看到新分数。</div></div>
+  </div>
+
+  <div class="faq">
+    <div class="q"><span class="qmark">Q</span>规则会变吗？</div>
+    <div class="a"><div class="step">会。评分机制每天用真实结算结果喂养：每注复盘五问 → 定位打偏的维度 → 改算法/权重的版本号 +1，规则原文在 <code>data/betting/scoring-system.md</code>，升级记录在自我提升页。</div></div>
+  </div>
+
+  <div class="footer">竞彩助手 · 评分说明</div>
+</div>
+</body>
+</html>

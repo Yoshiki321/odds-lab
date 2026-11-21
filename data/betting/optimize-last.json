@@ -1,0 +1,179 @@
+{
+  "generatedAt": "2026-09-11T03:44:13.150Z",
+  "elapsedSeconds": 1.74,
+  "status": "hold",
+  "promote": false,
+  "sampleCount": 21,
+  "sampleDates": [
+    "2026-09-09",
+    "2026-09-10"
+  ],
+  "baseline": {
+    "params": {
+      "multipliers": {
+        "drop": 1,
+        "confirm": 1,
+        "model": 1,
+        "history": 1,
+        "risk": 1,
+        "value": 1
+      },
+      "singleLine": 48,
+      "boostLine": 58,
+      "label": "baseline"
+    },
+    "test": {
+      "n": 3,
+      "wins": 2,
+      "pushes": 0,
+      "losses": 1,
+      "pnl": 0.62,
+      "staked": 3,
+      "roi": 0.2067
+    },
+    "testBoost": {
+      "n": 0,
+      "wins": 0,
+      "pushes": 0,
+      "losses": 0,
+      "pnl": 0,
+      "staked": 0,
+      "roi": null
+    }
+  },
+  "latestRecommendation": {
+    "params": {
+      "multipliers": {
+        "drop": 0.5,
+        "confirm": 0.5,
+        "model": 0.5,
+        "history": 1.25,
+        "risk": 1.25,
+        "value": 1
+      },
+      "singleLine": 48,
+      "boostLine": 58,
+      "label": "candidate"
+    }
+  },
+  "walkForwardCandidate": {
+    "test": {
+      "n": 2,
+      "wins": 2,
+      "pushes": 0,
+      "losses": 0,
+      "pnl": 1.62,
+      "staked": 2,
+      "roi": 0.81
+    },
+    "testBoost": {
+      "n": 2,
+      "wins": 2,
+      "pushes": 0,
+      "losses": 0,
+      "pnl": 1.62,
+      "staked": 2,
+      "roi": 0.81
+    },
+    "lift": 0.6033
+  },
+  "folds": [
+    {
+      "testDate": "2026-09-10",
+      "trainN": 15,
+      "testN": 6,
+      "selected": {
+        "multipliers": {
+          "drop": 0.5,
+          "confirm": 0.5,
+          "model": 0.5,
+          "history": 1.25,
+          "risk": 1.25,
+          "value": 1
+        },
+        "singleLine": 48,
+        "boostLine": 58,
+        "label": "candidate"
+      },
+      "train": {
+        "n": 5,
+        "wins": 4,
+        "pushes": 1,
+        "losses": 0,
+        "pnl": 2.9,
+        "staked": 5,
+        "roi": 0.58
+      },
+      "trainBoost": {
+        "n": 0,
+        "wins": 0,
+        "pushes": 0,
+        "losses": 0,
+        "pnl": 0,
+        "staked": 0,
+        "roi": null
+      },
+      "test": {
+        "n": 2,
+        "wins": 2,
+        "pushes": 0,
+        "losses": 0,
+        "pnl": 1.62,
+        "staked": 2,
+        "roi": 0.81
+      },
+      "testBoost": {
+        "n": 2,
+        "wins": 2,
+        "pushes": 0,
+        "losses": 0,
+        "pnl": 1.62,
+        "staked": 2,
+        "roi": 0.81
+      },
+      "baselineTrain": {
+        "n": 5,
+        "wins": 3,
+        "pushes": 0,
+        "losses": 2,
+        "pnl": -0.45,
+        "staked": 5,
+        "roi": -0.09
+      },
+      "baselineTrainBoost": {
+        "n": 0,
+        "wins": 0,
+        "pushes": 0,
+        "losses": 0,
+        "pnl": 0,
+        "staked": 0,
+        "roi": null
+      },
+      "baselineTest": {
+        "n": 3,
+        "wins": 2,
+        "pushes": 0,
+        "losses": 1,
+        "pnl": 0.62,
+        "staked": 3,
+        "roi": 0.2067
+      },
+      "baselineTestBoost": {
+        "n": 0,
+        "wins": 0,
+        "pushes": 0,
+        "losses": 0,
+        "pnl": 0,
+        "staked": 0,
+        "roi": null
+      },
+      "testNotWorse": false
+    }
+  ],
+  "gates": {
+    "minSettled": 50,
+    "minTestBets": 8,
+    "minRoiLift": 0.05,
+    "allFoldsTestNotWorse": false
+  }
+}

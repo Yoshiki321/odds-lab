@@ -1,0 +1,160 @@
+/**
+ * 欧洲市场赔率 + 亚盘 + 大小球抓取（懂球帝 magicball）→ PG
+ * - europe_odds（当前快照，value 维度读它算 EV）
+ * - europe_odds_history（origin/spot 轨迹，回测/临场对比用）
+ * - handicap_odds_history（AH 亚盘 / OU 大小球 轨迹）
+ * 匹配键：开赛时刻对齐（±45min）+ 队名归一化互含核验；不匹配跳过（宁缺毋滥）
+ */
+import { query } from '../src/server/db/pool.js';
+import { upsertEuropeanOdds, appendEuropeanOddsHistory, appendHandicapOddsHistory } from '../src/server/db/store.js';
+
+const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36';
+const URL = 'https://www.dongqiudi.com/magicball/v1/list/match_list?language=zh-CN&cmp_type=soccer&tab_type=all';
+
+/** "2.35,3.5,2.5" → {home, draw, away}；解析失败返回 null */
+export function parseEuro(str: unknown): { home: number; draw: number; away: number } | null {
+  if (typeof str !== 'string') return null;
+  const p = str.split(',').map(s => parseFloat(s));
+  if (p.length < 3 || p.some(x => !isFinite(x) || x <= 0)) return null;
+  return { home: p[0], draw: p[1], away: p[2] };
+}
+
+/** "主水,让球数,客水" / "大球水,盘口,小球水" → {line, home, away} */
+export function parseHandicap(str: unknown): { line: number; home: number; away: number } | null {
+  if (typeof str !== 'string') return null;
+  const p = str.split(',').map(s => parseFloat(s));
+  if (p.length < 3 || p.some(x => !isFinite(x) || x <= 0)) return null;
+  return { line: p[1], home: p[0], away: p[2] };
+}
+
+/** 队名归一化：去空格/全半角/小写（中文名原样比对） */
+export function normName(s: unknown): string {
+  return String(s ?? '')
+    .replace(/[！-～]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0))
+    .replace(/\s+/g, '').replace(/[A-Z]/g, c => c.toLowerCase());
+}
+/** 队名相似度：0..1。中文缩写会去中字（皇马↔皇家马德里 字符集全交），
+ *  拉丁队名含顺序（FC字头互含）。字符集交集占比 ≥ 0.7 视为同一队 */
+function nameSim(a: string, b: string): number {
+  if (!a || !b) return 0;
+  if (a === b) return 2;
+  if (a.includes(b) || b.includes(a)) return 1.5;
+  const sa = new Set(a), sb = new Set(b);
+  let inter = 0;
+  for (const c of sa) if (sb.has(c)) inter++;
+  return inter / Math.min(sa.size, sb.size);
+}
+export function namesOverlap(a: string, b: string): boolean {
+  return nameSim(a, b) >= 0.7;
+}
+
+/** 队名别名（平台竞彩名 → magicball 译名）。同名不同译的球队，字符集比对会零交集，逐条补。
+ *  键为规范化的竞彩名，值为 magicball 侧规范名数组；命中任一项即视为同一队 */
+const ALIAS: Record<string, string[]> = {
+  萨巴赫: ['沙巴巴库', '沙巴', '沙巴巴库陈'],      // Sabah Baku（阿塞拜疆）
+  莱红牛: ['莱比锡', '红牛莱比锡', '莱比锡红牛', 'rbleipzig'], // 莱红牛=RB莱比锡
+  德尔瓦耶: ['山谷独立', '独立山谷', 'independientedelvalle'], // Independiente del Valle
+  佐加顿斯: ['尤尔加登', '佐加顿', 'djurgarden'], // Djurgarden（瑞超，竞彩名 vs 懂球帝译名零交集）
+  盖斯: ['加尔斯', '哥德堡盖斯', 'gais'], // GAIS（瑞超）
+  桑纳菲: ['桑讷菲尤尔', '桑纳菲尤尔'], // Sandefjord（挪超，懂球帝用讷）
+  库奥皮奥: ['库普斯', 'kups'], // KuPS（芬超，懂球帝用库普斯）
+  里斯本: ['葡萄牙体育', '里斯本竞技', 'sporting'], // Sporting CP（葡超/欧冠，懂球帝用葡萄牙体育）
+  圣旺红星: ['巴黎红星'], // Red Star FC（法乙，懂球帝或用巴黎红星）
+  蔚山现代: ['蔚山hd', '蔚山'], // Ulsan HD（亚冠，懂球帝用蔚山HD）
+};
+function aliasHit(plat: string, dqd: string): boolean {
+  const xs = ALIAS[plat];
+  return !!xs && xs.some(a => dqd.includes(a) || a.includes(dqd));
+}
+
+export interface EuropeOddsFeed {
+  written: number;        // 当前快照写库场数
+  matched: number;        // 匹配到竞彩场次
+  euroHist: number;       // 欧赔轨迹行（origin+spot）
+  ahHist: number;         // 亚盘轨迹行
+  ouHist: number;         // 大小球轨迹行
+  skippedNoEuro: number;
+  unmatched: string[];
+  warns: string[];
+}
+
+export async function fetchEuropeOdds(): Promise<EuropeOddsFeed> {
+  const feed: EuropeOddsFeed = { written: 0, matched: 0, euroHist: 0, ahHist: 0, ouHist: 0, skippedNoEuro: 0, unmatched: [], warns: [] };
+  const res = await fetch(URL, { headers: { 'user-agent': UA, referer: 'https://www.dongqiudi.com/' } });
+  if (!res.ok) throw new Error(`magicball HTTP ${res.status}`);
+  const j: any = await res.json();
+  const mb = (j?.data?.matches || []) as any[];
+
+  // 竞彩 open 窗口：近 36h（覆盖昨夜跨午夜场末欧赔）+ 未来 60h（当日盘 + 次日盘）
+  const now = Date.now();
+  const r = await query(
+    `SELECT match_id, kickoff, home, away, num, match_date
+     FROM matches WHERE kickoff BETWEEN to_timestamp($1/1000.0) - interval '36 hours' AND to_timestamp($1/1000.0) + interval '60 hours'`,
+    [now]);
+  const up = r.rows.map((x: any) => ({
+    matchId: String(x.match_id), kickoffMs: new Date(x.kickoff).getTime(),
+    home: normName(x.home), away: normName(x.away), label: `${x.num} ${x.home} vs ${x.away}`,
+  }));
+  if (!up.length) return { ...feed, unmatched: ['无 open 窗口内场次'] };
+
+  // 按开赛时刻索引（±45min 桶）避免 O(n²)
+  const buckets = new Map<number, typeof up>(); // bucket key = kickoff div 90min
+  for (const u of up) {
+    const k = Math.floor(u.kickoffMs / (90 * 60_000));
+    if (!buckets.has(k)) buckets.set(k, []);
+    buckets.get(k)!.push(u);
+  }
+  const seen = new Set<string>();
+  for (const m of mb) {
+    const so = m.score_odds;
+    const euSpot = parseEuro(so?.spot?.[1]);
+    if (!euSpot) { feed.skippedNoEuro++; continue; }
+    const tsMs = Number(m.match_timestamp) * 1000;
+    if (!isFinite(tsMs)) continue;
+    const k = Math.floor(tsMs / (90 * 60_000));
+    const cand = (buckets.get(k) || []).filter(u => Math.abs(u.kickoffMs - tsMs) <= 45 * 60_000);
+    if (!cand.length) { if (feed.unmatched.length < 5) feed.unmatched.push(`${m.team_A?.name} vs ${m.team_B?.name}`); continue; }
+    const homeN = normName(m.team_A?.name), awayN = normName(m.team_B?.name);
+    // 只认队名互含（同轮联赛同时开赛很常见，时间窗唯一≠同一场；宁可缺不错）
+    // 别名表补充同名不同译（萨巴赫=沙巴巴库/莱红牛=RB莱比锡/德尔瓦耶=山谷独立）
+    const ok = cand.filter(u =>
+      (namesOverlap(u.home, homeN) || aliasHit(u.home, homeN)) &&
+      (namesOverlap(u.away, awayN) || aliasHit(u.away, awayN)));
+    if (!ok.length) { feed.warns.push(`队名不符跳过 ${m.team_A?.name} vs ${m.team_B?.name} (时间窗${cand.length}候选)`); continue; }
+    const pick = ok[0];
+    if (seen.has(pick.matchId)) continue;
+    seen.add(pick.matchId);
+
+    // 1) 当前快照（value 维度即时读）
+    await upsertEuropeanOdds(pick.matchId, euSpot);
+    feed.written++;
+
+    // 2) 欧赔轨迹：origin + spot
+    const euOrigin = parseEuro(so?.origin?.[1]);
+    if (euOrigin) { await appendEuropeanOddsHistory(pick.matchId, euOrigin, 'origin'); feed.euroHist++; }
+    await appendEuropeanOddsHistory(pick.matchId, euSpot, 'spot'); feed.euroHist++;
+
+    // 3) 亚盘轨迹（score_odds [0]）
+    const ahSpot = parseHandicap(so?.spot?.[0]);
+    const ahOrigin = parseHandicap(so?.origin?.[0]);
+    if (ahOrigin) { await appendHandicapOddsHistory(pick.matchId, { market: 'AH', ...ahOrigin }, 'origin'); feed.ahHist++; }
+    if (ahSpot) { await appendHandicapOddsHistory(pick.matchId, { market: 'AH', ...ahSpot }, 'spot'); feed.ahHist++; }
+
+    // 4) 大小球轨迹（score_odds [2]）
+    const ouSpot = parseHandicap(so?.spot?.[2]);
+    const ouOrigin = parseHandicap(so?.origin?.[2]);
+    if (ouOrigin) { await appendHandicapOddsHistory(pick.matchId, { market: 'OU', ...ouOrigin }, 'origin'); feed.ouHist++; }
+    if (ouSpot) { await appendHandicapOddsHistory(pick.matchId, { market: 'OU', ...ouSpot }, 'spot'); feed.ouHist++; }
+
+    feed.matched++;
+  }
+  return feed;
+}
+
+if (process.argv[1]?.replace(/\\/g, '/').endsWith('fetch-europe-odds.ts')) {
+  fetchEuropeOdds().then(f => {
+    console.log(`欧赔 ${f.written} 场 (匹配${f.matched} 无欧赔${f.skippedNoEuro}) | 轨迹: 欧赔${f.euroHist}行 亚盘${f.ahHist}行 大小球${f.ouHist}行`);
+    if (f.warns.length) console.log(`警告 ${f.warns.length}:\n  ` + f.warns.join('\n  '));
+    if (f.unmatched.length) console.log(`未匹配示例: ${f.unmatched.join(' | ')}`);
+  }).catch(e => { console.error('欧赔抓取失败:', e?.message || e); process.exit(1); });
+}

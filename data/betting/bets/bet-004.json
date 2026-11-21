@@ -1,0 +1,38 @@
+{
+  "betId": 4,
+  "type": "2串1",
+  "stake": 100,
+  "totalOdds": 3.03,
+  "potentialReturn": 303,
+  "placedAt": "2026-08-24T01:50:00+08:00",
+  "status": "void",
+  "voidReason": "第3期重置，作废不计",
+  "legs": [
+    {
+      "matchId": 2041022,
+      "matchNum": "周日022",
+      "home": "都灵",
+      "away": "AC米兰",
+      "league": "意甲",
+      "kickoff": "2026-08-24T02:45:00+08:00",
+      "pick": "让球主胜 (HHAD H)",
+      "odds": 1.91,
+      "result": null
+    },
+    {
+      "matchId": 2041036,
+      "matchNum": "周一009",
+      "home": "吉维森特",
+      "away": "卡萨皮亚",
+      "league": "葡超",
+      "kickoff": "2026-08-25T03:15:00+08:00",
+      "pick": "主胜 (HAD H)",
+      "odds": 1.53,
+      "result": null
+    }
+  ],
+  "settledAt": null,
+  "returnAmount": null,
+  "profit": null,
+  "theory": "跟随机构变盘信号：都灵受让+1胜(覆盖都灵赢或平) × 吉维森特遇防线崩盘对手。风险收窄双腿"
+}

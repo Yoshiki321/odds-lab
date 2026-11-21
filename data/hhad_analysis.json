@@ -1,0 +1,1476 @@
+{
+  "winOdds": 5.1,
+  "drawOdds": 4.1,
+  "total": 146,
+  "summary": {
+    "win": 101,
+    "lose": 45,
+    "draw": 25,
+    "unknown": 0,
+    "stake": 14600,
+    "ret": 13752,
+    "roi": -0.05808219178082192
+  },
+  "detail": [
+    {
+      "date": "2026-01-01",
+      "match": "威科姆 vs 加的夫城",
+      "goalLine": "-1",
+      "favWin": "6.35",
+      "favDraw": "4.55",
+      "betSide": "客胜",
+      "betOdds": 1.33,
+      "result": "A"
+    },
+    {
+      "date": "2026-01-03",
+      "match": "图卢兹 vs 朗斯",
+      "goalLine": "+1",
+      "favWin": "5.65",
+      "favDraw": "4.20",
+      "betSide": "主胜",
+      "betOdds": 1.4,
+      "result": "A"
+    },
+    {
+      "date": "2026-01-04",
+      "match": "马里 vs 突尼斯",
+      "goalLine": "+1",
+      "favWin": "9.00",
+      "favDraw": "4.90",
+      "betSide": "主胜",
+      "betOdds": 1.23,
+      "result": "H"
+    },
+    {
+      "date": "2026-01-08",
+      "match": "拉齐奥 vs 佛罗伦萨",
+      "goalLine": "-1",
+      "favWin": "6.00",
+      "favDraw": "4.30",
+      "betSide": "客胜",
+      "betOdds": 1.37,
+      "result": "A"
+    },
+    {
+      "date": "2026-01-10",
+      "match": "伊朗U23 vs 乌兹别克U23",
+      "goalLine": "+1",
+      "favWin": "8.00",
+      "favDraw": "4.75",
+      "betSide": "主胜",
+      "betOdds": 1.26,
+      "result": "H"
+    },
+    {
+      "date": "2026-01-11",
+      "match": "斯旺西 vs 西布罗姆维奇",
+      "goalLine": "-1",
+      "favWin": "6.00",
+      "favDraw": "4.20",
+      "betSide": "客胜",
+      "betOdds": 1.38,
+      "result": "A"
+    },
+    {
+      "date": "2026-01-11",
+      "match": "托特纳姆热刺 vs 阿斯顿维拉",
+      "goalLine": "-1",
+      "favWin": "5.75",
+      "favDraw": "4.45",
+      "betSide": "客胜",
+      "betOdds": 1.37,
+      "result": "A"
+    },
+    {
+      "date": "2026-01-13",
+      "match": "塞维利亚 vs 维戈塞尔塔",
+      "goalLine": "-1",
+      "favWin": "5.60",
+      "favDraw": "4.22",
+      "betSide": "客胜",
+      "betOdds": 1.4,
+      "result": "A"
+    },
+    {
+      "date": "2026-01-14",
+      "match": "乌德勒支 vs 特温特",
+      "goalLine": "+1",
+      "favWin": "6.50",
+      "favDraw": "4.60",
+      "betSide": "主胜",
+      "betOdds": 1.32,
+      "result": "D"
+    },
+    {
+      "date": "2026-01-14",
+      "match": "阿联酋U23 vs 叙利亚U23",
+      "goalLine": "+1",
+      "favWin": "7.40",
+      "favDraw": "4.45",
+      "betSide": "主胜",
+      "betOdds": 1.3,
+      "result": "H"
+    },
+    {
+      "date": "2026-01-16",
+      "match": "墨尔本城 vs 奥克兰FC",
+      "goalLine": "-1",
+      "favWin": "5.40",
+      "favDraw": "4.25",
+      "betSide": "客胜",
+      "betOdds": 1.41,
+      "result": "D"
+    },
+    {
+      "date": "2026-01-17",
+      "match": "纽伦堡 vs 埃尔沃斯堡",
+      "goalLine": "+1",
+      "favWin": "5.35",
+      "favDraw": "4.20",
+      "betSide": "主胜",
+      "betOdds": 1.42,
+      "result": "H"
+    },
+    {
+      "date": "2026-01-17",
+      "match": "云达不来梅 vs 法兰克福",
+      "goalLine": "-1",
+      "favWin": "5.50",
+      "favDraw": "4.70",
+      "betSide": "客胜",
+      "betOdds": 1.36,
+      "result": "A"
+    },
+    {
+      "date": "2026-01-18",
+      "match": "波鸿 vs 达姆施塔特",
+      "goalLine": "-1",
+      "favWin": "5.15",
+      "favDraw": "4.15",
+      "betSide": "客胜",
+      "betOdds": 1.44,
+      "result": "A"
+    },
+    {
+      "date": "2026-01-18",
+      "match": "皇家贝蒂斯 vs 比利亚雷亚尔",
+      "goalLine": "-1",
+      "favWin": "5.65",
+      "favDraw": "4.60",
+      "betSide": "客胜",
+      "betOdds": 1.36,
+      "result": "H"
+    },
+    {
+      "date": "2026-01-19",
+      "match": "南特 vs 巴黎FC",
+      "goalLine": "+1",
+      "favWin": "5.35",
+      "favDraw": "4.20",
+      "betSide": "主胜",
+      "betOdds": 1.42,
+      "result": "D"
+    },
+    {
+      "date": "2026-01-20",
+      "match": "阿马多拉 vs 埃斯托里尔",
+      "goalLine": "-1",
+      "favWin": "6.45",
+      "favDraw": "4.50",
+      "betSide": "客胜",
+      "betOdds": 1.33,
+      "result": "A"
+    },
+    {
+      "date": "2026-01-20",
+      "match": "南锡 vs 甘冈",
+      "goalLine": "-1",
+      "favWin": "6.20",
+      "favDraw": "4.30",
+      "betSide": "客胜",
+      "betOdds": 1.36,
+      "result": "A"
+    },
+    {
+      "date": "2026-01-20",
+      "match": "拉齐奥 vs 科莫",
+      "goalLine": "-1",
+      "favWin": "7.20",
+      "favDraw": "4.30",
+      "betSide": "客胜",
+      "betOdds": 1.32,
+      "result": "A"
+    },
+    {
+      "date": "2026-01-21",
+      "match": "托特纳姆热刺 vs 多特蒙德",
+      "goalLine": "-1",
+      "favWin": "5.70",
+      "favDraw": "4.60",
+      "betSide": "客胜",
+      "betOdds": 1.36,
+      "result": "H"
+    },
+    {
+      "date": "2026-01-21",
+      "match": "国际米兰 vs 阿森纳",
+      "goalLine": "+1",
+      "favWin": "5.45",
+      "favDraw": "4.15",
+      "betSide": "主胜",
+      "betOdds": 1.42,
+      "result": "A"
+    },
+    {
+      "date": "2026-01-23",
+      "match": "布拉加 vs 诺丁汉森林",
+      "goalLine": "-1",
+      "favWin": "6.25",
+      "favDraw": "4.50",
+      "betSide": "客胜",
+      "betOdds": 1.34,
+      "result": "D"
+    },
+    {
+      "date": "2026-01-23",
+      "match": "塞萨洛尼基 vs 皇家贝蒂斯",
+      "goalLine": "+1",
+      "favWin": "5.90",
+      "favDraw": "4.35",
+      "betSide": "主胜",
+      "betOdds": 1.37,
+      "result": "H"
+    },
+    {
+      "date": "2026-01-24",
+      "match": "圣保利 vs 汉堡",
+      "goalLine": "-1",
+      "favWin": "6.51",
+      "favDraw": "4.15",
+      "betSide": "客胜",
+      "betOdds": 1.36,
+      "result": "A"
+    },
+    {
+      "date": "2026-01-26",
+      "match": "阿拉维斯 vs 皇家贝蒂斯",
+      "goalLine": "+1",
+      "favWin": "5.85",
+      "favDraw": "4.18",
+      "betSide": "主胜",
+      "betOdds": 1.39,
+      "result": "H"
+    },
+    {
+      "date": "2026-01-26",
+      "match": "罗马 vs AC米兰",
+      "goalLine": "-1",
+      "favWin": "6.55",
+      "favDraw": "4.15",
+      "betSide": "客胜",
+      "betOdds": 1.36,
+      "result": "A"
+    },
+    {
+      "date": "2026-01-26",
+      "match": "布雷斯特 vs 图卢兹",
+      "goalLine": "-1",
+      "favWin": "6.00",
+      "favDraw": "4.30",
+      "betSide": "客胜",
+      "betOdds": 1.37,
+      "result": "A"
+    },
+    {
+      "date": "2026-01-27",
+      "match": "维罗纳 vs 乌迪内斯",
+      "goalLine": "-1",
+      "favWin": "6.78",
+      "favDraw": "4.15",
+      "betSide": "客胜",
+      "betOdds": 1.35,
+      "result": "A"
+    },
+    {
+      "date": "2026-01-29",
+      "match": "毕尔巴鄂竞技 vs 里斯本竞技",
+      "goalLine": "-1",
+      "favWin": "5.80",
+      "favDraw": "4.40",
+      "betSide": "客胜",
+      "betOdds": 1.37,
+      "result": "A"
+    },
+    {
+      "date": "2026-01-31",
+      "match": "斯托克城 vs 南安普敦",
+      "goalLine": "+1",
+      "favWin": "5.30",
+      "favDraw": "4.25",
+      "betSide": "主胜",
+      "betOdds": 1.42,
+      "result": "A"
+    },
+    {
+      "date": "2026-01-31",
+      "match": "悉尼FC vs 西悉尼漫步者",
+      "goalLine": "-1",
+      "favWin": "5.85",
+      "favDraw": "4.60",
+      "betSide": "客胜",
+      "betOdds": 1.35,
+      "result": "H"
+    },
+    {
+      "date": "2026-02-01",
+      "match": "里奥阿维 vs 阿罗卡",
+      "goalLine": "-1",
+      "favWin": "5.65",
+      "favDraw": "4.20",
+      "betSide": "客胜",
+      "betOdds": 1.4,
+      "result": "A"
+    },
+    {
+      "date": "2026-02-04",
+      "match": "阿尔克马尔 vs 特温特",
+      "goalLine": "-1",
+      "favWin": "5.85",
+      "favDraw": "4.85",
+      "betSide": "客胜",
+      "betOdds": 1.33,
+      "result": "A"
+    },
+    {
+      "date": "2026-02-04",
+      "match": "达曼协定 vs 布赖代合作",
+      "goalLine": "-1",
+      "favWin": "5.15",
+      "favDraw": "4.15",
+      "betSide": "客胜",
+      "betOdds": 1.44,
+      "result": "D"
+    },
+    {
+      "date": "2026-02-05",
+      "match": "巴伦西亚 vs 毕尔巴鄂竞技",
+      "goalLine": "-1",
+      "favWin": "6.20",
+      "favDraw": "4.20",
+      "betSide": "客胜",
+      "betOdds": 1.37,
+      "result": "A"
+    },
+    {
+      "date": "2026-02-06",
+      "match": "特尔斯达 vs 前进之鹰",
+      "goalLine": "-1",
+      "favWin": "5.20",
+      "favDraw": "4.60",
+      "betSide": "客胜",
+      "betOdds": 1.39,
+      "result": "D"
+    },
+    {
+      "date": "2026-02-07",
+      "match": "查尔顿 vs 女王公园巡游者",
+      "goalLine": "-1",
+      "favWin": "6.60",
+      "favDraw": "4.35",
+      "betSide": "客胜",
+      "betOdds": 1.34,
+      "result": "A"
+    },
+    {
+      "date": "2026-02-10",
+      "match": "成都蓉城 vs 布里兰",
+      "goalLine": "-1",
+      "favWin": "5.65",
+      "favDraw": "4.30",
+      "betSide": "客胜",
+      "betOdds": 1.39,
+      "result": "A"
+    },
+    {
+      "date": "2026-02-11",
+      "match": "叻武里 vs 万隆",
+      "goalLine": "+1",
+      "favWin": "6.80",
+      "favDraw": "4.45",
+      "betSide": "主胜",
+      "betOdds": 1.32,
+      "result": "H"
+    },
+    {
+      "date": "2026-02-11",
+      "match": "那不勒斯 vs 科莫",
+      "goalLine": "-1",
+      "favWin": "6.20",
+      "favDraw": "4.20",
+      "betSide": "客胜",
+      "betOdds": 1.37,
+      "result": "A"
+    },
+    {
+      "date": "2026-02-12",
+      "match": "曼谷联 vs 麦克阿瑟FC",
+      "goalLine": "-1",
+      "favWin": "6.40",
+      "favDraw": "4.65",
+      "betSide": "客胜",
+      "betOdds": 1.32,
+      "result": "H"
+    },
+    {
+      "date": "2026-02-12",
+      "match": "查尔顿 vs 斯托克城",
+      "goalLine": "-1",
+      "favWin": "7.30",
+      "favDraw": "4.15",
+      "betSide": "客胜",
+      "betOdds": 1.33,
+      "result": "D"
+    },
+    {
+      "date": "2026-02-28",
+      "match": "麦克阿瑟FC vs 西悉尼漫步者",
+      "goalLine": "+1",
+      "favWin": "5.25",
+      "favDraw": "4.45",
+      "betSide": "主胜",
+      "betOdds": 1.4,
+      "result": "A"
+    },
+    {
+      "date": "2026-03-02",
+      "match": "都灵 vs 拉齐奥",
+      "goalLine": "+1",
+      "favWin": "6.10",
+      "favDraw": "4.15",
+      "betSide": "主胜",
+      "betOdds": 1.38,
+      "result": "H"
+    },
+    {
+      "date": "2026-03-03",
+      "match": "伯明翰 vs 米德尔斯堡",
+      "goalLine": "-1",
+      "favWin": "6.10",
+      "favDraw": "4.80",
+      "betSide": "客胜",
+      "betOdds": 1.32,
+      "result": "A"
+    },
+    {
+      "date": "2026-03-04",
+      "match": "柔佛 vs 广岛三箭",
+      "goalLine": "+1",
+      "favWin": "6.00",
+      "favDraw": "4.40",
+      "betSide": "主胜",
+      "betOdds": 1.36,
+      "result": "H"
+    },
+    {
+      "date": "2026-03-05",
+      "match": "阿斯顿维拉 vs 切尔西",
+      "goalLine": "-1",
+      "favWin": "6.05",
+      "favDraw": "4.60",
+      "betSide": "客胜",
+      "betOdds": 1.34,
+      "result": "A"
+    },
+    {
+      "date": "2026-03-06",
+      "match": "里昂 vs 朗斯",
+      "goalLine": "-1",
+      "favWin": "5.35",
+      "favDraw": "4.30",
+      "betSide": "客胜",
+      "betOdds": 1.41,
+      "result": "A"
+    },
+    {
+      "date": "2026-03-07",
+      "match": "光州FC vs 仁川联",
+      "goalLine": "-1",
+      "favWin": "7.75",
+      "favDraw": "5.00",
+      "betSide": "客胜",
+      "betOdds": 1.25,
+      "result": "D"
+    },
+    {
+      "date": "2026-03-08",
+      "match": "圣保利 vs 法兰克福",
+      "goalLine": "-1",
+      "favWin": "5.90",
+      "favDraw": "4.25",
+      "betSide": "客胜",
+      "betOdds": 1.38,
+      "result": "A"
+    },
+    {
+      "date": "2026-03-12",
+      "match": "诺维奇 vs 谢菲尔德联",
+      "goalLine": "+1",
+      "favWin": "5.65",
+      "favDraw": "4.30",
+      "betSide": "主胜",
+      "betOdds": 1.39,
+      "result": "H"
+    },
+    {
+      "date": "2026-03-13",
+      "match": "布里斯班狮吼 vs 西悉尼漫步者",
+      "goalLine": "+1",
+      "favWin": "5.35",
+      "favDraw": "4.40",
+      "betSide": "主胜",
+      "betOdds": 1.4,
+      "result": "H"
+    },
+    {
+      "date": "2026-03-15",
+      "match": "水晶宫 vs 利兹联",
+      "goalLine": "-1",
+      "favWin": "6.00",
+      "favDraw": "4.30",
+      "betSide": "客胜",
+      "betOdds": 1.37,
+      "result": "A"
+    },
+    {
+      "date": "2026-03-15",
+      "match": "皇家奥维耶多 vs 巴伦西亚",
+      "goalLine": "-1",
+      "favWin": "6.75",
+      "favDraw": "4.35",
+      "betSide": "客胜",
+      "betOdds": 1.33,
+      "result": "D"
+    },
+    {
+      "date": "2026-03-21",
+      "match": "赫拉克勒斯 vs SBV精英",
+      "goalLine": "-1",
+      "favWin": "5.20",
+      "favDraw": "4.40",
+      "betSide": "客胜",
+      "betOdds": 1.41,
+      "result": "A"
+    },
+    {
+      "date": "2026-03-21",
+      "match": "波城FC vs 蒙彼利埃",
+      "goalLine": "-1",
+      "favWin": "6.15",
+      "favDraw": "4.55",
+      "betSide": "客胜",
+      "betOdds": 1.34,
+      "result": "A"
+    },
+    {
+      "date": "2026-03-27",
+      "match": "新西兰 vs 芬兰",
+      "goalLine": "-1",
+      "favWin": "6.40",
+      "favDraw": "4.20",
+      "betSide": "客胜",
+      "betOdds": 1.36,
+      "result": "A"
+    },
+    {
+      "date": "2026-03-28",
+      "match": "摩洛哥 vs 厄瓜多尔",
+      "goalLine": "+1",
+      "favWin": "7.25",
+      "favDraw": "4.50",
+      "betSide": "主胜",
+      "betOdds": 1.3,
+      "result": "H"
+    },
+    {
+      "date": "2026-04-03",
+      "match": "女王公园巡游者 vs 沃特福德",
+      "goalLine": "+1",
+      "favWin": "5.90",
+      "favDraw": "4.25",
+      "betSide": "主胜",
+      "betOdds": 1.38,
+      "result": "H"
+    },
+    {
+      "date": "2026-04-05",
+      "match": "西汉姆联 vs 利兹联",
+      "goalLine": "-1",
+      "favWin": "6.50",
+      "favDraw": "4.75",
+      "betSide": "客胜",
+      "betOdds": 1.31,
+      "result": "A"
+    },
+    {
+      "date": "2026-04-08",
+      "match": "奥勒松 vs 腓特烈斯塔",
+      "goalLine": "-1",
+      "favWin": "5.25",
+      "favDraw": "4.30",
+      "betSide": "客胜",
+      "betOdds": 1.42,
+      "result": "A"
+    },
+    {
+      "date": "2026-04-10",
+      "match": "普拉滕斯 vs 科林蒂安",
+      "goalLine": "-1",
+      "favWin": "8.30",
+      "favDraw": "4.40",
+      "betSide": "客胜",
+      "betOdds": 1.28,
+      "result": "A"
+    },
+    {
+      "date": "2026-04-11",
+      "match": "埃尔切 vs 巴伦西亚",
+      "goalLine": "-1",
+      "favWin": "5.90",
+      "favDraw": "4.25",
+      "betSide": "客胜",
+      "betOdds": 1.38,
+      "result": "D"
+    },
+    {
+      "date": "2026-04-11",
+      "match": "IFK哥德堡 vs 赫根",
+      "goalLine": "-1",
+      "favWin": "6.00",
+      "favDraw": "4.50",
+      "betSide": "客胜",
+      "betOdds": 1.35,
+      "result": "A"
+    },
+    {
+      "date": "2026-04-11",
+      "match": "西悉尼漫步者 vs 悉尼FC",
+      "goalLine": "-1",
+      "favWin": "5.20",
+      "favDraw": "4.30",
+      "betSide": "客胜",
+      "betOdds": 1.42,
+      "result": "A"
+    },
+    {
+      "date": "2026-04-12",
+      "match": "桑德兰 vs 托特纳姆热刺",
+      "goalLine": "-1",
+      "favWin": "6.30",
+      "favDraw": "4.25",
+      "betSide": "客胜",
+      "betOdds": 1.36,
+      "result": "D"
+    },
+    {
+      "date": "2026-04-12",
+      "match": "塞维利亚 vs 马德里竞技",
+      "goalLine": "+1",
+      "favWin": "6.40",
+      "favDraw": "4.90",
+      "betSide": "主胜",
+      "betOdds": 1.3,
+      "result": "H"
+    },
+    {
+      "date": "2026-04-15",
+      "match": "蔚山现代 vs 首尔FC",
+      "goalLine": "+1",
+      "favWin": "6.20",
+      "favDraw": "4.20",
+      "betSide": "主胜",
+      "betOdds": 1.37,
+      "result": "A"
+    },
+    {
+      "date": "2026-04-17",
+      "match": "佛罗伦萨 vs 水晶宫",
+      "goalLine": "-1",
+      "favWin": "7.00",
+      "favDraw": "4.75",
+      "betSide": "客胜",
+      "betOdds": 1.29,
+      "result": "D"
+    },
+    {
+      "date": "2026-04-18",
+      "match": "圣保利 vs 科隆",
+      "goalLine": "-1",
+      "favWin": "6.75",
+      "favDraw": "4.60",
+      "betSide": "客胜",
+      "betOdds": 1.31,
+      "result": "A"
+    },
+    {
+      "date": "2026-04-19",
+      "match": "斯特拉斯堡 vs 雷恩",
+      "goalLine": "-1",
+      "favWin": "7.60",
+      "favDraw": "5.60",
+      "betSide": "客胜",
+      "betOdds": 1.22,
+      "result": "A"
+    },
+    {
+      "date": "2026-04-21",
+      "match": "水晶宫 vs 西汉姆联",
+      "goalLine": "-1",
+      "favWin": "5.40",
+      "favDraw": "4.35",
+      "betSide": "客胜",
+      "betOdds": 1.4,
+      "result": "A"
+    },
+    {
+      "date": "2026-04-22",
+      "match": "赫罗纳 vs 皇家贝蒂斯",
+      "goalLine": "-1",
+      "favWin": "5.35",
+      "favDraw": "4.30",
+      "betSide": "客胜",
+      "betOdds": 1.41,
+      "result": "A"
+    },
+    {
+      "date": "2026-04-22",
+      "match": "牛津联 vs 雷克斯汉姆",
+      "goalLine": "+1",
+      "favWin": "6.10",
+      "favDraw": "4.45",
+      "betSide": "主胜",
+      "betOdds": 1.35,
+      "result": "D"
+    },
+    {
+      "date": "2026-04-24",
+      "match": "柏太阳神 vs 鹿岛鹿角",
+      "goalLine": "-1",
+      "favWin": "6.00",
+      "favDraw": "4.20",
+      "betSide": "客胜",
+      "betOdds": 1.38,
+      "result": "A"
+    },
+    {
+      "date": "2026-04-25",
+      "match": "桑德兰 vs 诺丁汉森林",
+      "goalLine": "+1",
+      "favWin": "6.10",
+      "favDraw": "4.15",
+      "betSide": "主胜",
+      "betOdds": 1.38,
+      "result": "A"
+    },
+    {
+      "date": "2026-04-25",
+      "match": "拉斯决心 vs 利雅得",
+      "goalLine": "+1",
+      "favWin": "5.15",
+      "favDraw": "4.15",
+      "betSide": "主胜",
+      "betOdds": 1.44,
+      "result": "H"
+    },
+    {
+      "date": "2026-04-26",
+      "match": "IFK哥德堡 vs 哥德堡盖斯",
+      "goalLine": "+1",
+      "favWin": "5.65",
+      "favDraw": "4.20",
+      "betSide": "主胜",
+      "betOdds": 1.4,
+      "result": "H"
+    },
+    {
+      "date": "2026-04-26",
+      "match": "巴列卡诺 vs 皇家社会",
+      "goalLine": "-1",
+      "favWin": "5.65",
+      "favDraw": "4.40",
+      "betSide": "客胜",
+      "betOdds": 1.38,
+      "result": "A"
+    },
+    {
+      "date": "2026-04-27",
+      "match": "AC米兰 vs 尤文图斯",
+      "goalLine": "-1",
+      "favWin": "6.40",
+      "favDraw": "4.20",
+      "betSide": "客胜",
+      "betOdds": 1.36,
+      "result": "A"
+    },
+    {
+      "date": "2026-04-28",
+      "match": "赫根 vs 天狼星",
+      "goalLine": "-1",
+      "favWin": "6.50",
+      "favDraw": "5.00",
+      "betSide": "客胜",
+      "betOdds": 1.29,
+      "result": "A"
+    },
+    {
+      "date": "2026-04-29",
+      "match": "柏太阳神 vs 东京FC",
+      "goalLine": "-1",
+      "favWin": "6.10",
+      "favDraw": "4.25",
+      "betSide": "客胜",
+      "betOdds": 1.37,
+      "result": "A"
+    },
+    {
+      "date": "2026-04-30",
+      "match": "国际图尔库 vs 赫尔辛基",
+      "goalLine": "+1",
+      "favWin": "7.70",
+      "favDraw": "4.85",
+      "betSide": "主胜",
+      "betOdds": 1.26,
+      "result": "H"
+    },
+    {
+      "date": "2026-05-01",
+      "match": "诺丁汉森林 vs 阿斯顿维拉",
+      "goalLine": "-1",
+      "favWin": "6.75",
+      "favDraw": "4.60",
+      "betSide": "客胜",
+      "betOdds": 1.31,
+      "result": "D"
+    },
+    {
+      "date": "2026-05-01",
+      "match": "拉斯永恒 vs 迈季迈阿宽广",
+      "goalLine": "-1",
+      "favWin": "5.45",
+      "favDraw": "4.25",
+      "betSide": "客胜",
+      "betOdds": 1.41,
+      "result": "A"
+    },
+    {
+      "date": "2026-05-02",
+      "match": "柏林联合 vs 科隆",
+      "goalLine": "-1",
+      "favWin": "5.80",
+      "favDraw": "4.50",
+      "betSide": "客胜",
+      "betOdds": 1.36,
+      "result": "A"
+    },
+    {
+      "date": "2026-05-03",
+      "match": "斯特拉斯堡 vs 图卢兹",
+      "goalLine": "-1",
+      "favWin": "6.25",
+      "favDraw": "5.00",
+      "betSide": "客胜",
+      "betOdds": 1.3,
+      "result": "A"
+    },
+    {
+      "date": "2026-05-03",
+      "match": "阿尔克马尔 vs 特温特",
+      "goalLine": "+1",
+      "favWin": "5.65",
+      "favDraw": "5.30",
+      "betSide": "主胜",
+      "betOdds": 1.31,
+      "result": "H"
+    },
+    {
+      "date": "2026-05-03",
+      "match": "圣保利 vs 美因茨",
+      "goalLine": "-1",
+      "favWin": "6.70",
+      "favDraw": "4.20",
+      "betSide": "客胜",
+      "betOdds": 1.35,
+      "result": "A"
+    },
+    {
+      "date": "2026-05-03",
+      "match": "马尔默 vs 米亚尔比",
+      "goalLine": "-1",
+      "favWin": "5.30",
+      "favDraw": "4.25",
+      "betSide": "客胜",
+      "betOdds": 1.42,
+      "result": "A"
+    },
+    {
+      "date": "2026-05-03",
+      "match": "阿拉维斯 vs 毕尔巴鄂竞技",
+      "goalLine": "+1",
+      "favWin": "5.15",
+      "favDraw": "4.15",
+      "betSide": "主胜",
+      "betOdds": 1.44,
+      "result": "A"
+    },
+    {
+      "date": "2026-05-05",
+      "match": "塞维利亚 vs 皇家社会",
+      "goalLine": "+1",
+      "favWin": "6.50",
+      "favDraw": "4.25",
+      "betSide": "主胜",
+      "betOdds": 1.35,
+      "result": "H"
+    },
+    {
+      "date": "2026-05-07",
+      "match": "圣菲独立 vs 科林蒂安",
+      "goalLine": "-1",
+      "favWin": "7.85",
+      "favDraw": "4.30",
+      "betSide": "客胜",
+      "betOdds": 1.3,
+      "result": "A"
+    },
+    {
+      "date": "2026-05-08",
+      "match": "坦佩雷山猫 vs AC奥卢",
+      "goalLine": "-1",
+      "favWin": "5.95",
+      "favDraw": "4.65",
+      "betSide": "客胜",
+      "betOdds": 1.34,
+      "result": "D"
+    },
+    {
+      "date": "2026-05-10",
+      "match": "水晶宫 vs 埃弗顿",
+      "goalLine": "+1",
+      "favWin": "5.60",
+      "favDraw": "4.22",
+      "betSide": "主胜",
+      "betOdds": 1.4,
+      "result": "H"
+    },
+    {
+      "date": "2026-05-10",
+      "match": "皇家社会 vs 皇家贝蒂斯",
+      "goalLine": "-1",
+      "favWin": "5.35",
+      "favDraw": "4.40",
+      "betSide": "客胜",
+      "betOdds": 1.4,
+      "result": "A"
+    },
+    {
+      "date": "2026-05-12",
+      "match": "仁川联 vs 浦项制铁",
+      "goalLine": "-1",
+      "favWin": "9.25",
+      "favDraw": "4.55",
+      "betSide": "客胜",
+      "betOdds": 1.25,
+      "result": "A"
+    },
+    {
+      "date": "2026-05-13",
+      "match": "奥萨苏纳 vs 马德里竞技",
+      "goalLine": "-1",
+      "favWin": "5.60",
+      "favDraw": "4.15",
+      "betSide": "客胜",
+      "betOdds": 1.41,
+      "result": "A"
+    },
+    {
+      "date": "2026-05-14",
+      "match": "布雷斯特 vs 斯特拉斯堡",
+      "goalLine": "+1",
+      "favWin": "5.50",
+      "favDraw": "4.30",
+      "betSide": "主胜",
+      "betOdds": 1.4,
+      "result": "D"
+    },
+    {
+      "date": "2026-05-16",
+      "match": "圣保利 vs 沃尔夫斯堡",
+      "goalLine": "-1",
+      "favWin": "5.45",
+      "favDraw": "4.35",
+      "betSide": "客胜",
+      "betOdds": 1.4,
+      "result": "A"
+    },
+    {
+      "date": "2026-05-17",
+      "match": "福伦丹 vs 特尔斯达",
+      "goalLine": "+1",
+      "favWin": "5.15",
+      "favDraw": "4.55",
+      "betSide": "主胜",
+      "betOdds": 1.4,
+      "result": "D"
+    },
+    {
+      "date": "2026-05-17",
+      "match": "大阪樱花 vs 名古屋鲸八",
+      "goalLine": "+1",
+      "favWin": "6.00",
+      "favDraw": "4.15",
+      "betSide": "主胜",
+      "betOdds": 1.39,
+      "result": "H"
+    },
+    {
+      "date": "2026-05-18",
+      "match": "萨索洛 vs 莱切",
+      "goalLine": "-1",
+      "favWin": "6.25",
+      "favDraw": "4.20",
+      "betSide": "客胜",
+      "betOdds": 1.37,
+      "result": "A"
+    },
+    {
+      "date": "2026-05-22",
+      "match": "埃尔夫斯堡 vs 米亚尔比",
+      "goalLine": "+1",
+      "favWin": "6.30",
+      "favDraw": "4.35",
+      "betSide": "主胜",
+      "betOdds": 1.35,
+      "result": "H"
+    },
+    {
+      "date": "2026-05-24",
+      "match": "帕尔马 vs 萨索洛",
+      "goalLine": "-1",
+      "favWin": "7.20",
+      "favDraw": "4.80",
+      "betSide": "客胜",
+      "betOdds": 1.28,
+      "result": "D"
+    },
+    {
+      "date": "2026-05-25",
+      "match": "萨尔普斯堡 vs 莫尔德",
+      "goalLine": "-1",
+      "favWin": "5.40",
+      "favDraw": "4.55",
+      "betSide": "客胜",
+      "betOdds": 1.38,
+      "result": "D"
+    },
+    {
+      "date": "2026-05-30",
+      "match": "赫尔辛基火花 vs 塞伊奈约基",
+      "goalLine": "+1",
+      "favWin": "5.25",
+      "favDraw": "4.35",
+      "betSide": "主胜",
+      "betOdds": 1.41,
+      "result": "H"
+    },
+    {
+      "date": "2026-05-31",
+      "match": "韦斯特罗斯 vs IFK哥德堡",
+      "goalLine": "-1",
+      "favWin": "6.30",
+      "favDraw": "4.45",
+      "betSide": "客胜",
+      "betOdds": 1.34,
+      "result": "A"
+    },
+    {
+      "date": "2026-05-31",
+      "match": "清水鼓动 vs 横滨水手",
+      "goalLine": "-1",
+      "favWin": "7.20",
+      "favDraw": "4.80",
+      "betSide": "客胜",
+      "betOdds": 1.28,
+      "result": "A"
+    },
+    {
+      "date": "2026-06-01",
+      "match": "美国 vs 塞内加尔",
+      "goalLine": "-1",
+      "favWin": "6.10",
+      "favDraw": "4.25",
+      "betSide": "客胜",
+      "betOdds": 1.37,
+      "result": "D"
+    },
+    {
+      "date": "2026-06-03",
+      "match": "克罗地亚 vs 比利时",
+      "goalLine": "-1",
+      "favWin": "5.50",
+      "favDraw": "4.48",
+      "betSide": "客胜",
+      "betOdds": 1.38,
+      "result": "A"
+    },
+    {
+      "date": "2026-06-07",
+      "match": "罗马尼亚 vs 威尔士",
+      "goalLine": "+1",
+      "favWin": "7.00",
+      "favDraw": "4.60",
+      "betSide": "主胜",
+      "betOdds": 1.3,
+      "result": "H"
+    },
+    {
+      "date": "2026-06-08",
+      "match": "摩洛哥 vs 挪威",
+      "goalLine": "+1",
+      "favWin": "5.55",
+      "favDraw": "4.25",
+      "betSide": "主胜",
+      "betOdds": 1.4,
+      "result": "H"
+    },
+    {
+      "date": "2026-06-17",
+      "match": "赫尔辛基 vs 国际图尔库",
+      "goalLine": "-1",
+      "favWin": "5.35",
+      "favDraw": "4.50",
+      "betSide": "客胜",
+      "betOdds": 1.39,
+      "result": "A"
+    },
+    {
+      "date": "2026-06-28",
+      "match": "赫尔辛基火花 vs 瓦萨",
+      "goalLine": "-1",
+      "favWin": "5.50",
+      "favDraw": "4.20",
+      "betSide": "客胜",
+      "betOdds": 1.41,
+      "result": "A"
+    },
+    {
+      "date": "2026-06-28",
+      "match": "阿尔及利亚 vs 奥地利",
+      "goalLine": "+1",
+      "favWin": "7.05",
+      "favDraw": "4.35",
+      "betSide": "主胜",
+      "betOdds": 1.32,
+      "result": "H"
+    },
+    {
+      "date": "2026-07-07",
+      "match": "美国 vs 比利时",
+      "goalLine": "+1",
+      "favWin": "6.00",
+      "favDraw": "4.75",
+      "betSide": "主胜",
+      "betOdds": 1.33,
+      "result": "A"
+    },
+    {
+      "date": "2026-07-11",
+      "match": "TPS图尔库 vs AC奥卢",
+      "goalLine": "+1",
+      "favWin": "6.20",
+      "favDraw": "4.90",
+      "betSide": "主胜",
+      "betOdds": 1.31,
+      "result": "H"
+    },
+    {
+      "date": "2026-07-16",
+      "match": "比森阿泰尔 vs 克拉克斯维克",
+      "goalLine": "+1",
+      "favWin": "6.00",
+      "favDraw": "4.30",
+      "betSide": "主胜",
+      "betOdds": 1.37,
+      "result": "D"
+    },
+    {
+      "date": "2026-07-18",
+      "match": "塞伊奈约基 vs 库奥皮奥",
+      "goalLine": "+1",
+      "favWin": "5.25",
+      "favDraw": "4.45",
+      "betSide": "主胜",
+      "betOdds": 1.4,
+      "result": "A"
+    },
+    {
+      "date": "2026-07-18",
+      "match": "AIK索尔纳 vs 哥德堡盖斯",
+      "goalLine": "-1",
+      "favWin": "6.00",
+      "favDraw": "4.50",
+      "betSide": "客胜",
+      "betOdds": 1.35,
+      "result": "H"
+    },
+    {
+      "date": "2026-07-18",
+      "match": "大田市民 vs 蔚山现代",
+      "goalLine": "-1",
+      "favWin": "5.65",
+      "favDraw": "4.30",
+      "betSide": "客胜",
+      "betOdds": 1.39,
+      "result": "A"
+    },
+    {
+      "date": "2026-07-21",
+      "match": "卡尔马 vs 马尔默",
+      "goalLine": "-1",
+      "favWin": "5.65",
+      "favDraw": "4.30",
+      "betSide": "客胜",
+      "betOdds": 1.39,
+      "result": "A"
+    },
+    {
+      "date": "2026-07-25",
+      "match": "卡尔马 vs 米亚尔比",
+      "goalLine": "-1",
+      "favWin": "5.80",
+      "favDraw": "4.50",
+      "betSide": "客胜",
+      "betOdds": 1.36,
+      "result": "D"
+    },
+    {
+      "date": "2026-07-26",
+      "match": "坦佩雷山猫 vs 拉赫蒂",
+      "goalLine": "-1",
+      "favWin": "5.15",
+      "favDraw": "4.42",
+      "betSide": "客胜",
+      "betOdds": 1.41,
+      "result": "D"
+    },
+    {
+      "date": "2026-08-02",
+      "match": "瓦萨 vs 国际图尔库",
+      "goalLine": "-1",
+      "favWin": "5.90",
+      "favDraw": "4.35",
+      "betSide": "客胜",
+      "betOdds": 1.37,
+      "result": "A"
+    },
+    {
+      "date": "2026-08-08",
+      "match": "米亚尔比 vs 埃尔夫斯堡",
+      "goalLine": "-1",
+      "favWin": "6.00",
+      "favDraw": "4.50",
+      "betSide": "客胜",
+      "betOdds": 1.35,
+      "result": "A"
+    },
+    {
+      "date": "2026-08-08",
+      "match": "女王公园巡游者 vs 米尔沃尔",
+      "goalLine": "+1",
+      "favWin": "6.30",
+      "favDraw": "4.45",
+      "betSide": "主胜",
+      "betOdds": 1.34,
+      "result": "H"
+    },
+    {
+      "date": "2026-08-08",
+      "match": "坎布尔 vs SBV精英",
+      "goalLine": "-1",
+      "favWin": "5.15",
+      "favDraw": "4.23",
+      "betSide": "客胜",
+      "betOdds": 1.43,
+      "result": "A"
+    },
+    {
+      "date": "2026-08-11",
+      "match": "江原FC vs 大阪钢巴",
+      "goalLine": "-1",
+      "favWin": "5.75",
+      "favDraw": "4.15",
+      "betSide": "客胜",
+      "betOdds": 1.4,
+      "result": "A"
+    },
+    {
+      "date": "2026-08-15",
+      "match": "柏林赫塔 vs 海登海姆",
+      "goalLine": "-1",
+      "favWin": "5.30",
+      "favDraw": "4.25",
+      "betSide": "客胜",
+      "betOdds": 1.42,
+      "result": "H"
+    },
+    {
+      "date": "2026-08-15",
+      "match": "基尔 vs 圣保利",
+      "goalLine": "-1",
+      "favWin": "5.40",
+      "favDraw": "4.16",
+      "betSide": "客胜",
+      "betOdds": 1.42,
+      "result": "A"
+    },
+    {
+      "date": "2026-08-16",
+      "match": "葡萄牙国民 vs 埃斯托里尔",
+      "goalLine": "-1",
+      "favWin": "6.40",
+      "favDraw": "4.42",
+      "betSide": "客胜",
+      "betOdds": 1.34,
+      "result": "H"
+    },
+    {
+      "date": "2026-08-16",
+      "match": "阿森纳 vs 曼彻斯特城",
+      "goalLine": "-1",
+      "favWin": "6.10",
+      "favDraw": "4.45",
+      "betSide": "客胜",
+      "betOdds": 1.35,
+      "result": "H"
+    },
+    {
+      "date": "2026-08-16",
+      "match": "海牙 vs 格罗宁根",
+      "goalLine": "+1",
+      "favWin": "5.15",
+      "favDraw": "4.25",
+      "betSide": "主胜",
+      "betOdds": 1.43,
+      "result": "A"
+    },
+    {
+      "date": "2026-08-16",
+      "match": "德岛漩涡 vs 鸟栖沙岩",
+      "goalLine": "-1",
+      "favWin": "6.30",
+      "favDraw": "4.15",
+      "betSide": "客胜",
+      "betOdds": 1.37,
+      "result": "A"
+    },
+    {
+      "date": "2026-08-17",
+      "match": "赫尔辛基火花 vs 坦佩雷山猫",
+      "goalLine": "-1",
+      "favWin": "5.15",
+      "favDraw": "4.75",
+      "betSide": "客胜",
+      "betOdds": 1.38,
+      "result": "D"
+    },
+    {
+      "date": "2026-08-18",
+      "match": "加的夫城 vs 雷克斯汉姆",
+      "goalLine": "-1",
+      "favWin": "5.15",
+      "favDraw": "4.25",
+      "betSide": "客胜",
+      "betOdds": 1.43,
+      "result": "A"
+    },
+    {
+      "date": "2026-08-19",
+      "match": "安养FC vs 济州SK",
+      "goalLine": "+1",
+      "favWin": "5.35",
+      "favDraw": "4.20",
+      "betSide": "主胜",
+      "betOdds": 1.42,
+      "result": "H"
+    },
+    {
+      "date": "2026-08-20",
+      "match": "奈梅亨 vs 博德闪耀",
+      "goalLine": "-1",
+      "favWin": "5.40",
+      "favDraw": "4.80",
+      "betSide": "客胜",
+      "betOdds": 1.36,
+      "result": "A"
+    },
+    {
+      "date": "2026-08-22",
+      "match": "斯旺西 vs 谢菲尔德联",
+      "goalLine": "-1",
+      "favWin": "5.80",
+      "favDraw": "4.20",
+      "betSide": "客胜",
+      "betOdds": 1.39,
+      "result": "A"
+    },
+    {
+      "date": "2026-08-22",
+      "match": "伊普斯维奇 vs 桑德兰",
+      "goalLine": "-1",
+      "favWin": "5.90",
+      "favDraw": "4.25",
+      "betSide": "客胜",
+      "betOdds": 1.38,
+      "result": "D"
+    },
+    {
+      "date": "2026-08-22",
+      "match": "米尔沃尔 vs 诺维奇",
+      "goalLine": "-1",
+      "favWin": "5.90",
+      "favDraw": "4.25",
+      "betSide": "客胜",
+      "betOdds": 1.38,
+      "result": "H"
+    },
+    {
+      "date": "2026-08-22",
+      "match": "塞伊奈约基 vs 拉赫蒂",
+      "goalLine": "-1",
+      "favWin": "5.45",
+      "favDraw": "4.65",
+      "betSide": "客胜",
+      "betOdds": 1.37,
+      "result": "A"
+    },
+    {
+      "date": "2026-08-23",
+      "match": "西布罗姆维奇 vs 伯恩利",
+      "goalLine": "+1",
+      "favWin": "5.80",
+      "favDraw": "4.30",
+      "betSide": "主胜",
+      "betOdds": 1.38,
+      "result": "H"
+    },
+    {
+      "date": "2026-08-23",
+      "match": "图卢兹 vs 里昂",
+      "goalLine": "+1",
+      "favWin": "6.10",
+      "favDraw": "4.45",
+      "betSide": "主胜",
+      "betOdds": 1.35,
+      "result": "A"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "generatedAt": "2026-11-19T09:44:57.755Z",
+  "counting": {
+    "distinctMatches": 189,
+    "note": "本文件按“独立比赛”分类；snapshot_inventory.json 的 totals 是按“快照×场次”计数，两者不可相加"
+  },
+  "classes": {
+    "distinctMatches": 189,
+    "strictOnly": 6,
+    "strictAndDoubtful": 37,
+    "doubtfulOnly": 82,
+    "noResultOnly": 58,
+    "noKickoffOnly": 6
+  },
+  "usableMatches": 43,
+  "snapshotNameRange": {
+    "from": "2026-08-23T08:54:30.000Z",
+    "to": "2026-08-29T00:55:57.000Z",
+    "spanDays": 5.67
+  },
+  "kickoffRange": {
+    "from": "2026-08-23T18:45:00.000Z",
+    "to": "2026-08-29T11:30:00.000Z",
+    "spanDays": 5.7
+  }
+}

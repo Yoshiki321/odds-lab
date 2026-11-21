@@ -1,0 +1,13 @@
+a294b447-1781-4089-86dc-b68a89f41e54.jsonl len 335
+竞彩助手 v2 每日23:00关盘收工工作流（durable，跑 PG 数据层）：
+1. 最终刷新：cd c:\zwkj\竞彩助手\app && npx tsx tools/refresh.ts —— 抓最终盘→评分→拉已开奖。
+2. 结算当日已终场投注：cd c:\zwkj\竞彩助手\app && npx tsx tools/settle.ts —— 幂等，官方未终场跳过。
+3. 复盘当日评分准确率（scores vs results，错杀/虚高写 docs 表 scoring-upgrade 与当日日记）。
+4. 更新台账（bankroll/bets）+ 投注日记（docs journal:日期）。
+5. 汇报账态、在途、次日候选场次。买不买自主判断不询问。
+====
+a294b447-1781-4089-86dc-b68a89f41e54.jsonl len 212
+竞彩助手 v2 每小时评分刷新（LLM运维，跑 PG 数据层）：
+1. cd c:\zwkj\竞彩助手\app && npx tsx tools/refresh.ts —— 只刷新平台盘口+评分+已开奖赛果，写 source_status 供前端红条。
+2. 不结算不下单（那是 13:03/23:07 的事）。
+3. 信息源错误（sporttery 空场次/接口失败/JSON解析失败）在回复里点名源和错误，不得假装有分。

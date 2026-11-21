@@ -1,0 +1,57 @@
+# ---- 依赖 ----
+node_modules/
+
+# ---- 凭据 / 本地会话（绝对不能提交）----
+.edge-auto/
+data/experiment_survival_100/runtime/
+*credentials*.json
+.env
+.env.*
+
+# ---- 私人账本 / 订单 / 账户数据（绝不公开）----
+data/experiment_survival_100/ledger*
+data/experiment_survival_100/archive/
+data/experiment_survival_100/decisions/
+data/betting/ledger*
+data/betting/backup/
+data/scratch_backup/
+data/backup/
+
+# ---- 代理/工具本地状态 ----
+.agent_trash/
+.codex/
+.workbuddy/
+.playwright-mcp/
+downloaded_files/
+
+# ---- 运行产物 / 日志 ----
+*.log
+
+# ---- 本地截图（可能含账户页面）----
+tools/shot-*.png
+tools/selftest_shot.png
+data/experiment_survival_100/snapshots/
+data/experiment_survival_100/_archive_prefilter/
+data/experiment_survival_100/runtime/*.log
+
+# ---- 大体量生成数据（保留小型配置/报告）----
+data/history/
+data/odds/
+data/okooo_cache/
+data/scores/
+data/live/
+data/results/
+data/support/
+data/today/
+data/backtest/
+data/backup/
+data/xg/*
+!data/xg/README.md
+data/virtual/*
+!data/virtual/.gitkeep
+discussion_package*.zip
+
+# ---- 系统 ----
+.DS_Store
+Thumbs.db
+desktop.ini

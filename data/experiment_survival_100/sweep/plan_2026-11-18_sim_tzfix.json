@@ -1,0 +1,76 @@
+{
+  "version": "sweep-plan-v1",
+  "configVersion": "sweep-config-v1",
+  "createdAt": "2026-11-18T15:35:52.366Z",
+  "sel": {
+    "total": 3,
+    "included": [
+      {
+        "id": "OB-CL-20261125-GAL-AVL",
+        "league": "欧洲冠军联赛",
+        "home": "加拉塔萨雷",
+        "away": "阿斯顿维拉",
+        "kickoff": "2026-11-25T01:45:00+08:00",
+        "markets": [
+          "全场独赢",
+          "全场让球",
+          "全场大小"
+        ]
+      },
+      {
+        "id": "OB-CL-20261125-BDG-LIN",
+        "league": "欧洲冠军联赛",
+        "home": "博多格林特",
+        "away": "林茨",
+        "kickoff": "2026-11-25T01:45:00+08:00",
+        "markets": [
+          "全场独赢",
+          "全场让球",
+          "全场大小"
+        ]
+      },
+      {
+        "id": "OB-CL-20261125-MCI-NAP",
+        "league": "欧洲冠军联赛",
+        "home": "曼城",
+        "away": "那不勒斯",
+        "kickoff": "2026-11-25T04:00:00+08:00",
+        "markets": [
+          "全场独赢",
+          "全场让球",
+          "全场大小"
+        ]
+      }
+    ],
+    "excluded": []
+  },
+  "rechecks": [
+    {
+      "eventId": "OB-CL-20261125-GAL-AVL",
+      "kickoff": "2026-11-25T01:45:00+08:00",
+      "kickoffMs": 1795542300000,
+      "kickoffBeijing": "2026-11-25T01:45:00+08:00",
+      "planAtMs": 1795540500000,
+      "planAtBeijing": "2026-11-25T01:15:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "OB-CL-20261125-BDG-LIN",
+      "kickoff": "2026-11-25T01:45:00+08:00",
+      "kickoffMs": 1795542300000,
+      "kickoffBeijing": "2026-11-25T01:45:00+08:00",
+      "planAtMs": 1795540500000,
+      "planAtBeijing": "2026-11-25T01:15:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "OB-CL-20261125-MCI-NAP",
+      "kickoff": "2026-11-25T04:00:00+08:00",
+      "kickoffMs": 1795550400000,
+      "kickoffBeijing": "2026-11-25T04:00:00+08:00",
+      "planAtMs": 1795548600000,
+      "planAtBeijing": "2026-11-25T03:30:00+08:00",
+      "offsetMin": 30
+    }
+  ]
+}

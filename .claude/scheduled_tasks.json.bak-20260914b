@@ -1,0 +1,37 @@
+{
+  "tasks": [
+    {
+      "id": "c51e8c53",
+      "cron": "3 13 * * *",
+      "prompt": "竞彩助手 v2 每日13:00开盘工作流（durable，跑 PG 数据层）：\n1. 刷新：cd c:\\zwkj\\竞彩助手\\app && npx tsx tools/refresh.ts —— 抓当日盘→PG评分→拉已开奖赛果→生成扫描计划。信息源错误（sporttery 空场次/接口失败）会写 source_status，回复里点名源和错误。\n2. 结算前日：cd c:\\zwkj\\竞彩助手\\app && npx tsx tools/settle.ts —— 幂等，官方未终场自动跳过，绝不重复入账。\n3. 模型矩阵扫描当日评分（PG：cd c:\\zwkj\\竞彩助手\\app && npx tsx scripts/inspect.ts），≥58加注10%/48-57实单5%/40-47只虚拟（v2.1档位）。\n4. 可买早场按模型分级自主下注，写入 PG bets 表（upsertBet）+ 更新 bankroll。\n5. 更新当日投注日记（docs 表 journal:日期）。\n6. 汇报：抓几场、评分档位、在途/资金、信息源报错。买不买自主判断不询问。",
+      "createdAt": 1788778196350,
+      "lastFiredAt": 1789277580361,
+      "recurring": true,
+      "createdBySessionId": "a294b447-1781-4089-86dc-b68a89f41e54",
+      "createdByPid": 11828,
+      "createdByProcStart": "134333531353745700"
+    },
+    {
+      "id": "6421b1d8",
+      "cron": "7 23 * * *",
+      "prompt": "竞彩助手 v2 每日23:00关盘收工工作流（durable，跑 PG 数据层）：\n1. 最终刷新：cd c:\\zwkj\\竞彩助手\\app && npx tsx tools/refresh.ts —— 抓最终盘→评分→拉已开奖。\n2. 结算当日已终场投注：cd c:\\zwkj\\竞彩助手\\app && npx tsx tools/settle.ts —— 幂等，官方未终场跳过。\n3. 复盘当日评分准确率（scores vs results，错杀/虚高写 docs 表 scoring-upgrade 与当日日记）。\n4. 更新台账（bankroll/bets）+ 投注日记（docs journal:日期）。\n5. 汇报账态、在途、次日候选场次。买不买自主判断不询问。",
+      "createdAt": 1788778210808,
+      "lastFiredAt": 1789313820451,
+      "recurring": true,
+      "createdBySessionId": "a294b447-1781-4089-86dc-b68a89f41e54",
+      "createdByPid": 11828,
+      "createdByProcStart": "134333531353745700"
+    },
+    {
+      "id": "2646badb",
+      "cron": "33 13-22 * * *",
+      "prompt": "竞彩助手 v2 每小时评分刷新（LLM运维，跑 PG 数据层）：\n1. cd c:\\zwkj\\竞彩助手\\app && npx tsx tools/refresh.ts —— 只刷新平台盘口+评分+已开奖赛果，写 source_status 供前端红条。\n2. 不结算不下单（那是 13:03/23:07 的事）。\n3. 信息源错误（sporttery 空场次/接口失败/JSON解析失败）在回复里点名源和错误，不得假装有分。",
+      "createdAt": 1788778222411,
+      "lastFiredAt": 1789311780109,
+      "recurring": true,
+      "createdBySessionId": "a294b447-1781-4089-86dc-b68a89f41e54",
+      "createdByPid": 11828,
+      "createdByProcStart": "134333531353745700"
+    }
+  ]
+}

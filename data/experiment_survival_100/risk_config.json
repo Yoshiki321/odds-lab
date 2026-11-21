@@ -1,0 +1,35 @@
+{
+  "dailyMaxRisk": 100,
+  "experimentMaxLoss": 100,
+  "initialCapital": 100,
+  "maxConcurrentOpenRisk": 30,
+  "noLeverage": true,
+  "noMartingale": true,
+  "noRecharge": true,
+  "noRaiseLimits": true,
+  "singleMin": 10,
+  "singleMax": 1000000,
+  "history": [
+    {
+      "at": "2026-11-20",
+      "change": "用户明确指令覆盖：单注下限 10（原无下限/下限2）、单注上限无上限（原 singleMax 2）；noRaiseLimits false→true；当日/累计/未结上限同步放宽到本金级别以允许开干；保留 noLeverage/noMartingale/noRecharge 三把安全锁",
+      "unchanged": "initialCapital100；noLeverage/noMartingale/noRecharge 均保持 true",
+      "warning": "此为激进设置：累计亏损上限=本金100=可亏光；与旧铁律'单注2/未结3/当日5/累计20不可扩大'冲突，按用户最高权限覆盖，仅记录不隐含正当性"
+    },
+    {
+      "at": "2026-11-19T00:59+08:00",
+      "change": "maxConcurrentOpenRisk 3→5（用户批准，理由：首单未结2元占满，需留1-2单空间）",
+      "unchanged": "initialCapital100/singleMax2/dailyMaxRisk5/experimentMaxLoss20"
+    },
+    {
+      "at": "2026-11-19",
+      "change": "singleMax 1→2（用户批准，预算仍100）",
+      "unchanged": "未结3/日5/累计20"
+    },
+    {
+      "at": "2026-11-19T08:22:08.612Z",
+      "change": "按用户审计指令：未结上限 5→3（临时，待审计结论）",
+      "unchanged": "单注2/日5/累计20"
+    }
+  ]
+}

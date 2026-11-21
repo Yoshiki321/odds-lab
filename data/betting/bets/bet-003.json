@@ -1,0 +1,37 @@
+{
+  "betId": 3,
+  "type": "2串1",
+  "stake": 60,
+  "totalOdds": 2.33,
+  "potentialReturn": 139.8,
+  "placedAt": "2026-08-24T01:00:00+08:00",
+  "status": "void",
+  "legs": [
+    {
+      "matchId": 2041033,
+      "matchNum": "周一006",
+      "home": "罗马",
+      "away": "佛罗伦萨",
+      "league": "意甲",
+      "kickoff": "2026-08-25T02:45:00+08:00",
+      "pick": "主胜 (HAD H)",
+      "odds": 1.52,
+      "result": null
+    },
+    {
+      "matchId": 2041036,
+      "matchNum": "周一009",
+      "home": "吉维森特",
+      "away": "卡萨皮亚",
+      "league": "葡超",
+      "kickoff": "2026-08-25T03:15:00+08:00",
+      "pick": "主胜 (HAD H)",
+      "odds": 1.53,
+      "result": null
+    }
+  ],
+  "settledAt": null,
+  "returnAmount": null,
+  "profit": null,
+  "voidReason": "第2期重置，作废不计"
+}

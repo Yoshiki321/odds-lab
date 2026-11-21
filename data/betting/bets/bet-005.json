@@ -1,0 +1,38 @@
+{
+  "betId": 5,
+  "type": "2串1",
+  "stake": 100,
+  "totalOdds": 2.46,
+  "potentialReturn": 246,
+  "placedAt": "2026-08-24T01:50:00+08:00",
+  "status": "void",
+  "voidReason": "第3期重置，作废不计",
+  "legs": [
+    {
+      "matchId": 2041031,
+      "matchNum": "周一004",
+      "home": "奥萨苏纳",
+      "away": "莱万特",
+      "league": "西甲",
+      "kickoff": "2026-08-25T01:30:00+08:00",
+      "pick": "主胜 (HAD H)",
+      "odds": 1.62,
+      "result": null
+    },
+    {
+      "matchId": 2041033,
+      "matchNum": "周一006",
+      "home": "罗马",
+      "away": "佛罗伦萨",
+      "league": "意甲",
+      "kickoff": "2026-08-25T02:45:00+08:00",
+      "pick": "主胜 (HAD H)",
+      "odds": 1.52,
+      "result": null
+    }
+  ],
+  "settledAt": null,
+  "returnAmount": null,
+  "profit": null,
+  "theory": "两受控主场的稳健串：奥萨苏纳+罗马主场首秀，赔率无变盘，大众热度可控"
+}

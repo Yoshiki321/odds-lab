@@ -1,0 +1,161 @@
+[
+  {
+    "match": {
+      "matchId": "2041077",
+      "num": "周四009",
+      "league": "巴西杯",
+      "home": "巴西国际",
+      "away": "格雷米奥",
+      "matchDate": "2026-08-28",
+      "matchTime": "07:00:00",
+      "goalLine": "-1",
+      "h": 1.81,
+      "d": 2.8,
+      "a": 4.55,
+      "hh": 3.95,
+      "hd": 3.15,
+      "ha": 1.79,
+      "hadChanges": 0,
+      "hhadChanges": 0,
+      "hadHF": 0,
+      "hadAF": 0,
+      "hadAD": 0,
+      "hhadHF": 0,
+      "hhadAF": 0,
+      "hhadAD": 0,
+      "hadSingle": false,
+      "hhadADir": "flat",
+      "hhadHDir": "flat",
+      "hadADir": "flat"
+    },
+    "sigs": [
+      {
+        "id": "P2a",
+        "name": "P2a基础",
+        "desc": "HHAD-A(让球负) + 非五大非次级(不限制让球)",
+        "winRate": "46.5%",
+        "preciseEV": "120.1%",
+        "roi": "+114% (99注)",
+        "bonus": null
+      },
+      {
+        "id": "P2a_hdir_flat",
+        "name": "P2a主向稳定",
+        "desc": "P2a + 让球主方向flat",
+        "winRate": "58.6%",
+        "preciseEV": "150.3%",
+        "roi": "+150% (29注)",
+        "bonus": null
+      }
+    ]
+  },
+  {
+    "match": {
+      "matchId": "2041102",
+      "num": "周五004",
+      "league": "沙职",
+      "home": "赛哈海湾",
+      "away": "利雅新月",
+      "matchDate": "2026-08-29",
+      "matchTime": "02:00:00",
+      "goalLine": "+2",
+      "h": 9,
+      "d": 5.85,
+      "a": 1.18,
+      "hh": 1.96,
+      "hd": 4.1,
+      "ha": 2.67,
+      "hadChanges": 0,
+      "hhadChanges": 0,
+      "hadHF": 0,
+      "hadAF": 0,
+      "hadAD": 0,
+      "hhadHF": 0,
+      "hhadAF": 0,
+      "hhadAD": 0,
+      "hadSingle": false,
+      "hhadADir": "flat",
+      "hhadHDir": "flat",
+      "hadADir": "flat"
+    },
+    "sigs": [
+      {
+        "id": "P2a",
+        "name": "P2a基础",
+        "desc": "HHAD-A(让球负) + 非五大非次级(不限制让球)",
+        "winRate": "46.5%",
+        "preciseEV": "120.1%",
+        "roi": "+114% (99注)",
+        "bonus": null
+      },
+      {
+        "id": "P2a_hdir_flat",
+        "name": "P2a主向稳定",
+        "desc": "P2a + 让球主方向flat",
+        "winRate": "58.6%",
+        "preciseEV": "150.3%",
+        "roi": "+150% (29注)",
+        "bonus": null
+      }
+    ]
+  },
+  {
+    "match": {
+      "matchId": "2041105",
+      "num": "周五007",
+      "league": "荷乙",
+      "home": "罗达JC",
+      "away": "布雷达",
+      "matchDate": "2026-08-29",
+      "matchTime": "02:00:00",
+      "goalLine": "+1",
+      "h": 3.05,
+      "d": 3.43,
+      "a": 1.96,
+      "hh": 1.66,
+      "hd": 3.85,
+      "ha": 3.75,
+      "hadChanges": 0,
+      "hhadChanges": 0,
+      "hadHF": 0,
+      "hadAF": 0,
+      "hadAD": 0,
+      "hhadHF": 0,
+      "hhadAF": 0,
+      "hhadAD": 0,
+      "hadSingle": false,
+      "hhadADir": "flat",
+      "hhadHDir": "flat",
+      "hadADir": "flat"
+    },
+    "sigs": [
+      {
+        "id": "P2a_gl1",
+        "name": "🏆 最强信号",
+        "desc": "HHAD-A(让球负) + 非五大非次级 + 让球+1 + 非单关",
+        "winRate": "44.1%",
+        "preciseEV": "172.6%",
+        "roi": "+288% (34注)",
+        "bonus": "🟢让球负方向平(最稳)"
+      },
+      {
+        "id": "P2a",
+        "name": "P2a基础",
+        "desc": "HHAD-A(让球负) + 非五大非次级(不限制让球)",
+        "winRate": "46.5%",
+        "preciseEV": "120.1%",
+        "roi": "+114% (99注)",
+        "bonus": null
+      },
+      {
+        "id": "P2a_hdir_flat",
+        "name": "P2a主向稳定",
+        "desc": "P2a + 让球主方向flat",
+        "winRate": "58.6%",
+        "preciseEV": "150.3%",
+        "roi": "+150% (29注)",
+        "bonus": null
+      }
+    ]
+  }
+]

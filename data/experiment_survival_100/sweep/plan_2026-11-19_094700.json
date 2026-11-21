@@ -1,0 +1,1108 @@
+{
+  "version": "sweep-plan-v2",
+  "configVersion": "sweep-config-v2",
+  "createdAt": "2026-11-19T09:47:00+08:00",
+  "mode": "manual",
+  "observedAt": "2026-11-19T09:47:00+08:00",
+  "sourcePage": "https://user-pc-new.zqt0510.com/#/home",
+  "parsedMatches": 45,
+  "advertisedTotal": 183,
+  "coverageNote": "按联赛逐个抓：成功 12 个联赛/失败 4 个；解析到 45 场（宣称合计 183 场，覆盖率 24.6%）；失败联赛记未检查",
+  "sel": {
+    "total": 33,
+    "included": [
+      {
+        "id": "拜仁慕尼黑-科隆-1795203000000",
+        "league": "德国甲级联赛",
+        "home": "拜仁慕尼黑",
+        "away": "科隆",
+        "kickoffMs": 1795203000000,
+        "kickoff": "2026-11-21T03:30:00+08:00",
+        "markets": {
+          "had": {
+            "h": 1.05,
+            "d": 2.04,
+            "a": null
+          },
+          "hhad": {
+            "line": "-3/3.5",
+            "h": 2.04,
+            "a": 1.84
+          },
+          "ou": {
+            "line": "4.5",
+            "over": 1.97,
+            "under": 1.89
+          }
+        },
+        "leagueTab": "德甲",
+        "tier": 1
+      },
+      {
+        "id": "特鲁瓦-勒阿弗尔-1795203900000",
+        "league": "法国甲级联赛",
+        "home": "特鲁瓦",
+        "away": "勒阿弗尔",
+        "kickoffMs": 1795203900000,
+        "kickoff": "2026-11-21T03:45:00+08:00",
+        "markets": {
+          "had": {
+            "h": 2.17,
+            "d": 3.35,
+            "a": 3.05
+          },
+          "hhad": {
+            "line": "-0/0.5",
+            "h": 1.91,
+            "a": 1.97
+          },
+          "ou": {
+            "line": "2.5",
+            "over": 1.9,
+            "under": 1.96
+          }
+        },
+        "leagueTab": "法甲",
+        "tier": 1
+      },
+      {
+        "id": "毕尔巴鄂竞技-西班牙人-1795204800000",
+        "league": "西班牙甲级联赛",
+        "home": "毕尔巴鄂竞技",
+        "away": "西班牙人",
+        "kickoffMs": 1795204800000,
+        "kickoff": "2026-11-21T04:00:00+08:00",
+        "markets": {
+          "had": {
+            "h": 1.45,
+            "d": 4.35,
+            "a": 6
+          },
+          "hhad": {
+            "line": "-1/1.5",
+            "h": 2.08,
+            "a": 1.8
+          },
+          "ou": {
+            "line": "2.5/3",
+            "over": 2.04,
+            "under": 1.82
+          }
+        },
+        "leagueTab": "西甲",
+        "tier": 1
+      },
+      {
+        "id": "曼城-富勒姆-1795264200000",
+        "league": "英格兰超级联赛",
+        "home": "曼城",
+        "away": "富勒姆",
+        "kickoffMs": 1795264200000,
+        "kickoff": "2026-11-21T20:30:00+08:00",
+        "markets": {
+          "had": {
+            "h": 1.37,
+            "d": 5,
+            "a": 6.4
+          },
+          "hhad": {
+            "line": "-1/1.5",
+            "h": 1.84,
+            "a": 2.04
+          },
+          "ou": {
+            "line": "3/3.5",
+            "over": 2.05,
+            "under": 1.81
+          }
+        },
+        "leagueTab": "英超",
+        "tier": 1
+      },
+      {
+        "id": "阿拉维斯-拉科鲁尼亚-1795266000000",
+        "league": "西班牙甲级联赛",
+        "home": "阿拉维斯",
+        "away": "拉科鲁尼亚",
+        "kickoffMs": 1795266000000,
+        "kickoff": "2026-11-21T21:00:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "leagueTab": "西甲",
+        "tier": 1
+      },
+      {
+        "id": "拉齐奥-莱切-1795269600000",
+        "league": "意大利甲级联赛",
+        "home": "拉齐奥",
+        "away": "莱切",
+        "kickoffMs": 1795269600000,
+        "kickoff": "2026-11-21T22:00:00+08:00",
+        "markets": {
+          "had": {
+            "h": 1.37,
+            "d": 4.9,
+            "a": 6.7
+          },
+          "hhad": {
+            "line": "-1/1.5",
+            "h": 1.84,
+            "a": 2.04
+          },
+          "ou": {
+            "line": "3",
+            "over": 1.95,
+            "under": 1.91
+          }
+        },
+        "leagueTab": "意甲",
+        "tier": 1
+      },
+      {
+        "id": "科莫-卡利亚里-1795269600000",
+        "league": "意大利甲级联赛",
+        "home": "科莫",
+        "away": "卡利亚里",
+        "kickoffMs": 1795269600000,
+        "kickoff": "2026-11-21T22:00:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "leagueTab": "意甲",
+        "tier": 1
+      },
+      {
+        "id": "勒沃库森-帕德博恩-1795271400000",
+        "league": "德国甲级联赛",
+        "home": "勒沃库森",
+        "away": "帕德博恩",
+        "kickoffMs": 1795271400000,
+        "kickoff": "2026-11-21T22:30:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "leagueTab": "德甲",
+        "tier": 1
+      },
+      {
+        "id": "柏林联合-莱比锡红牛-1795271400000",
+        "league": "德国甲级联赛",
+        "home": "柏林联合",
+        "away": "莱比锡红牛",
+        "kickoffMs": 1795271400000,
+        "kickoff": "2026-11-21T22:30:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "leagueTab": "德甲",
+        "tier": 1
+      },
+      {
+        "id": "法兰克福-霍芬海姆-1795271400000",
+        "league": "德国甲级联赛",
+        "home": "法兰克福",
+        "away": "霍芬海姆",
+        "kickoffMs": 1795271400000,
+        "kickoff": "2026-11-21T22:30:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "leagueTab": "德甲",
+        "tier": 1
+      },
+      {
+        "id": "伯恩茅斯-诺丁汉森林-1795273200000",
+        "league": "英格兰超级联赛",
+        "home": "伯恩茅斯",
+        "away": "诺丁汉森林",
+        "kickoffMs": 1795273200000,
+        "kickoff": "2026-11-21T23:00:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "leagueTab": "英超",
+        "tier": 1
+      },
+      {
+        "id": "切尔西-利兹联-1795273200000",
+        "league": "英格兰超级联赛",
+        "home": "切尔西",
+        "away": "利兹联",
+        "kickoffMs": 1795273200000,
+        "kickoff": "2026-11-21T23:00:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "leagueTab": "英超",
+        "tier": 1
+      },
+      {
+        "id": "托特纳姆热刺-伊普斯维奇-1795273200000",
+        "league": "英格兰超级联赛",
+        "home": "托特纳姆热刺",
+        "away": "伊普斯维奇",
+        "kickoffMs": 1795273200000,
+        "kickoff": "2026-11-21T23:00:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "leagueTab": "英超",
+        "tier": 1
+      },
+      {
+        "id": "巴列卡诺-瓦伦西亚-1795274100000",
+        "league": "西班牙甲级联赛",
+        "home": "巴列卡诺",
+        "away": "瓦伦西亚",
+        "kickoffMs": 1795274100000,
+        "kickoff": "2026-11-21T23:15:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "leagueTab": "西甲",
+        "tier": 1
+      },
+      {
+        "id": "尼斯-巴黎圣日耳曼-1795277700000",
+        "league": "法国甲级联赛",
+        "home": "尼斯",
+        "away": "巴黎圣日耳曼",
+        "kickoffMs": 1795277700000,
+        "kickoff": "2026-11-22T00:15:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "leagueTab": "法甲",
+        "tier": 1
+      },
+      {
+        "id": "帕尔马-罗马-1795280400000",
+        "league": "意大利甲级联赛",
+        "home": "帕尔马",
+        "away": "罗马",
+        "kickoffMs": 1795280400000,
+        "kickoff": "2026-11-22T01:00:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "leagueTab": "意甲",
+        "tier": 1
+      },
+      {
+        "id": "塞维利亚-皇家贝蒂斯-1795282200000",
+        "league": "西班牙甲级联赛",
+        "home": "塞维利亚",
+        "away": "皇家贝蒂斯",
+        "kickoffMs": 1795282200000,
+        "kickoff": "2026-11-22T01:30:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "leagueTab": "西甲",
+        "tier": 1
+      },
+      {
+        "id": "朗斯-图卢兹-1795290300000",
+        "league": "法国甲级联赛",
+        "home": "朗斯",
+        "away": "图卢兹",
+        "kickoffMs": 1795290300000,
+        "kickoff": "2026-11-22T03:45:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "leagueTab": "法甲",
+        "tier": 1
+      },
+      {
+        "id": "那不勒斯-都灵-1795290300000",
+        "league": "意大利甲级联赛",
+        "home": "那不勒斯",
+        "away": "都灵",
+        "kickoffMs": 1795290300000,
+        "kickoff": "2026-11-22T03:45:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "leagueTab": "意甲",
+        "tier": 1
+      },
+      {
+        "id": "里尔-里昂-1795290300000",
+        "league": "法国甲级联赛",
+        "home": "里尔",
+        "away": "里昂",
+        "kickoffMs": 1795290300000,
+        "kickoff": "2026-11-22T03:45:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "leagueTab": "法甲",
+        "tier": 1
+      },
+      {
+        "id": "瓦斯科达伽马RJ-巴西国际-1795127400000",
+        "league": "巴西甲级联赛",
+        "home": "瓦斯科达伽马RJ",
+        "away": "巴西国际",
+        "kickoffMs": 1795127400000,
+        "kickoff": "2026-11-20T06:30:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "leagueTab": "巴甲",
+        "tier": 2
+      },
+      {
+        "id": "奥兰多城-辛辛那提FC-1795134600000",
+        "league": "美国职业大联盟 - 附加赛",
+        "home": "奥兰多城",
+        "away": "辛辛那提FC",
+        "kickoffMs": 1795134600000,
+        "kickoff": "2026-11-20T08:30:00+08:00",
+        "markets": {
+          "had": {
+            "h": 2.39,
+            "d": 4.3,
+            "a": 2.44
+          },
+          "hhad": {
+            "line": "0",
+            "h": 1.91,
+            "a": 1.97
+          },
+          "ou": {
+            "line": "3.5/4",
+            "over": 1.92,
+            "under": 1.94
+          }
+        },
+        "leagueTab": "美职联",
+        "tier": 2
+      },
+      {
+        "id": "西雅图海湾人-皇家盐湖城-1795143600000",
+        "league": "美国职业大联盟 - 附加赛",
+        "home": "西雅图海湾人",
+        "away": "皇家盐湖城",
+        "kickoffMs": 1795143600000,
+        "kickoff": "2026-11-20T11:00:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "leagueTab": "美职联",
+        "tier": 2
+      },
+      {
+        "id": "根塞尔伯里吉-加济安泰普大都会-1795257000000",
+        "league": "土耳其超级联赛",
+        "home": "根塞尔伯里吉",
+        "away": "加济安泰普大都会",
+        "kickoffMs": 1795257000000,
+        "kickoff": "2026-11-21T18:30:00+08:00",
+        "markets": {
+          "had": {
+            "h": 2.24,
+            "d": 3.55,
+            "a": 2.67
+          },
+          "hhad": {
+            "line": "-0/0.5",
+            "h": 2.05,
+            "a": 1.81
+          },
+          "ou": {
+            "line": "2.5/3",
+            "over": 2,
+            "under": 1.84
+          }
+        },
+        "leagueTab": "土超",
+        "tier": 2
+      },
+      {
+        "id": "加拉塔萨雷-萨姆士邦-1795266000000",
+        "league": "土耳其超级联赛",
+        "home": "加拉塔萨雷",
+        "away": "萨姆士邦",
+        "kickoffMs": 1795266000000,
+        "kickoff": "2026-11-21T21:00:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "leagueTab": "土超",
+        "tier": 2
+      },
+      {
+        "id": "阿美德-里泽体育-1795266000000",
+        "league": "土耳其超级联赛",
+        "home": "阿美德",
+        "away": "里泽体育",
+        "kickoffMs": 1795266000000,
+        "kickoff": "2026-11-21T21:00:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "leagueTab": "土超",
+        "tier": 2
+      },
+      {
+        "id": "奈梅亨-PSV埃因霍温-1795275000000",
+        "league": "荷兰甲级联赛",
+        "home": "奈梅亨",
+        "away": "PSV埃因霍温",
+        "kickoffMs": 1795275000000,
+        "kickoff": "2026-11-21T23:30:00+08:00",
+        "markets": {
+          "had": {
+            "h": 3.6,
+            "d": 4,
+            "a": 1.74
+          },
+          "hhad": {
+            "line": "+0.5/1",
+            "h": 1.92,
+            "a": 1.94
+          },
+          "ou": {
+            "line": "3.5/4",
+            "over": 1.94,
+            "under": 1.9
+          }
+        },
+        "leagueTab": "荷甲",
+        "tier": 2
+      },
+      {
+        "id": "高卡尔利士邦-费内巴切-1795276800000",
+        "league": "土耳其超级联赛",
+        "home": "高卡尔利士邦",
+        "away": "费内巴切",
+        "kickoffMs": 1795276800000,
+        "kickoff": "2026-11-22T00:00:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "leagueTab": "土超",
+        "tier": 2
+      },
+      {
+        "id": "乌德勒支-坎布尔-1795283100000",
+        "league": "荷兰甲级联赛",
+        "home": "乌德勒支",
+        "away": "坎布尔",
+        "kickoffMs": 1795283100000,
+        "kickoff": "2026-11-22T01:45:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "leagueTab": "荷甲",
+        "tier": 2
+      },
+      {
+        "id": "费耶诺德-鹿特丹精英-1795283100000",
+        "league": "荷兰甲级联赛",
+        "home": "费耶诺德",
+        "away": "鹿特丹精英",
+        "kickoffMs": 1795283100000,
+        "kickoff": "2026-11-22T01:45:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "leagueTab": "荷甲",
+        "tier": 2
+      },
+      {
+        "id": "新英格兰革命-费城联合-1795287600000",
+        "league": "美国职业大联盟 - 附加赛",
+        "home": "新英格兰革命",
+        "away": "费城联合",
+        "kickoffMs": 1795287600000,
+        "kickoff": "2026-11-22T03:00:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "leagueTab": "美职联",
+        "tier": 2
+      },
+      {
+        "id": "格罗宁根-海伦芬-1795291200000",
+        "league": "荷兰甲级联赛",
+        "home": "格罗宁根",
+        "away": "海伦芬",
+        "kickoffMs": 1795291200000,
+        "kickoff": "2026-11-22T04:00:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "leagueTab": "荷甲",
+        "tier": 2
+      },
+      {
+        "id": "达拉斯FC-波特兰伐木者-1795294800000",
+        "league": "美国职业大联盟 - 附加赛",
+        "home": "达拉斯FC",
+        "away": "波特兰伐木者",
+        "kickoffMs": 1795294800000,
+        "kickoff": "2026-11-22T05:00:00+08:00",
+        "markets": {
+          "had": {
+            "h": null,
+            "d": null,
+            "a": null
+          },
+          "hhad": null,
+          "ou": null
+        },
+        "leagueTab": "美职联",
+        "tier": 2
+      }
+    ],
+    "excluded": [],
+    "capped": false
+  },
+  "rechecks": [
+    {
+      "eventId": "拜仁慕尼黑-科隆-1795203000000",
+      "home": "拜仁慕尼黑",
+      "away": "科隆",
+      "league": "德国甲级联赛",
+      "tier": 1,
+      "kickoff": "2026-11-21T03:30:00+08:00",
+      "kickoffMs": 1795203000000,
+      "planAtMs": 1795201200000,
+      "planAtBeijing": "2026-11-21T03:00:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "特鲁瓦-勒阿弗尔-1795203900000",
+      "home": "特鲁瓦",
+      "away": "勒阿弗尔",
+      "league": "法国甲级联赛",
+      "tier": 1,
+      "kickoff": "2026-11-21T03:45:00+08:00",
+      "kickoffMs": 1795203900000,
+      "planAtMs": 1795202100000,
+      "planAtBeijing": "2026-11-21T03:15:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "毕尔巴鄂竞技-西班牙人-1795204800000",
+      "home": "毕尔巴鄂竞技",
+      "away": "西班牙人",
+      "league": "西班牙甲级联赛",
+      "tier": 1,
+      "kickoff": "2026-11-21T04:00:00+08:00",
+      "kickoffMs": 1795204800000,
+      "planAtMs": 1795203000000,
+      "planAtBeijing": "2026-11-21T03:30:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "曼城-富勒姆-1795264200000",
+      "home": "曼城",
+      "away": "富勒姆",
+      "league": "英格兰超级联赛",
+      "tier": 1,
+      "kickoff": "2026-11-21T20:30:00+08:00",
+      "kickoffMs": 1795264200000,
+      "planAtMs": 1795262400000,
+      "planAtBeijing": "2026-11-21T20:00:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "阿拉维斯-拉科鲁尼亚-1795266000000",
+      "home": "阿拉维斯",
+      "away": "拉科鲁尼亚",
+      "league": "西班牙甲级联赛",
+      "tier": 1,
+      "kickoff": "2026-11-21T21:00:00+08:00",
+      "kickoffMs": 1795266000000,
+      "planAtMs": 1795264200000,
+      "planAtBeijing": "2026-11-21T20:30:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "拉齐奥-莱切-1795269600000",
+      "home": "拉齐奥",
+      "away": "莱切",
+      "league": "意大利甲级联赛",
+      "tier": 1,
+      "kickoff": "2026-11-21T22:00:00+08:00",
+      "kickoffMs": 1795269600000,
+      "planAtMs": 1795267800000,
+      "planAtBeijing": "2026-11-21T21:30:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "科莫-卡利亚里-1795269600000",
+      "home": "科莫",
+      "away": "卡利亚里",
+      "league": "意大利甲级联赛",
+      "tier": 1,
+      "kickoff": "2026-11-21T22:00:00+08:00",
+      "kickoffMs": 1795269600000,
+      "planAtMs": 1795267800000,
+      "planAtBeijing": "2026-11-21T21:30:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "勒沃库森-帕德博恩-1795271400000",
+      "home": "勒沃库森",
+      "away": "帕德博恩",
+      "league": "德国甲级联赛",
+      "tier": 1,
+      "kickoff": "2026-11-21T22:30:00+08:00",
+      "kickoffMs": 1795271400000,
+      "planAtMs": 1795269600000,
+      "planAtBeijing": "2026-11-21T22:00:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "柏林联合-莱比锡红牛-1795271400000",
+      "home": "柏林联合",
+      "away": "莱比锡红牛",
+      "league": "德国甲级联赛",
+      "tier": 1,
+      "kickoff": "2026-11-21T22:30:00+08:00",
+      "kickoffMs": 1795271400000,
+      "planAtMs": 1795269600000,
+      "planAtBeijing": "2026-11-21T22:00:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "法兰克福-霍芬海姆-1795271400000",
+      "home": "法兰克福",
+      "away": "霍芬海姆",
+      "league": "德国甲级联赛",
+      "tier": 1,
+      "kickoff": "2026-11-21T22:30:00+08:00",
+      "kickoffMs": 1795271400000,
+      "planAtMs": 1795269600000,
+      "planAtBeijing": "2026-11-21T22:00:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "伯恩茅斯-诺丁汉森林-1795273200000",
+      "home": "伯恩茅斯",
+      "away": "诺丁汉森林",
+      "league": "英格兰超级联赛",
+      "tier": 1,
+      "kickoff": "2026-11-21T23:00:00+08:00",
+      "kickoffMs": 1795273200000,
+      "planAtMs": 1795271400000,
+      "planAtBeijing": "2026-11-21T22:30:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "切尔西-利兹联-1795273200000",
+      "home": "切尔西",
+      "away": "利兹联",
+      "league": "英格兰超级联赛",
+      "tier": 1,
+      "kickoff": "2026-11-21T23:00:00+08:00",
+      "kickoffMs": 1795273200000,
+      "planAtMs": 1795271400000,
+      "planAtBeijing": "2026-11-21T22:30:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "托特纳姆热刺-伊普斯维奇-1795273200000",
+      "home": "托特纳姆热刺",
+      "away": "伊普斯维奇",
+      "league": "英格兰超级联赛",
+      "tier": 1,
+      "kickoff": "2026-11-21T23:00:00+08:00",
+      "kickoffMs": 1795273200000,
+      "planAtMs": 1795271400000,
+      "planAtBeijing": "2026-11-21T22:30:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "巴列卡诺-瓦伦西亚-1795274100000",
+      "home": "巴列卡诺",
+      "away": "瓦伦西亚",
+      "league": "西班牙甲级联赛",
+      "tier": 1,
+      "kickoff": "2026-11-21T23:15:00+08:00",
+      "kickoffMs": 1795274100000,
+      "planAtMs": 1795272300000,
+      "planAtBeijing": "2026-11-21T22:45:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "尼斯-巴黎圣日耳曼-1795277700000",
+      "home": "尼斯",
+      "away": "巴黎圣日耳曼",
+      "league": "法国甲级联赛",
+      "tier": 1,
+      "kickoff": "2026-11-22T00:15:00+08:00",
+      "kickoffMs": 1795277700000,
+      "planAtMs": 1795275900000,
+      "planAtBeijing": "2026-11-21T23:45:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "帕尔马-罗马-1795280400000",
+      "home": "帕尔马",
+      "away": "罗马",
+      "league": "意大利甲级联赛",
+      "tier": 1,
+      "kickoff": "2026-11-22T01:00:00+08:00",
+      "kickoffMs": 1795280400000,
+      "planAtMs": 1795278600000,
+      "planAtBeijing": "2026-11-22T00:30:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "塞维利亚-皇家贝蒂斯-1795282200000",
+      "home": "塞维利亚",
+      "away": "皇家贝蒂斯",
+      "league": "西班牙甲级联赛",
+      "tier": 1,
+      "kickoff": "2026-11-22T01:30:00+08:00",
+      "kickoffMs": 1795282200000,
+      "planAtMs": 1795280400000,
+      "planAtBeijing": "2026-11-22T01:00:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "朗斯-图卢兹-1795290300000",
+      "home": "朗斯",
+      "away": "图卢兹",
+      "league": "法国甲级联赛",
+      "tier": 1,
+      "kickoff": "2026-11-22T03:45:00+08:00",
+      "kickoffMs": 1795290300000,
+      "planAtMs": 1795288500000,
+      "planAtBeijing": "2026-11-22T03:15:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "那不勒斯-都灵-1795290300000",
+      "home": "那不勒斯",
+      "away": "都灵",
+      "league": "意大利甲级联赛",
+      "tier": 1,
+      "kickoff": "2026-11-22T03:45:00+08:00",
+      "kickoffMs": 1795290300000,
+      "planAtMs": 1795288500000,
+      "planAtBeijing": "2026-11-22T03:15:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "里尔-里昂-1795290300000",
+      "home": "里尔",
+      "away": "里昂",
+      "league": "法国甲级联赛",
+      "tier": 1,
+      "kickoff": "2026-11-22T03:45:00+08:00",
+      "kickoffMs": 1795290300000,
+      "planAtMs": 1795288500000,
+      "planAtBeijing": "2026-11-22T03:15:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "瓦斯科达伽马RJ-巴西国际-1795127400000",
+      "home": "瓦斯科达伽马RJ",
+      "away": "巴西国际",
+      "league": "巴西甲级联赛",
+      "tier": 2,
+      "kickoff": "2026-11-20T06:30:00+08:00",
+      "kickoffMs": 1795127400000,
+      "planAtMs": 1795125600000,
+      "planAtBeijing": "2026-11-20T06:00:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "奥兰多城-辛辛那提FC-1795134600000",
+      "home": "奥兰多城",
+      "away": "辛辛那提FC",
+      "league": "美国职业大联盟 - 附加赛",
+      "tier": 2,
+      "kickoff": "2026-11-20T08:30:00+08:00",
+      "kickoffMs": 1795134600000,
+      "planAtMs": 1795132800000,
+      "planAtBeijing": "2026-11-20T08:00:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "西雅图海湾人-皇家盐湖城-1795143600000",
+      "home": "西雅图海湾人",
+      "away": "皇家盐湖城",
+      "league": "美国职业大联盟 - 附加赛",
+      "tier": 2,
+      "kickoff": "2026-11-20T11:00:00+08:00",
+      "kickoffMs": 1795143600000,
+      "planAtMs": 1795141800000,
+      "planAtBeijing": "2026-11-20T10:30:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "根塞尔伯里吉-加济安泰普大都会-1795257000000",
+      "home": "根塞尔伯里吉",
+      "away": "加济安泰普大都会",
+      "league": "土耳其超级联赛",
+      "tier": 2,
+      "kickoff": "2026-11-21T18:30:00+08:00",
+      "kickoffMs": 1795257000000,
+      "planAtMs": 1795255200000,
+      "planAtBeijing": "2026-11-21T18:00:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "加拉塔萨雷-萨姆士邦-1795266000000",
+      "home": "加拉塔萨雷",
+      "away": "萨姆士邦",
+      "league": "土耳其超级联赛",
+      "tier": 2,
+      "kickoff": "2026-11-21T21:00:00+08:00",
+      "kickoffMs": 1795266000000,
+      "planAtMs": 1795264200000,
+      "planAtBeijing": "2026-11-21T20:30:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "阿美德-里泽体育-1795266000000",
+      "home": "阿美德",
+      "away": "里泽体育",
+      "league": "土耳其超级联赛",
+      "tier": 2,
+      "kickoff": "2026-11-21T21:00:00+08:00",
+      "kickoffMs": 1795266000000,
+      "planAtMs": 1795264200000,
+      "planAtBeijing": "2026-11-21T20:30:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "奈梅亨-PSV埃因霍温-1795275000000",
+      "home": "奈梅亨",
+      "away": "PSV埃因霍温",
+      "league": "荷兰甲级联赛",
+      "tier": 2,
+      "kickoff": "2026-11-21T23:30:00+08:00",
+      "kickoffMs": 1795275000000,
+      "planAtMs": 1795273200000,
+      "planAtBeijing": "2026-11-21T23:00:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "高卡尔利士邦-费内巴切-1795276800000",
+      "home": "高卡尔利士邦",
+      "away": "费内巴切",
+      "league": "土耳其超级联赛",
+      "tier": 2,
+      "kickoff": "2026-11-22T00:00:00+08:00",
+      "kickoffMs": 1795276800000,
+      "planAtMs": 1795275000000,
+      "planAtBeijing": "2026-11-21T23:30:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "乌德勒支-坎布尔-1795283100000",
+      "home": "乌德勒支",
+      "away": "坎布尔",
+      "league": "荷兰甲级联赛",
+      "tier": 2,
+      "kickoff": "2026-11-22T01:45:00+08:00",
+      "kickoffMs": 1795283100000,
+      "planAtMs": 1795281300000,
+      "planAtBeijing": "2026-11-22T01:15:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "费耶诺德-鹿特丹精英-1795283100000",
+      "home": "费耶诺德",
+      "away": "鹿特丹精英",
+      "league": "荷兰甲级联赛",
+      "tier": 2,
+      "kickoff": "2026-11-22T01:45:00+08:00",
+      "kickoffMs": 1795283100000,
+      "planAtMs": 1795281300000,
+      "planAtBeijing": "2026-11-22T01:15:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "新英格兰革命-费城联合-1795287600000",
+      "home": "新英格兰革命",
+      "away": "费城联合",
+      "league": "美国职业大联盟 - 附加赛",
+      "tier": 2,
+      "kickoff": "2026-11-22T03:00:00+08:00",
+      "kickoffMs": 1795287600000,
+      "planAtMs": 1795285800000,
+      "planAtBeijing": "2026-11-22T02:30:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "格罗宁根-海伦芬-1795291200000",
+      "home": "格罗宁根",
+      "away": "海伦芬",
+      "league": "荷兰甲级联赛",
+      "tier": 2,
+      "kickoff": "2026-11-22T04:00:00+08:00",
+      "kickoffMs": 1795291200000,
+      "planAtMs": 1795289400000,
+      "planAtBeijing": "2026-11-22T03:30:00+08:00",
+      "offsetMin": 30
+    },
+    {
+      "eventId": "达拉斯FC-波特兰伐木者-1795294800000",
+      "home": "达拉斯FC",
+      "away": "波特兰伐木者",
+      "league": "美国职业大联盟 - 附加赛",
+      "tier": 2,
+      "kickoff": "2026-11-22T05:00:00+08:00",
+      "kickoffMs": 1795294800000,
+      "planAtMs": 1795293000000,
+      "planAtBeijing": "2026-11-22T04:30:00+08:00",
+      "offsetMin": 30
+    }
+  ],
+  "note": "解析为粗解析（页面文本），赔率等明细以页面为准；只观察不下单"
+}

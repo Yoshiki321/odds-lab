@@ -1,0 +1,6 @@
+import { query, pool } from '../../src/server/db/pool.js';
+async function main(){
+ const r=await query(`WITH x AS (SELECT DISTINCT ON (s.match_id) s.match_id,s.match_date,s.total,s.market,s.pred,r.had,r.hhad FROM scores s JOIN results r USING(match_id) WHERE s.match_date<'2026-09-09' AND r.had IS NOT NULL ORDER BY s.match_id,s.scan_round DESC,s.analyzed_at DESC) SELECT CASE WHEN total>=58 THEN '58+' WHEN total>=48 THEN '48-57' WHEN total>=40 THEN '40-47' WHEN total>=30 THEN '30-39' ELSE '<30' END band,COUNT(*)::int n,COUNT(*) FILTER(WHERE (market='HAD' AND pred=(SELECT had FROM results WHERE match_id=x.match_id)) OR (market='HHAD' AND pred=(SELECT hhad FROM results WHERE match_id=x.match_id)))::int wins FROM x GROUP BY 1 ORDER BY MIN(total)`);
+ console.log('latest snapshot per match'); for(const x of r.rows) console.log(JSON.stringify(x));
+ const h=await query(`SELECT s.match_date,m.num,m.home,m.away,s.total,s.scan_round,s.market,s.pred,r.had,r.hhad,r.score FROM scores s JOIN matches m USING(match_id) JOIN results r USING(match_id) WHERE s.match_date<'2026-09-09' AND s.total>=58 ORDER BY s.total DESC`); console.log('high rows');for(const x of h.rows)console.log(JSON.stringify(x)); await pool().end();
+} main();
