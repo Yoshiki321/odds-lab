@@ -1,4 +1,4 @@
--- 竞彩助手 v2 PG Schema
+-- Odds-Lab v2 PG Schema
 -- 迁移由 src/server/db/migrate.ts 幂等执行（CREATE TABLE IF NOT EXISTS）
 -- 数据库: jc_assistant  (UTF8)
 
