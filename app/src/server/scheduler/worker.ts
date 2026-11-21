@@ -3,9 +3,12 @@
 import { listPendingScans } from '../db/store.js';
 import { runScan } from './planner.js';
 
-/** 启动后台循环（不阻塞主事件循环） */
+/** 启动后台循环（带防重入互斥锁，避免 LLM 耗时 >60s 导致重复拉起） */
 export function startScanWorker(): void {
+  let running = false;
   const tick = async () => {
+    if (running) return;
+    running = true;
     try {
       const due = await listPendingScans(new Date().toISOString());
       for (const plan of due) {
@@ -13,9 +16,13 @@ export function startScanWorker(): void {
       }
     } catch (e: any) {
       console.error('[scheduler] tick 失败:', e.message);
+    } finally {
+      running = false;
     }
   };
-  setTimeout(() => void tick(), 5 * 1000);   // 启动后 5s 首查
-  setInterval(() => void tick(), 60 * 1000); // 之后每 60s
-  console.log('[scheduler] 扫描执行器已启动');
+  const schedule = () => {
+    void tick().finally(() => setTimeout(schedule, 60 * 1000));
+  };
+  setTimeout(schedule, 5 * 1000); // 启动后 5s 首查
+  console.log('[scheduler] 扫描执行器已启动（防重入模式）');
 }

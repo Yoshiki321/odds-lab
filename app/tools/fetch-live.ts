@@ -155,7 +155,9 @@ export async function fetchLiveAndStore(): Promise<{ rows: number; sealed: numbe
   // 终场即赛果：status='11'（已完成）且比分合法 → 直接推导写 results（胜平负/让球方向/半场），
   // 不等竞彩官方 Payout；官方开奖后 fetchResultsAndStore 会用官方 winFlag 覆盖（同分同向）。
   // 只处理竞彩盘场次（known），非竞彩场次无 matches 行，外键会拒绝。
-  const doneRows = rows.filter(r => known.has(r.matchId) && r.status === '11' && /^\d{1,3}\s*[:：\-]\s*\d{1,3}$/.test(r.score || ''));
+  // 禁止由非官方实时比分直接写入 results 表（防止未 Payout 前被 settle.ts 错结真注）；
+  // 赛果统一由 fetch-results.ts 校验 poolStatus === 'Payout' 后写入。
+  const doneRows: typeof rows = [];
   if (doneRows.length) {
     const { rows: glRows } = await query(`SELECT match_id, hhad FROM matches WHERE match_id = ANY($1::varchar[])`, [doneRows.map(x => x.matchId)]);
     const glMap = new Map<string, number>();

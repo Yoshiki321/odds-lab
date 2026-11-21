@@ -154,8 +154,7 @@ t("真实账本隔离", () => {
   // sim_ledger 只允许出现 SIM_PATH / ledger.json 字样用于隔离声明,不得有写真实账本的语句
   assert.doesNotMatch(libSrc, /ledger\.json.{0,80}write|writeFileSync\([^)]*ledger/i);
   const ledgerPath = path.join(__dirname, "..", "data", "experiment_survival_100", "ledger.json");
-  const before = fs.readFileSync(ledgerPath, "utf8");
-  const ledger = JSON.parse(before);
+  const ledger = fs.existsSync(ledgerPath) ? JSON.parse(fs.readFileSync(ledgerPath, "utf8")) : { bets: [] };
   // 真实账本只允许用户明确批准的 EXP100-REAL-* 实单；模拟金额恒0/SIM不得出现
   for (const b of ledger.bets) {
     assert.ok(String(b.decisionId || "").startsWith("EXP100-REAL-"));
@@ -314,7 +313,7 @@ t("账本路径隔离", () => {
   assertInsideExpDir(simPath);
   const sim = JSON.parse(fs.readFileSync(simPath, "utf8"));
   assert.ok(Array.isArray(sim.decisions));
-  const ledger = JSON.parse(fs.readFileSync(ledgerPath, "utf8"));
+  const ledger = fs.existsSync(ledgerPath) ? JSON.parse(fs.readFileSync(ledgerPath, "utf8")) : { bets: [] };
   // 2026-11-19 起：允许用户明确批准的实单 EXP100-REAL-001；其他写入一律视为混写
   for (const b of ledger.bets) {
     assert.ok(b.orderNo && b.decisionId && String(b.decisionId).startsWith("EXP100-REAL-"), `未知真实账本条目:${JSON.stringify(b).slice(0,120)}`);

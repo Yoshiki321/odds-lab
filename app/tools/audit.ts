@@ -21,7 +21,7 @@ export async function audit(): Promise<any> {
     SELECT DISTINCT ON (s.match_id) s.match_id, s.total, s.pred, s.market, s.odds, s.value_ev,
       m.num, to_char(m.match_date,'YYYY-MM-DD') d, m.hhad
     FROM score_snapshots s JOIN matches m ON m.match_id = s.match_id
-    WHERE s.total IS NOT NULL
+    WHERE s.total IS NOT NULL AND (s.hours_to_ko IS NULL OR s.hours_to_ko > 0)
     ORDER BY s.match_id, s.snapshot_at`)).rows;
   const seen = new Set(snaps.map((x: any) => x.match_id));
   // 无快照回退 scores round1
@@ -67,8 +67,8 @@ export async function audit(): Promise<any> {
         const fair = { home: (1 / eu.home) / z, draw: (1 / eu.draw) / z, away: (1 / eu.away) / z };
         const gl = (s as any).gl;
         const p = s.market === 'HAD'
-          ? (s.pred === 'H' ? fair.home : fair.away)
-          : fairProbForPick(fair, s.pred as 'H' | 'A', 'HHAD', Number.isFinite(gl) ? gl : 0);
+          ? (s.pred === 'H' ? fair.home : s.pred === 'D' ? fair.draw : fair.away)
+          : (Number.isFinite(gl) ? fairProbForPick(fair, s.pred as 'H' | 'A', 'HHAD', gl) : null);
         if (p != null) ev = +(p * s.odds - 1).toFixed(4);
       }
     }

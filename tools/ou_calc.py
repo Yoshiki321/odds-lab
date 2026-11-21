@@ -23,7 +23,7 @@ import math
 import sys
 
 RHO = -0.13
-MAX_GOALS = 8
+MAX_GOALS = 15
 
 
 def poisson_pmf(k, lam):
@@ -102,16 +102,19 @@ def fit_lambda_mu(odds):
 
 
 def over_under(lam, mu, line, max_goals=MAX_GOALS):
-    """计算某大小球盘口(如2.5,3.0,3.5)的大球概率"""
+    """计算某大小球盘口(如2.5,3.0,3.5)的 (over, under, push) 概率，正确拆分整数盘走水"""
     m = score_matrix(lam, mu, max_goals)
     over = sum(p for (x, y), p in m.items() if x + y > line)
-    return over, 1 - over
+    push = sum(p for (x, y), p in m.items() if x + y == line)
+    under = max(0.0, 1.0 - over - push)
+    return over, under, push
 
 
 def fair_ou_odds(lam, mu, line):
-    """去水后公平大/小赔率（含~3%边际可选）"""
-    over, under = over_under(lam, mu, line)
-    return 1 / over, 1 / under
+    """条件空间公平大/小赔率（整数盘排除走水退本：(1 - push) / p）"""
+    over, under, push = over_under(lam, mu, line)
+    eff = max(1e-9, 1.0 - push)
+    return (eff / over if over > 0 else float('inf')), (eff / under if under > 0 else float('inf'))
 
 
 def main():
@@ -135,10 +138,11 @@ def main():
         'over_under': {},
     }
     for line in (2.5, 3.0, 3.5, 4.0):
-        over, under = over_under(lam, mu, line)
+        over, under, push = over_under(lam, mu, line)
+        fo, fu = fair_ou_odds(lam, mu, line)
         res['over_under'][str(line)] = {
-            'over_prob': round(over, 4), 'under_prob': round(under, 4),
-            'fair_over_odds': round(1 / over, 3), 'fair_under_odds': round(1 / under, 3),
+            'over_prob': round(over, 4), 'push_prob': round(push, 4), 'under_prob': round(under, 4),
+            'fair_over_odds': round(fo, 3), 'fair_under_odds': round(fu, 3),
         }
 
     if args.json:

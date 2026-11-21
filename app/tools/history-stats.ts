@@ -16,7 +16,7 @@ export function loadHistoryWindow(days = 60, beforeDate?: string): { league: str
   if (!existsSync(HIST_DIR)) return [];
   const files = readdirSync(HIST_DIR)
     .filter(x => /^\d{4}-\d{2}-\d{2}\.json$/.test(x))
-    .filter(x => x.slice(0, 10) <= (beforeDate ?? '2999-12-31'))
+    .filter(x => x.slice(0, 10) < (beforeDate ?? '2999-12-31'))
     .sort()
     .slice(-days);
   const out: { league: string; winFlag: string; matchDate: string }[] = [];

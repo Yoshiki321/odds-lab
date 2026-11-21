@@ -20,7 +20,7 @@ import { pathToFileURL } from 'url';
 import { query, pool } from '../src/server/db/pool.js';
 import { saveElo } from '../src/server/db/store.js';
 
-const HISTORY_DIR = 'C:/zwkj/竞彩助手/data/history/football';
+const HISTORY_DIR = new URL('../../data/history/football', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
 const K = 40;
 const HOME_ADV = 100;
 const START_ELO = 1500;
@@ -53,7 +53,7 @@ async function loadPgResults(): Promise<FinMatch[]> {
     return {
       matchId: String(m.match_id),
       date,
-      num: Number(m.num ?? 0),
+      num: Number(String(m.num ?? 0).replace(/\D/g, '')) || 0,
       league: m.league ?? '',
       home: m.home,
       away: m.away,

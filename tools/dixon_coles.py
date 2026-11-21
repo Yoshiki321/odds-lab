@@ -100,6 +100,8 @@ def calculate_match_probabilities(lam, mu, max_goals=8, rho=RHO):
 def de_margin(odds):
     """比例去水法。odds=(oh, od, oa) → (margin, fair_probs)"""
     oh, od, oa = odds
+    if not all(math.isfinite(x) and x > 1.0 for x in (oh, od, oa)):
+        raise ValueError(f"invalid odds (must all be > 1.0): {odds}")
     inv = [1 / oh, 1 / od, 1 / oa]
     margin = sum(inv) - 1.0
     fair = [i / sum(inv) for i in inv]
@@ -116,6 +118,8 @@ def calc_ev(model_prob, market_odds):
 
 def fractional_kelly(model_prob, market_odds, fraction=0.25):
     """1/4 凯利注码"""
+    if not (math.isfinite(market_odds) and market_odds > 1.0 and math.isfinite(model_prob) and 0.0 < model_prob < 1.0):
+        return 0.0
     b = market_odds - 1.0
     p = model_prob
     q = 1.0 - p
@@ -132,7 +136,8 @@ def fit_lambda_mu(att_team, def_team, league_avg_goal=1.35):
     实际应使用 Dixon-Coles 的 log-linear 参数拟合，
     此处提供直觉近似，供无完整参数时的降级路径。
     """
-    lam = max(0.1, (att_team + (2 * league_avg_goal - def_team)) / 2)
+    # 修复防守项符号反向：def_team 为对手场均失球，失球越多防守越弱，预期进球越高
+    lam = max(0.1, att_team * (def_team / league_avg_goal))
     return lam
 
 

@@ -163,8 +163,8 @@ export function compareToBaseline(obs: PairedObs[], opts?: { minN?: number; alph
 
   const mean = diffs.reduce((s, x) => s + x, 0) / n;
   const sd = n > 1 ? Math.sqrt(diffs.reduce((s, x) => s + (x - mean) ** 2, 0) / (n - 1)) : 0;
-  if (sd === 0 && n < 100)
-    return { ...base, n, status: 'insufficient', note: `配对差值方差为 0 且 n=${n}，无法可靠估计区间`, problems: [] };
+  if (sd === 0)
+    return { ...base, n, meanDiff: +mean.toFixed(6), status: 'insufficient', note: `配对差值方差为 0 (n=${n})，退化样本不可作显著性检验`, problems: [] };
   const se = sd / Math.sqrt(n);
   const lo = mean - zc * se;
   const hi = mean + zc * se;

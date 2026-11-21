@@ -447,6 +447,6 @@ server.listen(PORT, '0.0.0.0', () => {
   console.log(`\n🏆 竞彩助手账单服务已启动:`);
   console.log(`   前端目录: ${PUBLIC_DIR}`);
   console.log(`   本机访问: http://127.0.0.1:${PORT}`);
-  console.log(`   公网访问: http://139.196.51.10:${PORT}`);
-  console.log(`   API数据:  http://139.196.51.10:${PORT}/api/summary\n`);
+  console.log(`   公网访问: http://127.0.0.1:${PORT}`);
+  console.log(`   API数据:  http://127.0.0.1:${PORT}/api/summary\n`);
 });

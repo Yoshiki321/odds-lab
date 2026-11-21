@@ -29,8 +29,11 @@ const clamp = (n: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, n
 /** "58%" / 0.58 → 0.58 */
 const pct = (v: unknown): number | null => {
   if (v == null || v === '') return null;
-  const f = parseFloat(String(v).replace('%', ''));
-  return isNaN(f) ? null : f / 100;
+  const raw = String(v).trim();
+  const hasPct = raw.endsWith('%');
+  const f = parseFloat(raw.replace('%', ''));
+  if (isNaN(f)) return null;
+  return (hasPct || Math.abs(f) > 1) ? f / 100 : f;
 };
 const num = (v: unknown): number | null => {
   if (v == null || v === '') return null;
@@ -138,12 +141,11 @@ function computeDrawRisk(m: MatchRow, market: 'HAD' | 'HHAD', pred: 'H' | 'A', g
 /** 单 block 最高支持率 / 最高机构概率 侧 */
 function sideOf(b: SupportBlock | null | undefined, key: 'hSupportRate' | 'hProbability'): 'H' | 'A' | 'D' | null {
   if (!b) return null;
-  const h = pct(b.hSupportRate ?? b.hProbability), d = pct(b.dSupportRate ?? b.dProbability), a = pct(b.aSupportRate ?? b.aProbability);
-  const best = Math.max(h ?? 0, d ?? 0, a ?? 0);
-  if (best <= 0) return null;
   const hs = key === 'hSupportRate' ? pct(b.hSupportRate) : pct(b.hProbability);
   const as = key === 'hSupportRate' ? pct(b.aSupportRate) : pct(b.aProbability);
   const ds = key === 'hSupportRate' ? pct(b.dSupportRate) : pct(b.dProbability);
+  const best = Math.max(hs ?? 0, ds ?? 0, as ?? 0);
+  if (best <= 0) return null;
   return hs === best ? 'H' : as === best ? 'A' : ds === best ? 'D' : null;
 }
 
@@ -306,8 +308,8 @@ export function scoreMatch(m: MatchRow, ctx?: ScoreContext): EngineRow | { num: 
       valueNote = `欧EV ${(ev >= 0 ? '+' : '')}${(ev * 100).toFixed(1)}% ${market === 'HHAD' ? `让球P${(pDir * 100).toFixed(0)}%` : ''}${eu.observedAt ? '@' + eu.observedAt.slice(11, 16) : ''}`;
     } else valueNote = '欧赔概率缺失';
   }
-  if (value === 0 && !valueNote) { // 无欧赔可比回退：按赔率档给微基础分（不鼓励无信息投注）
-    if (dirOdds >= 1.6 && dirOdds <= 5.0) value = dirOdds >= 2.0 ? 3 : 2;
+  if (value === 0 && !valueNote) { // 无欧赔可比：严格 0 分，不奖励无信息源场次
+    value = 0;
     valueNote = '无欧赔可比';
   }
 

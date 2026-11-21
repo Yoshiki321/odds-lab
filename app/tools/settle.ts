@@ -13,7 +13,7 @@ import {
 } from '../src/shared/settlement.js';
 
 export function parseScore(s: string): [number, number] | null {
-  const m = String(s || '').match(/(\d+)\s*:\s*(\d+)/);
+  const m = String(s || '').match(/(\d+)\s*[:：\-]\s*(\d+)/);
   if (!m) return null;
   return [parseInt(m[1]), parseInt(m[2])];
 }
@@ -79,7 +79,7 @@ async function commitBetSettlement(
         })]);
     if (!upd.rowCount) return null; // 已被其他流程结算
 
-    const cur = await c.query(`SELECT cash FROM bankroll WHERE id=1`);
+    const cur = await c.query(`SELECT cash FROM bankroll WHERE id=1 FOR UPDATE`);
     const cashBefore = Number(cur.rows[0]?.cash ?? 0);
     const balance = +(cashBefore + returnAmt).toFixed(2);
     const hist = JSON.stringify([{ date: nowIso, type: 'IN', note: `bet-${b.betId} ${verdict.reason}`, amount: returnAmt, balance }]);
@@ -102,7 +102,9 @@ export async function settleReal(): Promise<{ settled: number; pending: number; 
   let settled = 0, pending = 0, manual = 0, cashDelta = 0;
 
   for (const b of bets) {
-    const leg = (b.legs as any[])?.[0];
+    const legs = Array.isArray(b.legs) ? (b.legs as any[]) : [];
+    if (legs.length !== 1) { manual++; console.log(`  [人工] bet-${b.betId} 非单关(legs=${legs.length})，转人工核对防止串关误结`); continue; }
+    const leg = legs[0];
     if (!leg || !leg.matchId) { manual++; console.log(`  [人工] bet-${b.betId} 缺少 matchId，跳过`); continue; }
 
     const fin = await finalOf(String(leg.matchId));

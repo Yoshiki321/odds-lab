@@ -151,6 +151,7 @@ export function settle(params: {
   if (market === 'HAD' || market === 'HHAD') {
     const official = market === 'HAD' ? params.finalHad : params.finalHhad;
     if (!official || !['H', 'D', 'A'].includes(official)) return MANUAL(`缺少官方${market}赛果`);
+    if (side !== 'home' && side !== 'draw' && side !== 'away') return MANUAL(`${market} 方向非法: ${side}`);
     const want = side === 'home' ? 'H' : side === 'draw' ? 'D' : 'A';
     return official === want
       ? { outcome: 'win', multiplier: odds, reason: `${market} 命中 ${want}` }
@@ -158,7 +159,10 @@ export function settle(params: {
   }
 
   const line = Number(params.line);
-  if (!Number.isFinite(line)) return MANUAL('缺少盘口线');
+  if (!Number.isFinite(line) || Math.abs(line) > 10 || !Number.isInteger(Math.round(line * 4 * 1e6) / 1e6)) {
+    return MANUAL(`非法盘口线: ${params.line}`);
+  }
+  if (market === 'OU' && line < 0) return MANUAL(`大小球盘口不能为负: ${line}`);
   if (market === 'AH' && (side !== 'home' && side !== 'away')) return MANUAL('亚盘方向无法判定');
   if (market === 'OU' && (side !== 'over' && side !== 'under')) return MANUAL('大小球方向无法判定');
 

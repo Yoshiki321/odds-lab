@@ -102,8 +102,9 @@ export function buildRows(): { rows: Row[]; stats: any } {
     let j: any;
     try { j = readJson(p); } catch { continue; }
     const lists = j?.value?.matchInfoList || [];
-    const captureMs = fileMtimeMs(p);
     const nameTime = parseFileName(f);
+    // scraper.js 文件名为 UTC 时间戳，优先用文件名 UTC 时间（与 mtime 误差 <=1s）
+    const captureMs = nameTime ? Date.parse(`${nameTime.date}T${nameTime.time}Z`) : fileMtimeMs(p);
     snapshots++;
     for (const group of lists) {
       for (const m of group.subMatchList || []) {

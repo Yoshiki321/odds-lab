@@ -45,9 +45,9 @@ for (const f of files) {
   const st = statSync(p);
   const hash = createHash('sha256').update(readFileSync(p)).digest('hex').slice(0, 16);
   const j = JSON.parse(readFileSync(p, 'utf8'));
-  const nameMs = name ? ts(name.date, name.time) : NaN;
+  const nameMs = name ? Date.parse(`${name.date}T${name.time}Z`) : NaN; // scraper.js uses UTC toISOString()
   const mtimeMs = st.mtimeMs;
-  const per = { file: f, nameTime: name ? `${name.date}T${name.time}${TZ}` : null, nameMs, mtime: new Date(mtimeMs).toISOString(), deltaNameVsMtimeSec: name ? Math.round((mtimeMs - nameMs) / 1000) : null, sha256_16: hash, matches: 0, strict: 0, doubtful: 0, noKickoff: 0, noResult: 0, oddsLaterThanName: 0 };
+  const per = { file: f, nameTime: name ? `${name.date}T${name.time}Z` : null, nameMs, mtime: new Date(mtimeMs).toISOString(), deltaNameVsMtimeSec: name ? Math.round((mtimeMs - nameMs) / 1000) : null, sha256_16: hash, matches: 0, strict: 0, doubtful: 0, noKickoff: 0, noResult: 0, oddsLaterThanName: 0 };
   for (const g of j?.value?.matchInfoList || []) {
     for (const m of g.subMatchList || []) {
       per.matches++; totalMatches++;

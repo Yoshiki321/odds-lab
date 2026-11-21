@@ -20,6 +20,13 @@ function parse(line) {
   try { return JSON.parse(line); } catch { return null; }
 }
 
+function atomicWrite(fp, content, opts = {}) {
+  fs.mkdirSync(path.dirname(fp), { recursive: true });
+  const tmp = `${fp}.tmp.${process.pid}.${Date.now()}`;
+  fs.writeFileSync(tmp, content, { encoding: "utf8", ...opts });
+  fs.renameSync(tmp, fp);
+}
+
 function main() {
   const now = Date.now();
   const alerts = [];
@@ -28,6 +35,7 @@ function main() {
   let authError = null;
   let attempts = [];
   let apiErrs = 0;
+  let parsedLog = [];
 
   try { state = JSON.parse(fs.readFileSync(STATE, "utf8")); } catch (e) { alerts.push("读不到 _state.json"); }
   if (state) {
@@ -35,9 +43,10 @@ function main() {
     authError = state.authError || null;
   }
   if (fs.existsSync(LOG)) {
-    const lines = fs.readFileSync(LOG, "utf8").trim().split("\n");
-    attempts = lines.map(parse).filter(x => x && x.type === "attempt");
-    apiErrs = lines.map(parse).filter(x => x && x.type === "api_error").length;
+    const raw = fs.readFileSync(LOG, "utf8").trim();
+    parsedLog = raw ? raw.split("\n").map(parse).filter(Boolean) : [];
+    attempts = parsedLog.filter(x => x.type === "attempt");
+    apiErrs = parsedLog.filter(x => x.type === "api_error").length;
   }
 
   // 1) 心跳停摆
@@ -64,26 +73,33 @@ function main() {
   }
 
   // 4) 最近 30 分钟内新增 api_error
-  const recentErrs = (fs.existsSync(LOG) ? fs.readFileSync(LOG, "utf8").trim().split("\n").map(parse).filter(Boolean) : [])
-    .filter(x => x.type === "api_error" && Date.parse((x.at || "").replace(" ", "T") + "+08:00") >= sinceMs);
+  const recentErrs = parsedLog.filter(x => x.type === "api_error" && Date.parse((x.at || "").replace(" ", "T") + "+08:00") >= sinceMs);
   if (recentErrs.length > 0) alerts.push(`最近 30 分钟新增 ${recentErrs.length} 条 api_error`);
 
-  // 5) 自愈：两个模板的请求头不一致时，用 getOriginalDataPB 的头同步给 getMatchBaseInfoByOddsPB
-  //    （getOriginalDataPB 每轮都调，它的头有效；另一个失败通常是登录恢复后没同步）
-  let healed = false;
+  // 5) 自愈：同步 getOriginalDataPB 的最新有效头到全部关联查询模板（采用原子写防止半截 JSON）
+  let healed = [];
   try {
     const CRED = path.join(ROOT, "data", "experiment_survival_100", "runtime", "api_credentials.json");
     const cred = JSON.parse(fs.readFileSync(CRED, "utf8"));
-    const a = cred.templates.getOriginalDataPB;
-    const b = cred.templates.getMatchBaseInfoByOddsPB;
-    if (a && b && a.headers && JSON.stringify(a.headers) !== JSON.stringify(b.headers)) {
-      b.headers = Object.assign({}, a.headers, { "content-type": "application/json" });
-      cred.savedAt = new Date().toISOString();
-      fs.writeFileSync(CRED, JSON.stringify(cred, null, 2), { mode: 0o600, encoding: "utf8" });
-      healed = true;
+    const a = cred.templates && cred.templates.getOriginalDataPB;
+    const targets = ["getMatchBaseInfoByOddsPB", "countUnsettleTickets", "structureMatchBaseInfoByMidsPB"];
+    if (a && a.headers) {
+      for (const name of targets) {
+        const b = cred.templates[name];
+        if (!b) continue;
+        const desired = Object.assign({}, a.headers, b.method === "POST" ? { "content-type": "application/json" } : {});
+        if (JSON.stringify(b.headers) !== JSON.stringify(desired)) {
+          b.headers = desired;
+          healed.push(name);
+        }
+      }
+      if (healed.length) {
+        cred.savedAt = new Date().toISOString();
+        atomicWrite(CRED, JSON.stringify(cred, null, 2), { mode: 0o600 });
+      }
     }
-  } catch (e) { /* 凭据文件问题不在此自愈，写日志即可 */ }
-  if (healed) alerts.push("已自动同步 getMatchBaseInfoByOddsPB 的请求头（与 getOriginalDataPB 一致）");
+  } catch (e) { /* 凭据文件问题不在此自愈 */ }
+  if (healed.length) alerts.push(`已自动同步请求头到模板：${healed.join(", ")}`);
 
   const status = alerts.length ? "异常" : "正常";
   const ts = new Date(Date.now() + 8 * 3600e3).toISOString().replace("T", " ").slice(0, 19);
@@ -102,21 +118,22 @@ function main() {
     lines.push("## 需要处理");
     for (const a of alerts) lines.push(`- ${a}`);
     lines.push("");
-    lines.push("处理：网页重新登录后，运行 `node tools/ky_api_auth.cjs save`，并把新会话请求头同步到 getOriginalDataPB / getMatchBaseInfoByOddsPB 两个模板（看门狗会自动同步一次）。");
+    lines.push("处理：网页重新登录后，运行 `node tools/ky_api_auth.cjs save`。");
   } else {
     lines.push("无需处理。采集器每分钟轮询，比赛进入 T−35~T−30 窗口会自动采集。");
   }
   lines.push("");
-  lines.push("说明：此文件由 KYWatchdog 每分钟自动更新；工作区内的助手只在收到消息时读取，不会主动弹出告警。");
+  lines.push("说明：此文件由 KYWatchdog 每分钟自动更新。");
   lines.push("");
-  fs.writeFileSync(OUT, lines.join("\n"), "utf8");
+  atomicWrite(OUT, lines.join("\n"));
 
-  // 主动告警：状态变化时立即弹；异常持续每 30 分钟弹一次；恢复时弹一次
+  // 主动告警：修复原 Bug——仅在真正发送通知时更新 lastNotifiedAt，保证每 30 分钟提醒生效
   let prev = {};
   try { prev = JSON.parse(fs.readFileSync(ALERT_STATE, "utf8")); } catch {}
+  const prevNotifiedAt = Number.isFinite(prev.lastNotifiedAt) ? prev.lastNotifiedAt : prev.at;
   const shouldNotify =
     (status === "异常" && prev.status !== "异常") ||
-    (status === "异常" && Number.isFinite(prev.at) && now - prev.at >= REPEAT_MS) ||
+    (status === "异常" && Number.isFinite(prevNotifiedAt) && now - prevNotifiedAt >= REPEAT_MS) ||
     (status === "正常" && prev.status === "异常");
   if (shouldNotify) {
     try {
@@ -128,7 +145,12 @@ function main() {
       process.stderr.write("toast error: " + e.message + "\n");
     }
   }
-  fs.writeFileSync(ALERT_STATE, JSON.stringify({ status, at: now, alerts }, null, 2), "utf8");
+  atomicWrite(ALERT_STATE, JSON.stringify({
+    status,
+    checkedAt: now,
+    lastNotifiedAt: shouldNotify ? now : (prevNotifiedAt || null),
+    alerts,
+  }, null, 2));
 
   process.stdout.write(`${ts} ${status} alerts=${alerts.length} notified=${shouldNotify ? 1 : 0}\n`);
 }

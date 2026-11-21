@@ -63,7 +63,7 @@ async function fetchMatches() {
   for (let attempt = 1; attempt <= 3; attempt++) {
     const t0Start = Date.now();
     try {
-      const r = await fetch(t0.url.replace(/t=\d+/, "t=" + Date.now()), { headers: t0.headers });
+      const r = await fetch(t0.url.replace(/t=\d+/, "t=" + Date.now()), { headers: t0.headers, signal: AbortSignal.timeout(10000) });
       const txt = await r.text();
       const t0End = Date.now();
       const j = JSON.parse(txt);
@@ -102,21 +102,31 @@ async function collectOne(c, m, windowLabel, nowMs) {
   const startMs = Date.now();
   let ok = false, reason = null, odds = null, serverMs = null, hash = null, rawText = null, endMs = startMs;
   try {
-    const r = await fetch(t1.url, { method: t1.method, headers: t1.headers, body: JSON.stringify(body) });
+    const r = await fetch(t1.url, { method: t1.method, headers: t1.headers, body: JSON.stringify(body), signal: AbortSignal.timeout(10000) });
     rawText = await r.text();
     endMs = Date.now();
     const j = JSON.parse(rawText);
     serverMs = Number(j.ts) || null;
-    const obj = unwrap(rawText);
-    const mm = (obj.data || [])[0];
-    if (!mm) { reason = "响应无该场"; }
-    else {
-      const groups = ((mm.playData && mm.playData.length ? mm.playData : mm.hpsData) || []).flatMap((x) => x.hps || []);
-      const g = groups.find((x) => String(x.hpid) === "1" || String(x.hpid) === "37");
-      const opts = (g && g.hl && g.hl.ol) || [];
-      const get = (ot) => { const o = opts.find((x) => String(x.ot) === ot); return o ? Number(o.ov) / 100000 : null; };
-      const h = get("1"), d = get("X"), a = get("2");
-      if (h && d && a && h > 1 && d > 1 && a > 1) { odds = { h, d, a }; ok = true; } else reason = "独赢三项缺失";
+    if (String(j.code) !== "0000000") {
+      reason = `接口错误 code=${j.code} msg=${j.msg || ""}`;
+    } else {
+      const obj = unwrap(rawText);
+      const mm = (obj.data || [])[0];
+      if (!mm) { reason = "响应无该场"; }
+      else {
+        const groups = ((mm.playData && mm.playData.length ? mm.playData : mm.hpsData) || []).flatMap((x) => x.hps || []);
+        const g = groups.find((x) => String(x.hpid) === "1" || String(x.hpid) === "37");
+        const opts = (g && g.hl && g.hl.ol) || [];
+        const get = (ot) => { const o = opts.find((x) => String(x.ot) === ot); return o ? Number(o.ov) / 100000 : null; };
+        const h = get("1"), d = get("X"), a = get("2");
+        const gAh = groups.find((x) => String(x.hpid) === "4");
+        const ahOpts = (gAh && gAh.hl && gAh.hl.ol) || [];
+        const ah = ahOpts.length >= 2 ? { line: gAh.hl.hv || "", h: Number(ahOpts[0].ov) / 100000, a: Number(ahOpts[1].ov) / 100000 } : null;
+        const gOu = groups.find((x) => String(x.hpid) === "2");
+        const ouOpts = (gOu && gOu.hl && gOu.hl.ol) || [];
+        const ou = ouOpts.length >= 2 ? { line: gOu.hl.hv || "", over: Number(ouOpts[0].ov) / 100000, under: Number(ouOpts[1].ov) / 100000 } : null;
+        if (h && d && a && h > 1 && d > 1 && a > 1) { odds = { h, d, a, ah, ou }; ok = true; } else reason = "独赢三项缺失";
+      }
     }
     hash = crypto.createHash("sha256").update(rawText).digest("hex");
   } catch (e) { reason = "请求失败: " + e.message; endMs = Date.now(); }
@@ -170,16 +180,25 @@ async function runOnce() {
     if (rawText) {
       const dir = path.join(SNAP, bjDate(m.kickoffMs));
       fs.mkdirSync(dir, { recursive: true });
-      const fp = path.join(dir, `${bj(new Date(rec.reqEndMs)).replace(/[-: ]/g, "").slice(9, 15)}_${m.mid}_${rec.hash.slice(0, 8)}.json`);
+      // 修复小时位切片：YYYYMMDDHHMMSS 的 HHMMSS 在 [8..14]
+      const fp = path.join(dir, `${bj(new Date(rec.reqEndMs)).replace(/[-: ]/g, "").slice(8, 14)}_${m.mid}_${rec.hash.slice(0, 8)}.json`);
       if (!fs.existsSync(fp)) fs.writeFileSync(fp, rawText, "utf8");
       rec.rawFile = path.relative(ROOT, fp);
     }
+    // 严格按响应完成时刻 reqEndMs 判定窗口，避免循环耗时导致超窗污染
+    const actualWin = windowOf(m.kickoffMs, rec.reqEndMs);
+    rec.windowAtEnd = actualWin;
     log({ type: "attempt", ...rec });
-    if (rec.ok && rec.clockOffsetMs !== null && Math.abs(rec.clockOffsetMs) <= CLOCK_TOLERANCE_MS) {
-      const srec = { at: bj(new Date(now)), window: w, endBJ: rec.reqEndBJ, endMs: rec.reqEndMs, odds: rec.odds, rawFile: rec.rawFile };
+    if (rec.ok && actualWin && rec.clockOffsetMs !== null && Math.abs(rec.clockOffsetMs) <= CLOCK_TOLERANCE_MS) {
+      const srec = { at: bj(new Date(rec.reqEndMs)), window: actualWin, endBJ: rec.reqEndBJ, endMs: rec.reqEndMs, odds: rec.odds, rawFile: rec.rawFile };
       state.seen[m.mid] = srec;
-      if (w === "main") (state.mainOk || (state.mainOk = {}))[m.mid] = srec;
-      else (state.auxOk || (state.auxOk = {}))[m.mid] = srec;
+      // 主窗口冻结规则：保留窗口内首条有效记录，不被后续重试覆盖
+      if (actualWin === "main") {
+        const mo = state.mainOk || (state.mainOk = {});
+        if (!mo[m.mid]) mo[m.mid] = srec;
+      } else {
+        (state.auxOk || (state.auxOk = {}))[m.mid] = srec;
+      }
     }
     results.push(rec);
   }

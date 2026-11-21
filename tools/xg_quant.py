@@ -131,8 +131,9 @@ def fit_lambda_mu(home_xg, away_xg, league_avg=1.35):
       lambda = home_for * (away_against / league_avg)  (进攻×对方防守)
       mu     = away_for * (home_against / league_avg)
     """
-    lam = home_xg["for"] * (away_xg["against"] / league_avg)
-    mu = away_xg["for"] * (home_xg["against"] / league_avg)
+    # 补齐主场优势因子（五大联赛经验均值：主约 ×1.10，客约 ×0.91）
+    lam = home_xg["for"] * (away_xg["against"] / league_avg) * 1.10
+    mu = away_xg["for"] * (home_xg["against"] / league_avg) * 0.91
     return max(0.1, lam), max(0.1, mu)
 
 

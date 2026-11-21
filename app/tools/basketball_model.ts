@@ -91,7 +91,7 @@ function clampLambda(l: number): number { return Math.max(40, Math.min(l, 160));
 export function coverProb(lh: number, la: number, line: number): number {
   const LH = clampLambda(lh), LA = clampLambda(la);
   const ph = poissonArr(LH, MAX_K), cdfA = poissonCdf(LA, MAX_K);
-  const t = Math.ceil(-line) - 1; // margin ≤ t → 不覆盖；margin = home − away
+  const t = Math.floor(-line); // 修复整数盘 off-by-one：margin <= floor(-line) 不覆盖（含走水）
   let pLe = 0;
   for (let j = 0; j <= MAX_K; j++) {
     const idx = j - t - 1;
@@ -161,6 +161,7 @@ function main() {
       if (dv.prob === null) { noOdds++; continue; }
       const pBase = dv.prob;
       const margin = g.homeScore - g.awayScore;
+      if (margin + g.line === 0) continue; // 整数盘走水不计入二分类 Brier
       const cover = margin + g.line > 0 ? 1 : 0;
       modelBrierSum += (pModel - cover) ** 2;
       baseBrierSum += (pBase - cover) ** 2;

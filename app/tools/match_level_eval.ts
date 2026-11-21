@@ -88,7 +88,7 @@ const cands: Cand[] = [];
 for (const f of readdirSync(ODDS).filter((x) => /^football_all_.*\.json$/.test(x))) {
   const nm = parseName(f);
   if (!nm) continue;
-  const nameMs = ts(nm.date, nm.time);
+  const nameMs = Date.parse(`${nm.date}T${nm.time}Z`); // scraper.js uses UTC toISOString()
   let j: any; try { j = JSON.parse(readFileSync(join(ODDS, f), 'utf8')); } catch { continue; }
   for (const g of j?.value?.matchInfoList || []) for (const m of g.subMatchList || []) {
     if (!m.matchDate || !m.matchTime || !m.had?.updateDate || !m.had?.updateTime) continue;
@@ -113,8 +113,9 @@ for (const c of cands) {
 const hist = loadHistory();
 const picks: any[] = [];
 for (const c of [...byMatch.values()].sort((a, b) => a.kickoffMs - b.kickoffMs)) {
-  const cutoff = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(c.nameMs));
-  const past = hist.filter((m) => m.date < cutoff);
+  // 无开赛时刻的历史文件采用 -36h 双日保守缓冲，防止 D-1 跨午夜场泄露
+  const cutoff = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(c.nameMs - 36 * 3600_000));
+  const past = hist.filter((m) => m.date <= cutoff);
   if (!past.length) continue;
   const rates = fitRates(past, c.league);
   const pm = predict(rates, c.hId, c.aId);
@@ -202,7 +203,7 @@ const derived = {
     median: minutes[Math.floor(minutes.length / 2)],
     max: minutes[minutes.length - 1],
   },
-  hasT30Sample: minutes[0] <= 35 && minutes[0] >= 25,
+  hasT30Sample: minutes.some((m) => m >= 30 && m <= 35),
   kickoffRangeBJ: n ? { from: bjDate(picks[0].kickoffMs), to: bjDate(picks[n - 1].kickoffMs) } : null,
 };
 

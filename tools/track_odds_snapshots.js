@@ -59,7 +59,7 @@ async function capture() {
   // 加载已有历史（保留所有累积的变化）
   let history = {};
   if (existsSync(histFile)) {
-    try { history = JSON.parse(readFileSync(histFile, 'utf8')); } catch {}
+    try { const loaded = JSON.parse(readFileSync(histFile, 'utf8')); history = (loaded && typeof loaded.matches === 'object' && loaded.matches) ? loaded.matches : loaded; } catch {}
   }
 
   const now = new Date().toISOString();
