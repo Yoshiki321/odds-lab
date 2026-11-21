@@ -135,6 +135,8 @@ async function collectOne(c, m, windowLabel, nowMs) {
     matchId: m.mid, league: m.league, home: m.home, away: m.away,
     kickoffMs: m.kickoffMs, kickoffBJ: bj(new Date(m.kickoffMs)),
     window: windowLabel, reqStartMs: startMs, reqEndMs: endMs,
+    schemaVersion: "v2-envelope",
+    reqStartUtc: new Date(startMs).toISOString(), reqEndUtc: new Date(endMs).toISOString(),
     reqStartBJ: bj(new Date(startMs)), reqEndBJ: bj(new Date(endMs)),
     serverMs, clockOffsetMs: serverMs ? serverMs - endMs : null,
     ok, reason, odds, hash, minutesBeforeKickoffAtEnd: +((m.kickoffMs - endMs) / 60000).toFixed(2),
@@ -196,6 +198,9 @@ async function runOnce() {
       if (actualWin === "main") {
         const mo = state.mainOk || (state.mainOk = {});
         if (!mo[m.mid]) mo[m.mid] = srec;
+      } else if (actualWin === "closing") {
+        const co = state.closingOk || (state.closingOk = {});
+        co[m.mid] = srec;
       } else {
         (state.auxOk || (state.auxOk = {}))[m.mid] = srec;
       }
