@@ -1,0 +1,20 @@
+{
+  "eventId": "mid-5762283",
+  "dateAsiaShanghai": "2026-11-22",
+  "observedAt": "2026-11-22T01:15:45+08:00",
+  "planAt": "2026-11-22T01:15:00+08:00",
+  "planAtMs": 1795281300000,
+  "actualAtMs": 1795281345812,
+  "minutesToKickoff": 29,
+  "morning": {
+    "league": "荷兰甲级联赛",
+    "tier": 2,
+    "kickoff": "2026-11-22T01:45:00+08:00"
+  },
+  "latestOdds": {
+    "markets": null
+  },
+  "autoBet": false,
+  "decision": "待人工判断（自动流程不下单）",
+  "dataQuality": "接口未返回该场盘口"
+}

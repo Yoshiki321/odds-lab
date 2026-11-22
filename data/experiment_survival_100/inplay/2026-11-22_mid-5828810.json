@@ -1,0 +1,20 @@
+{
+  "eventId": "mid-5828810",
+  "dateAsiaShanghai": "2026-11-22",
+  "observedAt": "2026-11-22T00:30:06+08:00",
+  "planAt": "2026-11-22T00:30:00+08:00",
+  "planAtMs": 1795278600000,
+  "actualAtMs": 1795278606696,
+  "minutesToKickoff": 30,
+  "morning": {
+    "league": "意大利甲级联赛",
+    "tier": 1,
+    "kickoff": "2026-11-22T01:00:00+08:00"
+  },
+  "latestOdds": {
+    "markets": null
+  },
+  "autoBet": false,
+  "decision": "待人工判断（自动流程不下单）",
+  "dataQuality": "接口未返回该场盘口"
+}
