@@ -6,6 +6,16 @@
 
 ---
 
+## 一键接管提示词（直接复制发给本地 Agent）
+
+直接复制下面这段话发给你的本地 Agent（OpenCode / Claude Code），它会自动下载/同步最新代码并按仓库内置 Skill（`.claude/skills/odds-lab-ops.md`）完成验证、发版、循环采集与风控执行：
+
+```text
+下载并同步 https://github.com/Yoshiki321/odds-lab.git 的最新 main 代码，然后加载并严格按照 .claude/skills/odds-lab-ops.md 执行更新、测试、发版、每日循环采集分析与风控下注流程。
+```
+
+---
+
 ## 核心能力
 
 - **多源盘口与赛果采集**：整合欧亚盘口（开云体育 API / 懂球帝 / 澳客）、参考场次与历史赛果（竞彩网网关）、以及五大联赛 xG 数据（Understat）。
