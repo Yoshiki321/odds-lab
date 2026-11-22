@@ -349,15 +349,69 @@ def run_self_test():
     print("SELF-TEST PASSED:", json.dumps(rep, ensure_ascii=False))
 
 
+def load_football_data_jsonl(path: str):
+    """将 fetch_football_data.py 产出的免费欧亚盘口 JSONL 转为 Walk-Forward 训练样本"""
+    samples = []
+    base_dt = datetime(2020, 1, 1)
+    with open(path, encoding="utf8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            r = json.loads(line)
+            if r.get("hg") is None or r.get("ag") is None:
+                continue
+            sharp = r.get("sharpOpen1x2") or r.get("softOpen1x2")
+            if not sharp:
+                continue
+            dt = datetime.strptime(r["date"], "%Y-%m-%d")
+            day_num = float((dt - base_dt).days)
+            # 计算 Sharp-Soft 初盘隐含概率差作为 delta_line 特征
+            p_sharp = devig_power(sharp)
+            p_soft = devig_power(r["softOpen1x2"]) if r.get("softOpen1x2") else None
+            delta_line = (p_sharp[0] - p_soft[0]) if (p_sharp and p_soft) else 0.0
+            # 计算 CLV（若存在收盘尖盘）
+            clv = None
+            if r.get("sharpClose1x2") and r.get("softOpen1x2"):
+                p_close = devig_power(r["sharpClose1x2"])
+                if p_close:
+                    clv = p_close[0] * r["softOpen1x2"][0] - 1.0
+            samples.append({
+                "date": r["date"],
+                "day_num": day_num,
+                "h_id": f"{r['leagueCode']}:{r['home']}",
+                "a_id": f"{r['leagueCode']}:{r['away']}",
+                "hg": int(r["hg"]),
+                "ag": int(r["ag"]),
+                "odds_1x2": sharp,
+                "delta_line": delta_line,
+                "fatigue": 0.0,
+                "clv": clv,
+            })
+    samples.sort(key=lambda x: x["date"])
+    return samples
+
+
 def main():
     ap = argparse.ArgumentParser(description="Odds-Lab 残差模型训练与 Walk-Forward 验证器")
     ap.add_argument("--self-test", action="store_true", help="运行合成数据自检")
+    ap.add_argument("--football-data", default="", help="输入 fetch_football_data.py 生成的 JSONL 路径")
     ap.add_argument("--out", default="data/experiment_survival_100/model/football_residual_v1.json")
     args = ap.parse_args()
     if args.self_test:
         run_self_test()
         return
-    print("请传入 --self-test 验证框架，或在积累 >=300 场 T-30 真实快照后接入数据集运行。")
+    if args.football_data:
+        samples = load_football_data_jsonl(args.football_data)
+        rep = evaluate_walk_forward(samples)
+        rep["dataset"] = args.football_data
+        rep["totalLoaded"] = len(samples)
+        os.makedirs(os.path.dirname(args.out), exist_ok=True)
+        with open(args.out, "w", encoding="utf8") as f:
+            json.dump(rep, f, ensure_ascii=False, indent=2)
+        print(json.dumps(rep, ensure_ascii=False, indent=2))
+        return
+    print("请传入 --self-test 或 --football-data <jsonl> 运行训练与 Walk-Forward 验证。")
 
 
 if __name__ == "__main__":

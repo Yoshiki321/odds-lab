@@ -67,6 +67,11 @@ odds-lab/
 | **澳客（okooo）** | 百家欧赔 / 亚盘对比与比分补全 | `tools/okooo_scraper.js`、`tools/fetch_okooo_live.js` |
 | **中国竞彩网（sporttery）** | 场次池筛选、参考水位、历史赛果（2016 至今） | `scraper.js`、`app/tools/fetch-today.ts`、`app/tools/fetch-results.ts` |
 | **Understat** | 五大联赛 xG / npxG 球队进攻防守数据 | `tools/fetch_xg.py`、`tools/xg_quant.py` |
+| **Football-Data.co.uk**（免费免 Key） | 11 个一/二级欧洲联赛历史与未来赛程：Betfair 交易所初/收盘尖盘、亚盘、大小球 2.5、`HxG/AxG` | `tools/fetch_football_data.py` |
+| **ESPN Public JSON API**（免费免 Key） | 全球主流足球首发 11 人/阵型（T−50m）+ NBA 完整双方伤停名单与让分走势 | `tools/fetch_espn_intel.py` |
+| **OpenLigaDB**（免费免 Key） | 德甲 / 德乙官方级开源赛程、精确开赛时间戳与比分校验 | `https://api.openligadb.de/getmatchdata/bl1` |
+
+> **专业参考资料站（免费人工复核）**：[OddsPortal](https://www.oddsportal.com/football/) · [球探体育（Titan007）](https://m.titan007.com/odds.htm) · [FotMob](https://www.fotmob.com/) · [SofaScore](https://www.sofascore.com/) · [Transfermarkt](https://www.transfermarkt.us/premier-league/sperrenausfaelle/wettbewerb/GB1/plus/1) · [xG Stat](https://www.xgstat.com/) · [NBA Official Injury Report](https://official.nba.com/nba-injury-report-2026-27-season/) · [Basketball-Reference](https://www.basketball-reference.com/leagues/NBA_2027.html)。各免费源完整抓取、字段清洗与训练联动用法见 [`.claude/skills/free-data-sources.md`](.claude/skills/free-data-sources.md)。
 
 ---
 
