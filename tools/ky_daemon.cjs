@@ -11,7 +11,7 @@
 "use strict";
 const fs = require("node:fs");
 const path = require("node:path");
-const { chromium } = require("playwright");
+let chromium = null; try { chromium = require("playwright").chromium; } catch {}
 
 const ROOT = path.resolve(__dirname, "..");
 const EXP = path.join(ROOT, "data", "experiment_survival_100");
@@ -488,26 +488,63 @@ async function runInplay(task) {
 
 // ---------------------------------------------------------------- API 原生扫盘/赔率（子进程调用，凭据只在子进程内存）
 const { spawnSync } = require("node:child_process");
-function runApiSweep() {
+function parseJsonStdout(txt) {
+  const t = String(txt || "").trim();
+  const i = t.indexOf("{");
+  const j = t.lastIndexOf("}");
+  if (i >= 0 && j > i) {
+    try { return JSON.parse(t.slice(i, j + 1)); } catch {}
+  }
+  const line = t.split("\n").filter((l) => l.startsWith("{")).pop();
+  return line ? JSON.parse(line) : {};
+}
+function sweepLockPath(date) {
+  return path.join(RUNTIME, `sweep_${date}.lock`);
+}
+function tryClaimDailySweep(date) {
+  fs.mkdirSync(RUNTIME, { recursive: true });
+  const lp = sweepLockPath(date);
+  try {
+    const fd = fs.openSync(lp, "wx");
+    fs.writeSync(fd, JSON.stringify({ pid: process.pid, date, at: bj(nowMs()) }));
+    fs.closeSync(fd);
+    return true;
+  } catch (e) {
+    if (e && e.code === "EEXIST") return false;
+    throw e;
+  }
+}
+function runApiSweep({ force = false } = {}) {
+  const date = bjDate(nowMs());
+  if (!force && !tryClaimDailySweep(date)) {
+    log("INFO", `今日(${date})扫盘锁已被占用，跳过重复执行`);
+    return { ok: true, skipped: true };
+  }
   const r = spawnSync(process.execPath, ["tools/ky_api_engine.cjs"], { cwd: ROOT, encoding: "utf8", timeout: 240000 });
   if (r.error || r.status !== 0) {
+    // 仅在真正失败时释放锁，允许下轮重试
+    if (!force) { try { fs.unlinkSync(sweepLockPath(date)); } catch {} }
     log("ERROR", "API扫盘失败: " + String(r.error || r.stderr || "").slice(0, 200));
     return { ok: false };
   }
+  // 成功退出即立刻落盘 sweepDone，绝不因 stdout 解析异常而重复扫盘
+  const st = readJson(statePath(), {});
+  st.sweepDone = st.sweepDone || {};
+  st.sweepDone[date] = bj(nowMs());
+  writeJson(statePath(), st);
   try {
-    const out = JSON.parse(r.stdout.trim().split("\n").filter((l) => l.startsWith("{")).pop() || "{}");
-    const st = readJson(statePath(), {});
-    st.sweepDone = st.sweepDone || {};
-    st.sweepDone[bjDate(nowMs())] = bj(nowMs());
-    writeJson(statePath(), st);
+    const out = parseJsonStdout(r.stdout);
     log("INFO", `API扫盘完成 plan=${out.plan} stats=${JSON.stringify(out.stats)}`);
     return { ok: true, ...out };
-  } catch (e) { log("ERROR", "API扫盘输出解析失败: " + e.message); return { ok: false }; }
+  } catch (e) {
+    log("WARN", "API扫盘已成功落盘但输出解析异常: " + e.message);
+    return { ok: true };
+  }
 }
 function readApiOdds(mid) {
   const r = spawnSync(process.execPath, ["tools/ky_api_engine.cjs", "--odds", String(mid)], { cwd: ROOT, encoding: "utf8", timeout: 120000 });
   if (r.error || r.status !== 0) return null;
-  try { return JSON.parse(r.stdout.trim().split("\n").filter((l) => l.startsWith("{")).pop() || "{}"); } catch { return null; }
+  try { return parseJsonStdout(r.stdout); } catch { return null; }
 }
 
 // ---------------------------------------------------------------- tick
@@ -520,7 +557,7 @@ async function tick({ forceSweep = false } = {}) {
   // 1) 扫盘：09:00 之后 2 分钟内且今日未做
   const sweepDue = forceSweep || (minutes >= 540 && minutes < 542 && !(st.sweepDone && st.sweepDone[date]));
   if (sweepDue) {
-    await runApiSweep();
+    await runApiSweep({ force: forceSweep });
     return;
   }
 
@@ -561,7 +598,7 @@ async function tick({ forceSweep = false } = {}) {
 }
 
 // ---------------------------------------------------------------- 导出（供测试）
-module.exports = { parseMatches, tierOf, normLeague, selectAndPlan, makeRechecks, bj, bjMinutes };
+module.exports = { parseMatches, tierOf, normLeague, selectAndPlan, makeRechecks, bj, bjMinutes, tryClaimDailySweep, parseJsonStdout };
 
 // ---------------------------------------------------------------- main（仅在直接运行时启动）
 if (require.main === module) {
