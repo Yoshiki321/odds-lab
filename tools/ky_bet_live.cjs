@@ -68,11 +68,15 @@ const deny = (reason, extra) => { console.log(JSON.stringify({ ok: false, reject
   const balance = Number(balResp?.data?.amount);
   if (!Number.isFinite(balance) || balance < amount) deny("余额不足或读取失败", { balance, amount });
 
-  const ct = c.templates.countUnsettleTickets;
-  if (!ct) deny("无未结数接口模板");
-  const uncJson = JSON.parse(await (await fetch(ct.url + "&t=" + Date.now(), { headers: ct.headers, signal: AbortSignal.timeout(10000) })).text());
-  if (uncJson.code !== "0000000" || typeof uncJson.data !== "number") deny("未结数读取失败，无法核算风险");
-  const openCount = uncJson.data;
+  // countUnsettleTickets 已废弃（0400300）：未结敞口以账本 openRisk 为准，openCount 仅记录
+  let openCount = null;
+  try {
+    const ct = c.templates.countUnsettleTickets;
+    if (ct) {
+      const uncJson = JSON.parse(await (await fetch(ct.url.replace(/t=\d+/, "t=" + Date.now()), { headers: ct.headers, signal: AbortSignal.timeout(10000) })).text());
+      if (uncJson.code === "0000000" && typeof uncJson.data === "number") openCount = uncJson.data;
+    }
+  } catch {}
 
   const ledgerFile = path.join(EXP, "ledger_user_orders.json");
   let ledger;

@@ -115,7 +115,7 @@ node tools/edge-cdp.cjs info      # 确认页与地址
 
 | 现象 | 处置 |
 |---|---|
-| CDP 9333 拒绝连接 | 用固定 profile 重起 Edge；仍失败→报错停手 |
+| CDP 9333 拒绝连接 | **不要重起浏览器**。日常全走接口；只有接口返回 `0401013`（code 过期）才请用户打开一次页面刷新 code，刷新后立即关闭 |
 | `kaiyun.com` 403 | 改走 `https://www.w7spda.vip:6501/` |
 | 页面显示 登录/注册 | 请用户在该页亲手登录，不绕过 |
 | iframe 空壳 | 取 iframe `src` 在同页打开（不打 token） |
