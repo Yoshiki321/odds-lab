@@ -1,0 +1,20 @@
+{
+  "eventId": "mid-5638291",
+  "dateAsiaShanghai": "2026-11-21",
+  "observedAt": "2026-11-21T23:30:16+08:00",
+  "planAt": "2026-11-21T23:30:00+08:00",
+  "planAtMs": 1795275000000,
+  "actualAtMs": 1795275016527,
+  "minutesToKickoff": 30,
+  "morning": {
+    "league": "土耳其超级联赛",
+    "tier": 2,
+    "kickoff": "2026-11-22T00:00:00+08:00"
+  },
+  "latestOdds": {
+    "markets": null
+  },
+  "autoBet": false,
+  "decision": "待人工判断（自动流程不下单）",
+  "dataQuality": "接口未返回该场盘口"
+}
