@@ -499,10 +499,10 @@ function parseJsonStdout(txt) {
   return line ? JSON.parse(line) : {};
 }
 function sweepLockPath(date) {
-  return path.join(RUNTIME, `sweep_${date}.lock`);
+  return path.join(EXP, "runtime", `sweep_${date}.lock`);
 }
 function tryClaimDailySweep(date) {
-  fs.mkdirSync(RUNTIME, { recursive: true });
+  fs.mkdirSync(path.join(EXP, "runtime"), { recursive: true });
   const lp = sweepLockPath(date);
   try {
     const fd = fs.openSync(lp, "wx");
