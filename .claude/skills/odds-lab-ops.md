@@ -14,6 +14,7 @@ description: Odds-Lab（Yoshiki321/odds-lab）本地 Agent 全流程操作手册
 | 职责域 | 核心文件 | 用途说明 |
 |---|---|---|
 | **架构与 SOP** | `docs/ARCHITECTURE_AND_OPS.md` | 建模范式、去水/EV 公式、每日循环时间表、执行层/分析层分工 |
+| **免费数据源手册** | `.claude/skills/free-data-sources.md`、`tools/fetch_football_data.py`、`tools/fetch_espn_intel.py` | 经实测免费免 Key 源（Football-Data 11 联赛尖盘/xG、ESPN 足球首发/NBA 伤停）及训练联动 |
 | **v2 常驻服务** | `app/src/server/app.ts`、`api.ts`、`ops.ts` | `127.0.0.1:9000` HTTP/WS 看板与研判接口（Windows 任务计划 `JC9000` 托管） |
 | **数据库结构** | `app/src/server/db/schema.sql` | 含 `matches`/`scores`/`results`/`match_crosswalk`/`model_predictions` 等表 |
 | **定价与精确 EV** | `app/src/shared/pricing.ts`、`tools/pricing.cjs` | Power 去水、整盘/四分之一盘精确 EV、1/4 凯利、CLV 收盘价价值 |
@@ -67,9 +68,9 @@ description: Odds-Lab（Yoshiki321/odds-lab）本地 Agent 全流程操作手册
 
 - **09:00**：`KYDaemon` 触发 `tools/ky_api_engine.cjs` 全量扫盘（一/二/三级足球），生成当日计划并写 `sweepDone`。
 - **09:33**：补结昨日凌晨场官方 Payout 赛果，执行三源对账（订单列表 + 未结数 + 余额）。
-- **10:00**：更新 Understat xG 与赛程间隔数据（带 `as_of_date`）。
+- **10:00**：运行 `python3 tools/fetch_football_data.py --season 2627 --all`、`--fixtures` 及 Understat xG 更新（带 `as_of_date`）。
 - **13:05**：`app` 服务同步参考场次池、懂球帝欧亚水位与 `match_crosswalk` 对齐。
-- **T−50m**：采集足球临场首发/伤停（NBA 在 T−90m/T−30m，未接通前篮球信号门保持关闭）。
+- **T−50m**：运行 `python3 tools/fetch_espn_intel.py --sport soccer --league <code >` 采集足球首发/伤停（NBA 运行 `--sport nba`，未通过 OOS 验证前篮球信号门保持关闭）。
 - **T−35m ~ T−30m（主决策窗）**：
   1. `tools/ky_snapshot_collector.cjs` 采集执行盘口（1X2 / 亚盘 / 大小球），按 `reqEndUtc` 取窗口内首条有效记录。
   2. 调用 `tools/ky_signal_gate.cjs` 执行五门禁核验（OOS `verified=true` + 非封盘 + 精确净 EV > `+2.5%` + `+30s` 滑点保守价 + 时间窗 + 盘口线一致）。

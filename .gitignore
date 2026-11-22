@@ -66,3 +66,4 @@ app/config/db.json
 *.bak
 *.bak-*
 __pycache__/
+data/free_sources/
