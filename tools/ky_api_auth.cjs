@@ -6,7 +6,7 @@
 "use strict";
 const fs = require("node:fs");
 const path = require("node:path");
-const { chromium } = require("playwright");
+let chromium = null; try { chromium = require("playwright").chromium; } catch {}
 
 const ROOT = path.resolve(__dirname, "..");
 const CRED = path.join(ROOT, "data", "experiment_survival_100", "runtime", "api_credentials.json");
