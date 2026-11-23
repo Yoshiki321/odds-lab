@@ -117,15 +117,13 @@ if (!wtExists) {
 if (wtExists) {
   run("git fetch origin --prune", { cwd: WORKTREE });
   run("git checkout data/daily-sync", { cwd: WORKTREE });
-  run("git reset --hard HEAD", { cwd: WORKTREE });
-  run("git clean -fd", { cwd: WORKTREE });
+  // 先对齐远端数据分支，避免 non-fast-forward；没有远端分支时回退到 origin/main
   try {
-    run("git rebase origin/main", { cwd: WORKTREE });
+    run("git reset --hard origin/data/daily-sync", { cwd: WORKTREE });
   } catch {
-    try { run("git rebase --abort", { cwd: WORKTREE }); } catch {}
     run("git reset --hard origin/main", { cwd: WORKTREE });
-    log("warn: data branch rebase conflict -> reset to origin/main, current snapshot will be recommitted");
   }
+  run("git clean -fd", { cwd: WORKTREE });
 }
 
 // ---------- 5. 复制到 worktree ----------
