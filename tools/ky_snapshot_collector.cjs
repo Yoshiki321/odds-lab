@@ -7,6 +7,7 @@
  * 冻结规则：
  *  - 主窗口 [T-35, T-30]，取"响应完整返回时刻"落在窗口内的最新成功记录
  *  - 辅助窗口 [T-25, T-20] 单独记 aux，不并入主样本
+ *  - 收盘窗口 [T-2, T-1] 记 closingOk，用于 CLV 配对
  *  - 窗口内无成功 → missing
  *  - 原始响应只增不改，写哈希；日志不含凭据
  */
@@ -24,6 +25,7 @@ const LOG = path.join(SNAP, "_log.jsonl");
 const STATE = path.join(SNAP, "_state.json");
 
 const MAIN_LO = 30, MAIN_HI = 35, AUX_LO = 20, AUX_HI = 25;
+const CLOSING_LO = 1, CLOSING_HI = 2; // T-2m ~ T-1m 收盘参考价
 const CLOCK_TOLERANCE_MS = 5000;
 
 const unwrap = (t) => {
@@ -43,6 +45,7 @@ function windowOf(kickoffMs, nowMs) {
   const m = (kickoffMs - nowMs) / 60000;
   if (m >= MAIN_LO && m <= MAIN_HI) return "main";
   if (m >= AUX_LO && m <= AUX_HI) return "aux";
+  if (m >= CLOSING_LO && m <= CLOSING_HI) return "closing";
   return null;
 }
 
@@ -213,7 +216,7 @@ async function runOnce() {
   return { due: due.length, results, clock };
 }
 
-module.exports = { windowOf, pickMain, runOnce, MAIN_LO, MAIN_HI, AUX_LO, AUX_HI, CLOCK_TOLERANCE_MS };
+module.exports = { windowOf, pickMain, runOnce, MAIN_LO, MAIN_HI, AUX_LO, AUX_HI, CLOSING_LO, CLOSING_HI, CLOCK_TOLERANCE_MS };
 
 if (require.main === module) {
   (async () => {
