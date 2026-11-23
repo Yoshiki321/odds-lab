@@ -1,0 +1,20 @@
+{
+  "eventId": "mid-5830013",
+  "dateAsiaShanghai": "2026-11-23",
+  "observedAt": "2026-11-23T02:30:28+08:00",
+  "planAt": "2026-11-23T02:30:00+08:00",
+  "planAtMs": 1795372200000,
+  "actualAtMs": 1795372228240,
+  "minutesToKickoff": 30,
+  "morning": {
+    "league": "巴西甲级联赛",
+    "tier": 2,
+    "kickoff": "2026-11-23T03:00:00+08:00"
+  },
+  "latestOdds": {
+    "markets": null
+  },
+  "autoBet": false,
+  "decision": "待人工判断（自动流程不下单）",
+  "dataQuality": "接口未返回该场盘口"
+}

@@ -1,0 +1,34 @@
+{
+  "eventId": "mid-5638615",
+  "dateAsiaShanghai": "2026-11-23",
+  "observedAt": "2026-11-23T03:30:21+08:00",
+  "planAt": "2026-11-23T03:30:00+08:00",
+  "planAtMs": 1795375800000,
+  "actualAtMs": 1795375821160,
+  "minutesToKickoff": 30,
+  "morning": {
+    "league": "西班牙甲级联赛",
+    "tier": 1,
+    "kickoff": "2026-11-23T04:00:00+08:00"
+  },
+  "latestOdds": {
+    "markets": {
+      "had": {
+        "h": 6.6,
+        "d": 4.05,
+        "a": 1.52
+      },
+      "hhad": {
+        "line": "1",
+        "h": 1.94,
+        "a": 1.96
+      },
+      "ou": null
+    },
+    "source": "getMatchBaseInfoByOddsPB",
+    "observedAt": "2026-11-23T03:30:21+08:00"
+  },
+  "autoBet": false,
+  "decision": "待人工判断（自动流程不下单）",
+  "dataQuality": "接口赔率"
+}

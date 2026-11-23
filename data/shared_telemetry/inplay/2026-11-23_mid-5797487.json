@@ -1,0 +1,26 @@
+{
+  "eventId": "mid-5797487",
+  "dateAsiaShanghai": "2026-11-23",
+  "observedAt": "2026-11-23T00:00:57+08:00",
+  "planAt": "2026-11-23T00:00:00+08:00",
+  "planAtMs": 1795363200000,
+  "actualAtMs": 1795363257341,
+  "minutesToKickoff": 29,
+  "morning": {
+    "league": "英格兰超级联赛",
+    "tier": 1,
+    "kickoff": "2026-11-23T00:30:00+08:00"
+  },
+  "latestOdds": {
+    "markets": {
+      "had": null,
+      "hhad": null,
+      "ou": null
+    },
+    "source": "getMatchBaseInfoByOddsPB",
+    "observedAt": "2026-11-23T00:00:57+08:00"
+  },
+  "autoBet": false,
+  "decision": "待人工判断（自动流程不下单）",
+  "dataQuality": "接口赔率"
+}
