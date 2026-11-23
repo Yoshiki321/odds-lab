@@ -7,6 +7,7 @@
  * 冻结规则：
  *  - 主窗口 [T-35, T-30]，取"响应完整返回时刻"落在窗口内的最新成功记录
  *  - 辅助窗口 [T-25, T-20] 单独记 aux，不并入主样本
+ *  - 收盘窗口 [T-2, T-1] 记 closingOk，用于 CLV 配对
  *  - 窗口内无成功 → missing
  *  - 原始响应只增不改，写哈希；日志不含凭据
  */
@@ -24,6 +25,7 @@ const LOG = path.join(SNAP, "_log.jsonl");
 const STATE = path.join(SNAP, "_state.json");
 
 const MAIN_LO = 30, MAIN_HI = 35, AUX_LO = 20, AUX_HI = 25;
+const CLOSING_LO = 1, CLOSING_HI = 4; // T-4m ~ T-1m 收盘参考价（3分钟宽防60s轮询跳过，保留最临近开赛一帧）
 const CLOCK_TOLERANCE_MS = 5000;
 
 const unwrap = (t) => {
@@ -43,6 +45,7 @@ function windowOf(kickoffMs, nowMs) {
   const m = (kickoffMs - nowMs) / 60000;
   if (m >= MAIN_LO && m <= MAIN_HI) return "main";
   if (m >= AUX_LO && m <= AUX_HI) return "aux";
+  if (m >= CLOSING_LO && m <= CLOSING_HI) return "closing";
   return null;
 }
 
@@ -175,37 +178,50 @@ async function runOnce() {
     }
   }
 
-  for (const m of due) {
+  // 性能优化（基于 2026-11-23 遥测分析：23:00 高峰串行重采导致 228 场漏采）：
+  // 1) 已命中 mainOk/auxOk 的场次直接跳过，不再在 5 分钟窗口内反复重采
+  // 2) 以并发度 5 批处理，将高峰 40 场耗时从 ~60s 降至 ~8s
+  const todo = due.filter((m) => {
     const w = windowOf(m.kickoffMs, now);
-    const { rec, rawText } = await collectOne(c, m, w, now);
-    // 原始响应只增不改
-    if (rawText) {
-      const dir = path.join(SNAP, bjDate(m.kickoffMs));
-      fs.mkdirSync(dir, { recursive: true });
-      // 修复小时位切片：YYYYMMDDHHMMSS 的 HHMMSS 在 [8..14]
-      const fp = path.join(dir, `${bj(new Date(rec.reqEndMs)).replace(/[-: ]/g, "").slice(8, 14)}_${m.mid}_${rec.hash.slice(0, 8)}.json`);
-      if (!fs.existsSync(fp)) fs.writeFileSync(fp, rawText, "utf8");
-      rec.rawFile = path.relative(ROOT, fp);
-    }
-    // 严格按响应完成时刻 reqEndMs 判定窗口，避免循环耗时导致超窗污染
-    const actualWin = windowOf(m.kickoffMs, rec.reqEndMs);
-    rec.windowAtEnd = actualWin;
-    log({ type: "attempt", ...rec });
-    if (rec.ok && actualWin && rec.clockOffsetMs !== null && Math.abs(rec.clockOffsetMs) <= CLOCK_TOLERANCE_MS) {
-      const srec = { at: bj(new Date(rec.reqEndMs)), window: actualWin, endBJ: rec.reqEndBJ, endMs: rec.reqEndMs, odds: rec.odds, rawFile: rec.rawFile };
-      state.seen[m.mid] = srec;
-      // 主窗口冻结规则：保留窗口内首条有效记录，不被后续重试覆盖
-      if (actualWin === "main") {
-        const mo = state.mainOk || (state.mainOk = {});
-        if (!mo[m.mid]) mo[m.mid] = srec;
-      } else if (actualWin === "closing") {
-        const co = state.closingOk || (state.closingOk = {});
-        co[m.mid] = srec;
-      } else {
-        (state.auxOk || (state.auxOk = {}))[m.mid] = srec;
+    if (w === "main" && state.mainOk && state.mainOk[m.mid]) return false;
+    if (w === "aux" && state.auxOk && state.auxOk[m.mid]) return false;
+    return Boolean(w);
+  });
+
+  const CONCURRENCY = 5;
+  for (let idx = 0; idx < todo.length; idx += CONCURRENCY) {
+    const chunk = todo.slice(idx, idx + CONCURRENCY);
+    const batchOut = await Promise.all(chunk.map(async (m) => {
+      const w = windowOf(m.kickoffMs, now);
+      const { rec, rawText } = await collectOne(c, m, w, now);
+      return { m, rec, rawText };
+    }));
+    for (const { m, rec, rawText } of batchOut) {
+      if (rawText) {
+        const dir = path.join(SNAP, bjDate(m.kickoffMs));
+        fs.mkdirSync(dir, { recursive: true });
+        const fp = path.join(dir, `${bj(new Date(rec.reqEndMs)).replace(/[-: ]/g, "").slice(8, 14)}_${m.mid}_${rec.hash.slice(0, 8)}.json`);
+        if (!fs.existsSync(fp)) fs.writeFileSync(fp, rawText, "utf8");
+        rec.rawFile = path.relative(ROOT, fp);
       }
+      const actualWin = windowOf(m.kickoffMs, rec.reqEndMs);
+      rec.windowAtEnd = actualWin;
+      log({ type: "attempt", ...rec });
+      if (rec.ok && actualWin && rec.clockOffsetMs !== null && Math.abs(rec.clockOffsetMs) <= CLOCK_TOLERANCE_MS) {
+        const srec = { at: bj(new Date(rec.reqEndMs)), window: actualWin, endBJ: rec.reqEndBJ, endMs: rec.reqEndMs, odds: rec.odds, rawFile: rec.rawFile };
+        state.seen[m.mid] = srec;
+        if (actualWin === "main") {
+          const mo = state.mainOk || (state.mainOk = {});
+          if (!mo[m.mid]) mo[m.mid] = srec;
+        } else if (actualWin === "closing") {
+          const co = state.closingOk || (state.closingOk = {});
+          co[m.mid] = srec;
+        } else {
+          (state.auxOk || (state.auxOk = {}))[m.mid] = srec;
+        }
+      }
+      results.push(rec);
     }
-    results.push(rec);
   }
   state.heartbeat = { at: bj(new Date()), atMs: now, dueCount: due.length, clockOffsetMs: clock.offsetMs };
   state.authError = null;
@@ -213,7 +229,7 @@ async function runOnce() {
   return { due: due.length, results, clock };
 }
 
-module.exports = { windowOf, pickMain, runOnce, MAIN_LO, MAIN_HI, AUX_LO, AUX_HI, CLOCK_TOLERANCE_MS };
+module.exports = { windowOf, pickMain, runOnce, MAIN_LO, MAIN_HI, AUX_LO, AUX_HI, CLOSING_LO, CLOSING_HI, CLOCK_TOLERANCE_MS };
 
 if (require.main === module) {
   (async () => {

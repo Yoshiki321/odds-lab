@@ -4,7 +4,9 @@
  * 用 EncodedCommand 传中文，规避 PowerShell 5.1 读 UTF-8 脚本的编码问题。
  */
 "use strict";
-const { execFileSync } = require("node:child_process");
+const { spawn } = require("node:child_process");
+const fs = require("node:fs");
+const path = require("node:path");
 
 function psLiteral(s) {
   // PowerShell 单引号字符串：用 '' 转义内部单引号
@@ -26,7 +28,20 @@ function toast(title, message) {
     "[Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier($AppId).Show($n)",
   ].join(";");
   const encoded = Buffer.from(script, "utf16le").toString("base64");
-  execFileSync("powershell", ["-NoProfile", "-WindowStyle", "Hidden", "-EncodedCommand", encoded], { timeout: 15000, stdio: "ignore" });
+  // 非阻塞：机器繁忙时 PowerShell 启动可能超过 15s，同步等待会 ETIMEDOUT 导致告警丢失
+  const child = spawn("powershell", ["-NoProfile", "-WindowStyle", "Hidden", "-EncodedCommand", encoded], {
+    detached: true,
+    stdio: "ignore",
+    windowsHide: true,
+  });
+  child.on("error", (e) => {
+    try {
+      const log = path.join(__dirname, "..", "data", "experiment_survival_100", "runtime", "toast.log");
+      fs.mkdirSync(path.dirname(log), { recursive: true });
+      fs.appendFileSync(log, `${new Date().toISOString()} toast_error ${e.message}\n`, "utf8");
+    } catch {}
+  });
+  child.unref();
 }
 
 module.exports = { toast };
