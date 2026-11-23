@@ -231,6 +231,64 @@
         },
         "reasons": []
       }
+    },
+    {
+      "decisionId": "SIM-EV-5880456-1795411641715",
+      "dateAsiaShanghai": "2026-11-23",
+      "event": {
+        "id": "5880456",
+        "home": "东京绿茵贝拉萨(女)",
+        "away": "INAC神户李奥内萨(女)",
+        "league": "日女联",
+        "kickoff": "2026-11-23 14:00"
+      },
+      "market": "全场让球",
+      "side": "客-1",
+      "line": -1,
+      "observedOdds": {
+        "price": 1.99,
+        "observedAt": "2026-11-23T05:27:21.715Z",
+        "source": "ky_api_engine",
+        "note": "只是观察报价≠可成交价,未下单、不可复制成交"
+      },
+      "prob": 0.395,
+      "evPerUnit": -0.21394999999999997,
+      "amount": "SIM",
+      "platformOrderId": null,
+      "settlement": {
+        "status": "待确认",
+        "pnl": null,
+        "result": null
+      },
+      "modelName": "poisson-fit-to-1x2",
+      "modelVersion": "v1-unverified",
+      "dataSource": "ky_api_odds",
+      "uncertainty": "模型未通过OOS验证（n<300）；仅虚拟单，不构成实单依据",
+      "riskCheck": {
+        "single": "pass",
+        "concurrent": "pass",
+        "daily": "pass",
+        "experiment": "pass",
+        "note": "校验只记录不执行,不下单、不锁额度",
+        "simStake": 1,
+        "caps": {
+          "initialCapital": 100,
+          "singleMax": 1000000,
+          "maxConcurrentOpenRisk": 30,
+          "dailyMaxRisk": 100,
+          "experimentMaxLoss": 100
+        },
+        "mode": "SIM_ONLY"
+      },
+      "dataQuality": {
+        "valid": true,
+        "missing": {
+          "missingOdds": false,
+          "missingTime": false,
+          "missingEventId": false
+        },
+        "reasons": []
+      }
     }
   ],
   "meta": {
@@ -251,6 +309,6 @@
     },
     "settlementRule": "规则不明则 settlement.status 恒为 待确认,绝不猜胜负、不猜盈亏,pnl 恒为 null",
     "timezone": "Asia/Shanghai",
-    "updatedAtAsiaShanghai": "2026-11-22T18:27:22.188Z"
+    "updatedAtAsiaShanghai": "2026-11-23T05:27:26.171Z"
   }
 }

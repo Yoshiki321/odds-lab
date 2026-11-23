@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-23T03:48:21.224Z",
+  "generatedAt": "2026-11-23T08:54:24.966Z",
   "dateBJ": "2026-11-23",
-  "pairs": 0,
+  "pairs": 3,
   "counts": {
-    "mainOk": 807,
-    "auxOk": 817,
-    "closingOk": 0,
-    "missing": 402
+    "mainOk": 810,
+    "auxOk": 820,
+    "closingOk": 3,
+    "missing": 405
   },
   "note": "脱敏共享数据清单"
 }
