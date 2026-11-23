@@ -131,7 +131,11 @@ function main() {
   let prev = {};
   try { prev = JSON.parse(fs.readFileSync(ALERT_STATE, "utf8")); } catch {}
   const prevNotifiedAt = Number.isFinite(prev.lastNotifiedAt) ? prev.lastNotifiedAt : prev.at;
+  // 鉴权签名：只要出现“新的”鉴权错误（code/msg 变化）就立即告警，不等 30 分钟
+  const authSig = authError ? `${authError.code || ""}|${authError.msg || ""}` : null;
+  const authIsNew = !!authSig && prev.authSig !== authSig;
   const shouldNotify =
+    authIsNew ||
     (status === "异常" && prev.status !== "异常") ||
     (status === "异常" && Number.isFinite(prevNotifiedAt) && now - prevNotifiedAt >= REPEAT_MS) ||
     (status === "正常" && prev.status === "异常");
@@ -149,6 +153,7 @@ function main() {
     status,
     checkedAt: now,
     lastNotifiedAt: shouldNotify ? now : (prevNotifiedAt || null),
+    authSig,
     alerts,
   }, null, 2));
 
