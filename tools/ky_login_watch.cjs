@@ -81,8 +81,8 @@ function daemonRunning() {
   }
   log("credentials_stale_capturing");
   try {
-    // 用不重载页面的方式抓取，避免 reload 触发站点安全校验/掉会话
-    cp.execFileSync(process.execPath, [path.join(__dirname, "ky_capture_noreload.cjs")], { timeout: 120000 });
+    // 用不重载页面的方式抓取，并从赔率接口头推导 getOriginalDataPB（避免 reload 掉会话）
+    cp.execFileSync(process.execPath, [path.join(__dirname, "ky_probe_session.cjs")], { timeout: 120000 });
     log("capture_done ok=" + (await apiOk()));
   } catch (e) {
     log("capture_failed " + String(e.message).slice(0, 120));
