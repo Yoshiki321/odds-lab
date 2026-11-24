@@ -1,0 +1,26 @@
+{
+  "eventId": "mid-5853566",
+  "dateAsiaShanghai": "2026-11-24",
+  "observedAt": "2026-11-24T08:30:00+08:00",
+  "planAt": "2026-11-24T08:30:00+08:00",
+  "planAtMs": 1795480200000,
+  "actualAtMs": 1795480200759,
+  "minutesToKickoff": 30,
+  "morning": {
+    "league": "美国职业大联盟 - 附加赛",
+    "tier": 2,
+    "kickoff": "2026-11-24T09:00:00+08:00"
+  },
+  "latestOdds": {
+    "markets": {
+      "had": null,
+      "hhad": null,
+      "ou": null
+    },
+    "source": "getMatchBaseInfoByOddsPB",
+    "observedAt": "2026-11-24T08:30:00+08:00"
+  },
+  "autoBet": false,
+  "decision": "待人工判断（自动流程不下单）",
+  "dataQuality": "接口赔率"
+}

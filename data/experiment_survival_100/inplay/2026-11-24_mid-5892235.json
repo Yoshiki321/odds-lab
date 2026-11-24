@@ -1,0 +1,34 @@
+{
+  "eventId": "mid-5892235",
+  "dateAsiaShanghai": "2026-11-24",
+  "observedAt": "2026-11-24T02:32:32+08:00",
+  "planAt": "2026-11-24T02:30:00+08:00",
+  "planAtMs": 1795458600000,
+  "actualAtMs": 1795458752238,
+  "minutesToKickoff": 27,
+  "morning": {
+    "league": "英格兰超级联赛杯U21",
+    "tier": 1,
+    "kickoff": "2026-11-24T03:00:00+08:00"
+  },
+  "latestOdds": {
+    "markets": {
+      "had": {
+        "h": 2.39,
+        "d": 3.7,
+        "a": 2.44
+      },
+      "hhad": {
+        "line": "0",
+        "h": 1.87,
+        "a": 1.97
+      },
+      "ou": null
+    },
+    "source": "getMatchBaseInfoByOddsPB",
+    "observedAt": "2026-11-24T02:32:32+08:00"
+  },
+  "autoBet": false,
+  "decision": "待人工判断（自动流程不下单）",
+  "dataQuality": "接口赔率"
+}

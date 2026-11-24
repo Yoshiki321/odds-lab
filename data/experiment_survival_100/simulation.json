@@ -637,6 +637,238 @@
         },
         "reasons": []
       }
+    },
+    {
+      "decisionId": "SIM-EV-5641099-1795447640904",
+      "dateAsiaShanghai": "2026-11-23",
+      "event": {
+        "id": "5641099",
+        "home": "大不里士拖拉机",
+        "away": "迪拜祈祷",
+        "league": "亚冠精英",
+        "kickoff": "2026-11-24 00:00"
+      },
+      "market": "全场让球",
+      "side": "主0.5",
+      "line": 0.5,
+      "observedOdds": {
+        "price": 1.89,
+        "observedAt": "2026-11-23T15:27:20.904Z",
+        "source": "ky_api_engine",
+        "note": "只是观察报价≠可成交价,未下单、不可复制成交"
+      },
+      "prob": 0.541,
+      "evPerUnit": 0.02249000000000012,
+      "amount": "SIM",
+      "platformOrderId": null,
+      "settlement": {
+        "status": "待确认",
+        "pnl": null,
+        "result": null
+      },
+      "modelName": "poisson-fit-to-1x2",
+      "modelVersion": "v1-unverified",
+      "dataSource": "ky_api_odds",
+      "uncertainty": "模型未通过OOS验证（n<300）；仅虚拟单，不构成实单依据",
+      "riskCheck": {
+        "single": "pass",
+        "concurrent": "pass",
+        "daily": "pass",
+        "experiment": "pass",
+        "note": "校验只记录不执行,不下单、不锁额度",
+        "simStake": 1,
+        "caps": {
+          "initialCapital": 100,
+          "singleMax": 1000000,
+          "maxConcurrentOpenRisk": 30,
+          "dailyMaxRisk": 100,
+          "experimentMaxLoss": 100
+        },
+        "mode": "SIM_ONLY"
+      },
+      "dataQuality": {
+        "valid": true,
+        "missing": {
+          "missingOdds": false,
+          "missingTime": false,
+          "missingEventId": false
+        },
+        "reasons": []
+      }
+    },
+    {
+      "decisionId": "SIM-EV-5876907-1795456637727",
+      "dateAsiaShanghai": "2026-11-24",
+      "event": {
+        "id": "5876907",
+        "home": "迪欧斯捷尔",
+        "away": "卡格SE",
+        "league": "匈乙",
+        "kickoff": "2026-11-24 02:30"
+      },
+      "market": "全场让球",
+      "side": "客-1.5",
+      "line": -1.5,
+      "observedOdds": {
+        "price": 2.06,
+        "observedAt": "2026-11-23T17:57:17.727Z",
+        "source": "ky_api_engine",
+        "note": "只是观察报价≠可成交价,未下单、不可复制成交"
+      },
+      "prob": 0.536,
+      "evPerUnit": 0.10416000000000003,
+      "amount": "SIM",
+      "platformOrderId": null,
+      "settlement": {
+        "status": "待确认",
+        "pnl": null,
+        "result": null
+      },
+      "modelName": "poisson-fit-to-1x2",
+      "modelVersion": "v1-unverified",
+      "dataSource": "ky_api_odds",
+      "uncertainty": "模型未通过OOS验证（n<300）；仅虚拟单，不构成实单依据",
+      "riskCheck": {
+        "single": "pass",
+        "concurrent": "pass",
+        "daily": "pass",
+        "experiment": "pass",
+        "note": "校验只记录不执行,不下单、不锁额度",
+        "simStake": 1,
+        "caps": {
+          "initialCapital": 100,
+          "singleMax": 1000000,
+          "maxConcurrentOpenRisk": 30,
+          "dailyMaxRisk": 100,
+          "experimentMaxLoss": 100
+        },
+        "mode": "SIM_ONLY"
+      },
+      "dataQuality": {
+        "valid": true,
+        "missing": {
+          "missingOdds": false,
+          "missingTime": false,
+          "missingEventId": false
+        },
+        "reasons": []
+      }
+    },
+    {
+      "decisionId": "SIM-EV-5872642-1795458443005",
+      "dateAsiaShanghai": "2026-11-24",
+      "event": {
+        "id": "5872642",
+        "home": "伯明翰U21",
+        "away": "吉林汉姆U21",
+        "league": "英超杯U21",
+        "kickoff": "2026-11-24 03:00"
+      },
+      "market": "全场让球",
+      "side": "客-1",
+      "line": -1,
+      "observedOdds": {
+        "price": 2.03,
+        "observedAt": "2026-11-23T18:27:23.005Z",
+        "source": "ky_api_engine",
+        "note": "只是观察报价≠可成交价,未下单、不可复制成交"
+      },
+      "prob": 0.409,
+      "evPerUnit": -0.16973000000000016,
+      "amount": "SIM",
+      "platformOrderId": null,
+      "settlement": {
+        "status": "待确认",
+        "pnl": null,
+        "result": null
+      },
+      "modelName": "poisson-fit-to-1x2",
+      "modelVersion": "v1-unverified",
+      "dataSource": "ky_api_odds",
+      "uncertainty": "模型未通过OOS验证（n<300）；仅虚拟单，不构成实单依据",
+      "riskCheck": {
+        "single": "pass",
+        "concurrent": "pass",
+        "daily": "pass",
+        "experiment": "pass",
+        "note": "校验只记录不执行,不下单、不锁额度",
+        "simStake": 1,
+        "caps": {
+          "initialCapital": 100,
+          "singleMax": 1000000,
+          "maxConcurrentOpenRisk": 30,
+          "dailyMaxRisk": 100,
+          "experimentMaxLoss": 100
+        },
+        "mode": "SIM_ONLY"
+      },
+      "dataQuality": {
+        "valid": true,
+        "missing": {
+          "missingOdds": false,
+          "missingTime": false,
+          "missingEventId": false
+        },
+        "reasons": []
+      }
+    },
+    {
+      "decisionId": "SIM-EV-5813267-1795461142763",
+      "dateAsiaShanghai": "2026-11-24",
+      "event": {
+        "id": "5813267",
+        "home": "莱科",
+        "away": "隆美辛尼",
+        "league": "意丙",
+        "kickoff": "2026-11-24 03:45"
+      },
+      "market": "全场让球",
+      "side": "客-0.5",
+      "line": -0.5,
+      "observedOdds": {
+        "price": 1.96,
+        "observedAt": "2026-11-23T19:12:22.763Z",
+        "source": "ky_api_engine",
+        "note": "只是观察报价≠可成交价,未下单、不可复制成交"
+      },
+      "prob": 0.529,
+      "evPerUnit": 0.036839999999999984,
+      "amount": "SIM",
+      "platformOrderId": null,
+      "settlement": {
+        "status": "待确认",
+        "pnl": null,
+        "result": null
+      },
+      "modelName": "poisson-fit-to-1x2",
+      "modelVersion": "v1-unverified",
+      "dataSource": "ky_api_odds",
+      "uncertainty": "模型未通过OOS验证（n<300）；仅虚拟单，不构成实单依据",
+      "riskCheck": {
+        "single": "pass",
+        "concurrent": "pass",
+        "daily": "pass",
+        "experiment": "pass",
+        "note": "校验只记录不执行,不下单、不锁额度",
+        "simStake": 1,
+        "caps": {
+          "initialCapital": 100,
+          "singleMax": 1000000,
+          "maxConcurrentOpenRisk": 30,
+          "dailyMaxRisk": 100,
+          "experimentMaxLoss": 100
+        },
+        "mode": "SIM_ONLY"
+      },
+      "dataQuality": {
+        "valid": true,
+        "missing": {
+          "missingOdds": false,
+          "missingTime": false,
+          "missingEventId": false
+        },
+        "reasons": []
+      }
     }
   ],
   "meta": {
@@ -657,6 +889,6 @@
     },
     "settlementRule": "规则不明则 settlement.status 恒为 待确认,绝不猜胜负、不猜盈亏,pnl 恒为 null",
     "timezone": "Asia/Shanghai",
-    "updatedAtAsiaShanghai": "2026-11-23T15:02:58.765Z"
+    "updatedAtAsiaShanghai": "2026-11-23T19:12:30.894Z"
   }
 }
