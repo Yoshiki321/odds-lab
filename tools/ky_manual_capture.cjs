@@ -31,8 +31,8 @@ const unwrap = (x) => {
   const tpl = {};
   page.on("request", (r) => {
     const u = r.url();
-    if (!tpl.odds && u.includes("getMatchBaseInfoByOddsPB")) tpl.odds = { url: u, method: r.method(), headers: safeHeaders(r.headers()), post: r.postData() };
-    if (!tpl.structure && u.includes("structureMatchBaseInfoByMidsPB")) tpl.structure = { url: u, method: r.method(), headers: safeHeaders(r.headers()), post: r.postData() };
+    if (!tpl.getMatchBaseInfoByOddsPB && u.includes("getMatchBaseInfoByOddsPB")) tpl.getMatchBaseInfoByOddsPB = { url: u, method: r.method(), headers: safeHeaders(r.headers()), post: r.postData() };
+    if (!tpl.structureMatchBaseInfoByMidsPB && u.includes("structureMatchBaseInfoByMidsPB")) tpl.structureMatchBaseInfoByMidsPB = { url: u, method: r.method(), headers: safeHeaders(r.headers()), post: r.postData() };
   });
 
   await page.goto("https://www.w7spda.vip:6501/game/sport", { waitUntil: "domcontentloaded", timeout: 30000 }).catch(() => {});
@@ -41,7 +41,7 @@ const unwrap = (x) => {
   await page.waitForTimeout(1500);
   try { await page.getByText("我已了解", { exact: true }).first().click({ timeout: 3000 }); console.log("dismissed_notice"); } catch {}
 
-  for (let i = 0; i < 30 && !tpl.odds; i++) {
+  for (let i = 0; i < 30 && !tpl.getMatchBaseInfoByOddsPB; i++) {
     await page.waitForTimeout(1000);
     if (i === 2) { try { await page.getByText("我已了解", { exact: true }).first().click({ timeout: 2000 }); } catch {} }
     if (i === 8 || i === 15) {
@@ -56,10 +56,10 @@ const unwrap = (x) => {
       }).catch(() => {});
     }
   }
-  console.log("captured_odds=" + !!tpl.odds);
-  if (!tpl.odds) { console.log(JSON.stringify({ ok: false, reason: "未捕获赔率请求" })); process.exit(1); }
+  console.log("captured_odds=" + !!tpl.getMatchBaseInfoByOddsPB);
+  if (!tpl.getMatchBaseInfoByOddsPB) { console.log(JSON.stringify({ ok: false, reason: "未捕获赔率请求" })); process.exit(1); }
 
-  const h = tpl.odds.headers;
+  const h = tpl.getMatchBaseInfoByOddsPB.headers;
   const url = "https://api.71vfi7l.com/yewu11/v2/m/getOriginalDataPB?t=" + Date.now();
   const raw = await new Promise((res, rej) => {
     https.get(url, { headers: h, rejectUnauthorized: false }, (r) => { let d = ""; r.on("data", (x) => d += x); r.on("end", () => res(d)); }).on("error", rej);
