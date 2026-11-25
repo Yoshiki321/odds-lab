@@ -30,8 +30,10 @@ function ps(cmd) {
 }
 
 (function main() {
-  let hb = null;
-  try { hb = JSON.parse(fs.readFileSync(STATE, "utf8")).heartbeat; } catch {}
+  let st = null;
+  try { st = JSON.parse(fs.readFileSync(STATE, "utf8")); } catch {}
+  const hb = st && st.heartbeat;
+  if (st && st.authError) { log("auth_expired_wait"); process.exit(0); }
   if (!hb || !Number.isFinite(hb.atMs)) { log("no_heartbeat"); process.exit(0); }
   const age = Date.now() - hb.atMs;
   if (age <= STALE_MS) process.exit(0);

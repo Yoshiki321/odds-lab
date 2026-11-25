@@ -6,6 +6,7 @@
 "use strict";
 const fs = require("node:fs");
 const path = require("node:path");
+const cp = require("node:child_process");
 
 const ROOT = path.resolve(__dirname, "..");
 const SNAP = path.join(ROOT, "data", "experiment_survival_100", "snapshots");
@@ -14,6 +15,8 @@ const LOG = path.join(SNAP, "_log.jsonl");
 const OUT = path.join(SNAP, "HEALTH.md");
 const ALERT_STATE = path.join(SNAP, "_alert_state.json");
 const STALE_MS = 120000; // 心跳超过 2 分钟没更新视为停摆
+const RESTART_STALE_MS = 5 * 60000; // 超过 5 分钟才自动重启，避免误判
+const RESTART_STATE = path.join(ROOT, "data", "experiment_survival_100", "runtime", "watchdog_restart_state.json");
 const REPEAT_MS = 30 * 60000; // 异常持续时每 30 分钟提醒一次，避免骚扰
 
 function parse(line) {
@@ -25,6 +28,17 @@ function atomicWrite(fp, content, opts = {}) {
   const tmp = `${fp}.tmp.${process.pid}.${Date.now()}`;
   fs.writeFileSync(tmp, content, { encoding: "utf8", ...opts });
   fs.renameSync(tmp, fp);
+}
+
+function restartCollector(reason) {
+  let last = 0;
+  try { last = JSON.parse(fs.readFileSync(RESTART_STATE, "utf8")).lastRestartMs || 0; } catch {}
+  if (Date.now() - last < RESTART_STALE_MS) return false;
+  const ps = "Get-CimInstance Win32_Process -Filter \"Name='node.exe'\" | Where-Object { $_.CommandLine -match 'ky_snapshot_collector' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }; Start-ScheduledTask -TaskName KYCollector";
+  cp.execFileSync("powershell", ["-NoProfile", "-Command", ps], { timeout: 30000, stdio: "ignore" });
+  fs.mkdirSync(path.dirname(RESTART_STATE), { recursive: true });
+  fs.writeFileSync(RESTART_STATE, JSON.stringify({ lastRestartMs: Date.now(), reason }, null, 2), "utf8");
+  return true;
 }
 
 function main() {
@@ -49,11 +63,20 @@ function main() {
     apiErrs = parsedLog.filter(x => x.type === "api_error").length;
   }
 
-  // 1) 心跳停摆
+  // 1) 心跳停摆：无鉴权错误时自动重启采集器；鉴权过期时只告警，避免重启风暴
   if (!hb) alerts.push("没有心跳记录");
   else if (!Number.isFinite(hb.atMs) || now - hb.atMs > STALE_MS) {
     const mins = Number.isFinite(hb.atMs) ? Math.round((now - hb.atMs) / 60000) : "?";
     alerts.push(`采集器停摆：心跳已 ${mins} 分钟没更新（最后 ${hb.at}）`);
+    if (Number.isFinite(hb.atMs) && now - hb.atMs > RESTART_STALE_MS) {
+      if (authError) {
+        alerts.push("鉴权已过期，等待人工登录，不重复重启采集器");
+      } else {
+        try {
+          if (restartCollector(`heartbeat stale ${mins}min`)) alerts.push("已自动重启采集器（心跳停摆）");
+        } catch (e) { alerts.push("自动重启采集器失败：" + String(e.message).slice(0, 100)); }
+      }
+    }
   }
 
   // 2) 鉴权失效
