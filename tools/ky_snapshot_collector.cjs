@@ -241,12 +241,19 @@ if (require.main === module) {
     console.log("采集器常驻启动（60s 一轮）");
     let lastErrLogMs = 0;
     for (;;) {
+      // 内部看门狗：单轮 90 秒未结束就退出，避免进程永久卡死；外部 Guard/任务计划负责拉起
+      const killTimer = setTimeout(() => {
+        console.error("FATAL runOnce 超过 90 秒未完成，强制退出");
+        process.exit(1);
+      }, 90000);
       try { const r = await runOnce(); if (r.due) console.log(JSON.stringify({ at: bj(new Date()), due: r.due })); }
       catch (e) {
         const rec = { type: "api_error", at: bj(new Date()), code: e.code || null, error: e.message };
         if (Date.now() - lastErrLogMs > 10 * 60000) { log(rec); lastErrLogMs = Date.now(); }
         try { const s = readState(); s.authError = { at: rec.at, code: rec.code, msg: e.message }; writeState(s); } catch {}
         console.error("ERR " + e.message);
+      } finally {
+        clearTimeout(killTimer);
       }
       await new Promise((res) => setTimeout(res, 60000));
     }

@@ -16,8 +16,8 @@ const STATE = path.join(EXP, "snapshots", "_state.json");
 const RT = path.join(EXP, "runtime");
 const LSTATE = path.join(RT, "collector_guard_state.json");
 const LOG = path.join(RT, "collector_guard.log");
-const STALE_MS = 10 * 60000;
-const COOLDOWN_MS = 10 * 60000;
+const STALE_MS = 5 * 60000;
+const COOLDOWN_MS = 5 * 60000;
 
 function log(msg) {
   fs.mkdirSync(RT, { recursive: true });
