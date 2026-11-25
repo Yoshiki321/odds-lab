@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-24T15:15:07.143Z",
-  "dateBJ": "2026-11-24",
-  "pairs": 108,
+  "generatedAt": "2026-11-25T15:15:05.880Z",
+  "dateBJ": "2026-11-25",
+  "pairs": 113,
   "counts": {
-    "mainOk": 951,
-    "auxOk": 972,
-    "closingOk": 119,
-    "missing": 410
+    "mainOk": 956,
+    "auxOk": 977,
+    "closingOk": 124,
+    "missing": 570
   },
   "note": "脱敏共享数据清单"
 }
