@@ -81,8 +81,12 @@ function daemonRunning() {
   }
   log("credentials_stale_capturing");
   try {
-    // 用不重载页面的方式抓取：进入游戏 + 关闭安全提示 + 从赔率头推导 getOriginalDataPB
-    cp.execFileSync(process.execPath, [path.join(__dirname, "ky_manual_capture.cjs")], { timeout: 120000 });
+    // 优先在已加载的体育子应用里抓；失败再走“进入游戏 + 关闭安全提示”的完整流程
+    try {
+      cp.execFileSync(process.execPath, [path.join(__dirname, "ky_capture_current.cjs")], { timeout: 60000 });
+    } catch {
+      cp.execFileSync(process.execPath, [path.join(__dirname, "ky_manual_capture.cjs")], { timeout: 120000 });
+    }
     log("capture_done ok=" + (await apiOk()));
   } catch (e) {
     log("capture_failed " + String(e.message).slice(0, 120));
